@@ -24,7 +24,15 @@ Cria materiais **on e off** para campanhas pagas:
 | Kling 3.0 | Geração de vídeo por IA |
 | ElevenLabs | Geração de áudio e locução |
 | Figma | Diagramação e identidade visual |
-| GreatPages → HTML/Claude | Landing pages (em migração) |
+| GreatPages → HTML/Claude | Landing pages (em migração para HTML gerado pelo Claude) |
+
+---
+
+## Equipe
+
+- **Account** — aprova o briefing antes de chegar no André
+- **Copywriter** — escreve a copy (às vezes chega com qualidade baixa)
+- **Aprovadores** — precisam aprovar as entregas finais
 
 ---
 
@@ -36,14 +44,6 @@ Cria materiais **on e off** para campanhas pagas:
 4. Criar prompts para geração de imagens/vídeos
 5. Gerar os assets nas ferramentas de IA
 6. Diagramar o criativo no Figma dentro da identidade visual do cliente
-
----
-
-## Equipe
-
-- **Account** — aprova o briefing antes de chegar no André
-- **Copywriter** — escreve a copy (às vezes chega com qualidade baixa)
-- **Aprovadores** — precisam aprovar as entregas finais
 
 ---
 
@@ -83,7 +83,7 @@ Cria materiais **on e off** para campanhas pagas:
 
 ## Como me comportar neste projeto
 
-- **Sempre leia o CONTEXTO.md** e os arquivos de skill relevantes antes de executar qualquer comando
+- **Sempre leia este CLAUDE.md** antes de executar qualquer comando
 - **Use `/start` como ponto de entrada** quando chegar uma demanda nova
 - Responda em **português** sempre
 - Seja direto e orientado à entrega — o André é sênior, não precisa de explicações básicas
