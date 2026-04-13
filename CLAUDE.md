@@ -58,37 +58,73 @@ Cria materiais **on e off** para campanhas pagas:
 
 ## Skills disponíveis
 
+### 🎯 Orquestrador
+
 | Comando | Arquivo | O que faz |
 |---|---|---|
-| `/start` | `.claude/skills/start/SKILL.md` | **Ponto de entrada.** Orquestra as demandas e monta o plano de execução |
-| `/briefing` | `.claude/skills/briefing/SKILL.md` | Analisa briefing, diagnostica copy, define direção visual |
-| `/prompts` | `.claude/skills/prompts/SKILL.md` | Gera prompts para Freepik, Kling e ElevenLabs |
-| `/roteiro` | `.claude/skills/roteiro/SKILL.md` | Prompts cinematográficos para Sora, Veo, Runway, Kling, Pika, Luma — multi-cena com consistência visual |
-| `/referencias` | `.claude/skills/referencias/SKILL.md` | Sugere referências visuais de alta performance |
-| `/lp` | `.claude/skills/lp/SKILL.md` | Cria landing page (HTML/Tailwind + Figma) — sistema anti-genérico com paletas curadas |
-| `/formatos` | `.claude/skills/formatos/SKILL.md` | Desdobra conceito em todos os formatos da campanha |
-| `/identidade` | `.claude/skills/identidade/SKILL.md` | Extrai e documenta identidade visual do cliente |
-| `/design-system` | `.claude/skills/design-system/SKILL.md` | Cria design system completo (tokens, componentes, preview HTML, exporta para Figma) |
-### Quando usar qual skill de vídeo
+| `/start` | `.claude/skills/Orquestrador/start/SKILL.md` | **Ponto de entrada.** Orquestra as demandas e monta o plano de execução |
 
-- `/prompts` → vídeos simples de campanha, 1-3 cenas, Kling ou ElevenLabs
-- `/roteiro` → projeto com múltiplas cenas, consistência entre takes, direção cinematográfica apurada, suporte a Sora/Veo/Runway
+### ✍️ Copywriter
 
-### Quando usar qual skill de identidade/design
+| Comando | Arquivo | O que faz |
+|---|---|---|
+| `/briefing` | `.claude/skills/Copywriter/briefing/SKILL.md` | Analisa briefing, diagnostica copy, define direção visual |
 
-- `/identidade` → cliente novo, extrair e documentar a identidade visual existente
+### 🎨 Designer
+
+| Comando | Arquivo | O que faz |
+|---|---|---|
+| `/referencias` | `.claude/skills/Designer/referencias/SKILL.md` | Sugere referências visuais de alta performance |
+| `/prompts` | `.claude/skills/Designer/prompts/SKILL.md` | Gera prompts para Freepik, Kling e ElevenLabs |
+| `/roteiro` | `.claude/skills/Designer/roteiro/SKILL.md` | Prompts cinematográficos para Sora, Veo, Runway, Kling, Pika, Luma — multi-cena com consistência visual |
+| `/formatos` | `.claude/skills/Designer/formatos/SKILL.md` | Desdobra conceito em todos os formatos da campanha |
+| `/lp` | `.claude/skills/Designer/lp/SKILL.md` | Cria landing page (HTML/Tailwind + Figma) — sistema anti-genérico com paletas curadas |
+| `/identidade` | `.claude/skills/Designer/identidade/SKILL.md` | Extrai e documenta identidade visual do cliente |
+| `/design-system` | `.claude/skills/Designer/design-system/SKILL.md` | Cria design system completo (tokens, componentes, preview HTML, exporta para Figma) |
+| `/figma-designer` | `.claude/skills/Designer/figma-designer/SKILL.md` | Regras e padrões para criação de layouts Figma via Plugin API — texto que preenche, sem overflow |
+### Quando usar qual skill
+
+**Vídeo:**
+- `/prompts` → vídeos simples, 1-3 cenas, Kling ou ElevenLabs
+- `/roteiro` → múltiplas cenas, consistência entre takes, direção cinematográfica, Sora/Veo/Runway
+
+**Identidade e sistema:**
+- `/identidade` → cliente novo, extrair e documentar identidade visual existente
 - `/design-system` → transformar identidade em sistema completo com tokens e componentes no Figma
+
+**Estrutura de pastas das skills:**
+```
+.claude/skills/
+├── Orquestrador/
+│   └── start/           ← ponto de entrada de toda demanda
+├── Copywriter/
+│   └── briefing/        ← análise de copy e direção criativa
+└── Designer/
+    ├── referencias/     ← referências visuais antes de criar
+    ├── prompts/         ← prompts para Freepik, Kling, ElevenLabs
+    ├── roteiro/         ← roteiros cinematográficos para IA de vídeo
+    ├── formatos/        ← desdobramento por formato
+    ├── lp/              ← landing pages HTML/Tailwind
+    ├── identidade/      ← extração de identidade visual
+    ├── design-system/   ← design system completo
+    └── figma-designer/  ← regras e código para layouts no Figma
+```
+```
+.claude/skills/Clientes/
+├── global_ds.md         ← regras globais de performance (leitura obrigatória antes de qualquer criativo)
+└── samech.md            ← identidade + copy do cliente
+```
 
 ### Templates de prompts disponíveis (usados pelo `/prompts`)
 
 | Template | Arquivo | Uso |
 |---|---|---|
-| Imagem vetorial | `.claude/skills/prompts/templates/imagem-vetorial.md` | Ilustração flat/vetor para impressos e digitais |
-| Textura e profundidade | `.claude/skills/prompts/templates/textura-profundidade.md` | Macro realista com bokeh |
-| Iluminação estúdio | `.claude/skills/prompts/templates/iluminacao-estudio.md` | Retratos e produto com luz controlada |
-| Lifestyle ambiental | `.claude/skills/prompts/templates/lifestyle-ambiental.md` | Pessoa/produto em contexto real |
-| Vídeo Kling | `.claude/skills/prompts/templates/video-kling.md` | Roteiro em cenas para Kling 3.0 |
-| Voz ElevenLabs | `.claude/skills/prompts/templates/voz-elevenlabs.md` | Script de locução com pontuação estratégica |
+| Imagem vetorial | `.claude/skills/Designer/prompts/templates/imagem-vetorial.md` | Ilustração flat/vetor para impressos e digitais |
+| Textura e profundidade | `.claude/skills/Designer/prompts/templates/textura-profundidade.md` | Macro realista com bokeh |
+| Iluminação estúdio | `.claude/skills/Designer/prompts/templates/iluminacao-estudio.md` | Retratos e produto com luz controlada |
+| Lifestyle ambiental | `.claude/skills/Designer/prompts/templates/lifestyle-ambiental.md` | Pessoa/produto em contexto real |
+| Vídeo Kling | `.claude/skills/Designer/prompts/templates/video-kling.md` | Roteiro em cenas para Kling 3.0 |
+| Voz ElevenLabs | `.claude/skills/Designer/prompts/templates/voz-elevenlabs.md` | Script de locução com pontuação estratégica |
 
 ---
 
@@ -102,19 +138,31 @@ Cria materiais **on e off** para campanhas pagas:
 - Priorize saídas prontas para usar: prompts completos, HTML funcional, copy finalizada
 - Não pergunte o que já está no briefing — extraia você mesmo
 
+### Ordem de leitura ao iniciar qualquer criativo
+
+1. `Clientes/global_ds.md` — regras globais de performance (valem para todos os clientes)
+2. `Clientes/[cliente].md` — identidade visual, copy e especificidades da marca
+3. Skill correspondente à tarefa (`Designer/`, `Copywriter/`, etc.)
+
 ---
 
 ## Status atual do projeto
 
-Fase: **expansão e melhoria das skills**
-Objetivo: tornar cada skill mais precisa, com outputs mais ricos e menos dependência de interação manual.
+Fase: **reorganização + melhoria contínua**
+Objetivo: skills organizadas por papel (Designer / Copywriter / Orquestrador), outputs mais ricos, menos dependência de interação manual.
 
-Skills novas adicionadas (abril 2026):
-- `/roteiro` — prompts cinematográficos para IAs de vídeo (Sora, Veo, Runway, Kling, Pika, Luma)
+Reorganização (abril 2026):
+- Skills migradas para pastas por papel: `Designer/`, `Copywriter/`, `Orquestrador/`
+- Arquivo de cliente criado: `Designer/figma-designer/clientes/samech.md`
+
+Skills adicionadas (abril 2026):
+- `/roteiro` — prompts cinematográficos para Sora, Veo, Runway, Kling, Pika, Luma
 - `/design-system` — design system completo com tokens, componentes e exportação Figma
+- `/figma-designer` — regras absolutas de layout Figma via Plugin API (sem overflow de texto)
 
 Skills melhoradas:
-- `/lp` — upgrade com sistema anti-genérico, copy-first, paletas curadas por setor, referências integradas
+- `/lp` — sistema anti-genérico, copy-first, paletas curadas por setor
+- `/start` — planos padrão por tipo de demanda
 
 Ordem de prioridade para próximas melhorias:
 1. `/referencias` — mais rasa, maior dor de tempo
@@ -122,4 +170,3 @@ Ordem de prioridade para próximas melhorias:
 3. `/prompts` — templates precisam estar embutidos na skill
 4. `/formatos` — falta spec técnica de exportação (DPI, bleed, perfil de cor)
 5. `/identidade` — falta fluxo para clientes sem material de marca
-6. `/start` — falta exemplos concretos de plano por tipo de demanda

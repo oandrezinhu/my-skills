@@ -27,7 +27,24 @@
       "Bash(cp \"/tmp/skills-import/design-system-pro/design-system-pro/references/styleguide-layout.md\" /c/Users/User/my-skills/.claude/skills/design-system/references/)",
       "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/copywriting.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)",
       "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/sections.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:doc-0c-ak-docstext.googleusercontent.com)",
+      "mcp__claude_ai_Figma__get_design_context",
+      "Bash(node)",
+      "mcp__claude_ai_Figma__get_screenshot",
+      "mcp__claude_ai_Figma__whoami",
+      "mcp__claude_ai_Figma__create_new_file",
+      "mcp__claude_ai_Figma__use_figma",
+      "Bash(mkdir -p Designer Copywriter Orquestrador)",
+      "Bash(mv start:*)",
+      "Bash(mv briefing:*)",
+      "Bash(mv figma-designer:*)",
+      "Bash(mv identidade:*)",
+      "Bash(mkdir -p \"C:/Users/User/my-skills/.claude/skills/Clientes\")",
+      "Bash(mv \"C:/Users/User/my-skills/.claude/skills/Designer/figma-designer/clientes/samech.md\" \"C:/Users/User/my-skills/.claude/skills/Clientes/samech.md\")",
+      "Bash(rmdir \"C:/Users/User/my-skills/.claude/skills/Designer/figma-designer/clientes\")",
+      "mcp__claude_ai_Figma__get_metadata"
     ]
   }
 }
