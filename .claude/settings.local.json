@@ -27,7 +27,16 @@
       "Bash(cp \"/tmp/skills-import/design-system-pro/design-system-pro/references/figma-export.md\" /c/Users/User/my-skills/.claude/skills/design-system/references/)",
       "Bash(cp \"/tmp/skills-import/design-system-pro/design-system-pro/references/styleguide-layout.md\" /c/Users/User/my-skills/.claude/skills/design-system/references/)",
       "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/copywriting.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)",
-      "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/sections.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)"
+      "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/sections.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" --max-time 10 \"https://n8n4.services4.collieassociados.com/mcp/aff51b4d-315e-4360-a7f4-85fcb3435dfe-ekyte-new-mcp\")",
+      "Bash(curl -s --max-time 15 -X POST \"https://n8n4.services4.collieassociados.com/mcp/aff51b4d-315e-4360-a7f4-85fcb3435dfe-ekyte-new-mcp\" -H \"Content-Type: application/json\" -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2024-11-05\",\"capabilities\":{},\"clientInfo\":{\"name\":\"test\",\"version\":\"1.0\"}}}')",
+      "Bash(curl -s --max-time 15 -X POST \"https://n8n4.services4.collieassociados.com/mcp/aff51b4d-315e-4360-a7f4-85fcb3435dfe-ekyte-new-mcp\" -H \"Content-Type: application/json\" -H \"Accept: application/json, text/event-stream\" -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2024-11-05\",\"capabilities\":{},\"clientInfo\":{\"name\":\"test\",\"version\":\"1.0\"}}}')",
+      "Bash(curl -s --max-time 15 -X POST \"https://n8n4.services4.collieassociados.com/mcp/aff51b4d-315e-4360-a7f4-85fcb3435dfe-ekyte-new-mcp\" -H \"Content-Type: application/json\" -H \"Accept: application/json, text/event-stream\" -d '{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/list\",\"params\":{}}')",
+      "WebSearch",
+      "WebFetch(domain:ekyte.com)",
+      "WebFetch(domain:www.ekyte.com)",
+      "Bash(mkdir -p /c/Users/User/my-skills/.claude/mcp-servers/ekyte)",
+      "Bash(mkdir -p /c/Users/User/my-skills/.claude/skills/ekyte)"
     ]
   }
 }

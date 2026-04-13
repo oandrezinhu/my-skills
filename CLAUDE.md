@@ -69,6 +69,7 @@ Cria materiais **on e off** para campanhas pagas:
 | `/formatos` | `.claude/skills/formatos/SKILL.md` | Desdobra conceito em todos os formatos da campanha |
 | `/identidade` | `.claude/skills/identidade/SKILL.md` | Extrai e documenta identidade visual do cliente |
 | `/design-system` | `.claude/skills/design-system/SKILL.md` | Cria design system completo (tokens, componentes, preview HTML, exporta para Figma) |
+| `/ekyte` | `.claude/skills/ekyte/SKILL.md` | Registra apontamentos de horas no Ekyte via MCP local (aceita ID ou URL da task) |
 
 ### Quando usar qual skill de vídeo
 
