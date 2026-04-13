@@ -4,7 +4,12 @@
       "Skill(update-config)",
       "Skill(update-config:*)",
       "Bash(npm install:*)",
-      "Bash(claude:*)"
+      "Bash(claude:*)",
+      "Read(//c/Users/User/.claude/**)",
+      "Read(//c/Users/User/AppData/Roaming/Claude/**)",
+      "Read(//c/Users/User/**)",
+      "Bash(python3 -c ':*)",
+      "Bash(node -e ':*)"
     ]
   }
 }
