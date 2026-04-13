@@ -1,111 +1,118 @@
 ---
 name: lp
-description: Cria landing page de alta conversão do zero a partir da copy e identidade visual do cliente. Entrega HTML/Tailwind completo pronto para publicar E cria o arquivo editável no Figma via MCP. Use quando André precisar criar uma LP para campanha.
+description: Cria landing pages distintivas e de alta conversão do zero. Saída em HTML + Tailwind single-file pronto para publicar E arquivo editável no Figma via MCP. Use quando André precisar criar uma LP para campanha, produto ou serviço. Acione sempre que mencionar "landing page", "LP", "página de vendas", "página de captura", "one-pager", "página de conversão", ou pedir para criar uma página para um produto, serviço, SaaS, agência ou empresa. Use após /briefing — o contexto já analisado alimenta diretamente esta skill.
 ---
 
-# Skill: Landing Page de Alta Conversão
+# Landing Page de Alta Conversão
 
-Você é especialista em CRO (Conversion Rate Optimization) e design de landing pages para campanhas de mídia paga. Seu trabalho é criar uma LP completa que converte — sem depender de template genérico.
-
-## O que você entrega
-
-1. **HTML + Tailwind CSS** completo, responsivo, pronto para publicar no GreatPages ou qualquer servidor
-2. **Arquivo Figma** editável criado via MCP com todos os frames e componentes organizados
-
-## Como usar
-
-```
-/lp <cole a copy ou link do briefing> | identidade: <cores, fonte, logo>
-```
-
-Ou simplesmente `/lp` após um `/briefing` — nesse caso use o contexto já analisado.
+Gera landing pages que não são genéricas. A regra número um desta skill: **nunca entregue uma LP genérica**. Genérico é o estado natural de uma IA escrevendo landing page — você precisa lutar contra isso ativamente em cada decisão.
 
 `$ARGUMENTS`
 
----
+## O que conta como "genérico" (nunca faça)
 
-## Passo 1 — Coleta de insumos
+Se algum destes sinais aparecer no que você gerou, é genérico — recomece a seção:
 
-Se alguma informação não foi fornecida, pergunte antes de criar:
-
-```
-CHECKLIST DE INSUMOS
-[ ] Copy completa (headline, subheadline, benefícios, prova social, CTA)
-[ ] Cor primária da marca (hex)
-[ ] Cor secundária / destaque (hex)
-[ ] Fonte principal (Google Fonts ou sistema)
-[ ] Logo (URL ou descrição)
-[ ] Objetivo da conversão (lead / venda / cadastro / visita)
-[ ] Público-alvo principal
-[ ] Link de destino do CTA
-```
+- Headline que poderia servir pra qualquer empresa ("A plataforma completa para o seu negócio")
+- Hero com gradiente roxo→azul + blob abstrato + ilustração 3D flutuante
+- Três features chamadas "Rápido", "Seguro", "Escalável"
+- Depoimentos com nomes tipo "João Silva, CEO" e citações vazias ("Mudou nossa empresa!")
+- Ícones Lucide clichê (Zap/Shield/Rocket) sem conexão com a feature
+- Cores exatamente `blue-600` e `indigo-600` do Tailwind sem customização
+- "Como funciona" em 3 passos genéricos ("Cadastre-se / Configure / Aproveite")
+- "Saiba mais" como texto de CTA principal
 
 ---
 
-## Passo 2 — Estrutura da LP (arquitetura de conversão)
+## O que você entrega
 
-Monte a LP com estas seções em ordem. Cada seção tem um job específico de conversão:
-
-```
-SEÇÃO 1 — HERO
-Job: Capturar atenção e comunicar o valor em 3 segundos
-Elementos: Headline forte + subheadline + CTA primário + imagem hero
-Regra: Headline deve conter a dor ou o maior benefício. Nunca começar com o nome da marca.
-
-SEÇÃO 2 — DOR / PROBLEMA
-Job: Fazer o visitante se identificar e sentir que a página é para ele
-Elementos: 3-4 dores reais do público, descritas com empatia
-Regra: Sem solução aqui ainda. Só espelhar a realidade do visitante.
-
-SEÇÃO 3 — SOLUÇÃO / PRODUTO
-Job: Apresentar o produto como a resposta direta às dores
-Elementos: Nome do produto + o que é + como funciona (simples, 3 passos max)
-Regra: Foco em transformação — antes vs. depois
-
-SEÇÃO 4 — DIFERENCIAIS / BENEFÍCIOS
-Job: Quebrar objeções e justificar a escolha
-Elementos: 3-6 cards de benefícios com ícone + título + descrição curta
-Regra: Benefício > feature. "Economia de 30% no tempo" > "Processo automatizado"
-
-SEÇÃO 5 — PROVA SOCIAL
-Job: Eliminar risco percebido com validação externa
-Elementos: Depoimentos, logos de clientes, números de resultado, certificações
-Regra: Se não tiver prova social real, use especificidade técnica do produto
-
-SEÇÃO 6 — CTA FINAL
-Job: Converter o visitante que chegou até aqui
-Elementos: Headline de urgência/benefício + formulário ou botão + micro-copy de segurança
-Regra: Repetir o CTA primário com linguagem levemente diferente. Reduzir fricção máxima.
-
-SEÇÃO 7 — FOOTER MÍNIMO
-Job: Credibilidade e conformidade legal
-Elementos: Logo + links legais + CNPJ + copyright
-```
+1. **HTML + Tailwind CSS** completo, responsivo, single-file, pronto para publicar
+2. **Arquivo Figma** editável criado via MCP com frames Desktop (1440px) + Mobile (390px)
 
 ---
 
-## Passo 3 — Gerar o HTML
+## Etapa 1 — Briefing
 
-Gere o HTML completo seguindo estas regras:
+Se vier após um `/briefing`, use o contexto já analisado e pule direto para a Etapa 2.
 
-### Regras técnicas
-- Use **Tailwind CSS via CDN** (sem build step) para máxima compatibilidade
-- HTML semântico: `<section>`, `<header>`, `<main>`, `<footer>`
-- **Mobile-first** — todas as seções responsivas com breakpoint `md:` e `lg:`
-- Fonte via Google Fonts no `<head>`
-- Cores da marca como variáveis CSS no `:root`
-- Imagens com `alt` descritivo para SEO
-- CTA buttons com `id="cta-[secao]"` para tracking
+Se não houver contexto, pergunte agrupado em uma mensagem só:
 
-### Regras de conversão no código
-- Headline hero em `text-4xl md:text-6xl font-bold` — nunca menor
-- CTA button com cor de contraste máximo (`bg-[cor-destaque]`)
-- Sticky CTA no mobile (fixed bottom bar com o botão principal)
-- Formulário com mínimo de campos (só o essencial para o objetivo)
-- Loading state no botão do formulário
-- `<meta>` tags de OG para preview bonito quando compartilhado
+> "Pra fazer uma página que não seja genérica, preciso de quatro coisas:
+> 1. **O quê + pra quem**: o que vendem e quem é o cliente ideal (1-2 linhas concretas)
+> 2. **Diferencial real**: o que fazem diferente dos concorrentes — algo verificável, não 'qualidade' ou 'atendimento'
+> 3. **Ação desejada**: o que o visitante deve fazer (testar grátis, agendar, comprar, WhatsApp, orçamento…)
+> 4. **Identidade visual**: logo, cores, fontes? Alguma referência de site que gostam?"
 
-### Template base de estrutura HTML
+Se o briefing inicial já tem esses elementos, **pule a entrevista**. Faltando item não-crítico (foto de equipe, número exato de clientes), invente plausível e **liste no final como placeholder pra trocar**.
+
+---
+
+## Etapa 2 — Estrutura
+
+Toda LP tem este esqueleto obrigatório. Consulte `references/sections.md` para como escrever cada seção e diferenças entre produto vs serviço:
+
+1. **Navbar** (logo + 1-2 links âncora + CTA)
+2. **Hero** (headline + subheadline + CTA primário + visual)
+3. **Prova social / logos** (logos de clientes OU números reais OU rating/selo)
+4. **Features / benefícios** (3-6 blocos, formato depende do tipo)
+5. **Como funciona** (3 passos — nunca genéricos)
+6. **Depoimentos** (mínimo 3, com nome + cargo + empresa + citação específica)
+7. **FAQ** (5-7 perguntas que matam objeções reais do setor)
+8. **CTA final** (bloco destacado reforçando a ação)
+9. **Footer enxuto**
+
+**Adicione conforme o tipo:**
+- **SaaS/app**: bloco de demo/screenshot após o hero; Pricing antes do CTA final
+- **Produto físico**: galeria de closeups; especificações; frete; Pricing
+- **Agência/performance**: Cases/portfolio; Processo detalhado
+- **Consultoria/profissional**: Sobre/credenciais; Metodologia; Formulário no final
+- **Campanha de mídia paga**: Hero direto, seção de dor/problema, CTA sticky no mobile
+
+---
+
+## Etapa 3 — Copy primeiro, código depois
+
+Esta é a etapa onde 90% das LPs falham. Escreva **todo o copy em texto puro** antes de tocar em HTML.
+
+Para cada seção, rascunhe: headline, subheadline, bullets/copy de apoio, texto exato dos CTAs.
+
+Consulte `references/copywriting.md` para frameworks, fórmulas de headline e palavras banidas. Regras principais:
+- Específico > genérico (use números, prazos, nomes, nichos)
+- "Você" aparece mais que "nós"
+- Benefício antes da feature
+- Zero palavras banidas ("revolucionário", "transforme", "soluções", "leve ao próximo nível")
+- CTAs em primeira pessoa ou ação concreta ("Quero agendar diagnóstico", "Começar teste de 14 dias")
+
+**Teste de não-genérico**: releia cada headline — *um concorrente direto poderia copiar essa frase sem mudar nada?* Se sim, reescreva incorporando algo específico: uma feature real, um nicho, um número, um processo.
+
+---
+
+## Etapa 4 — Design distintivo
+
+Antes de escrever qualquer HTML, tome estas decisões. Consulte `references/design-rules.md` para paletas curadas por setor e combinações de fonte:
+
+1. **Paleta**: uma das paletas curadas por setor OU custom a partir das cores do logo. **Nunca** `blue-600`/`indigo-600` puros sem customizar.
+
+2. **Tipografia**: 1-2 fontes do Google Fonts. Combinações específicas por setor. SaaS técnico ≠ clínica premium ≠ agência criativa.
+
+3. **Layout do hero**:
+   - Produto visual (app, hardware, SaaS com UI bonita) → centered com mockup grande, ou split clássico
+   - Serviço premium (consultoria, clínica) → full-bleed com foto autêntica + overlay, ou centered tipográfico
+   - Agência criativa → tipografia gigante, layout assimétrico
+
+4. **Visual do hero**: nada de blob abstrato ou stock photo genérico. Opções válidas:
+   - Screenshot do produto dentro de mockup de browser/device
+   - Foto autêntica do serviço em execução
+   - Composição tipográfica sem imagem (válido para agências, consultorias premium)
+   - Grid de screenshots em bento layout
+
+5. **Ícones**: Lucide via CDN, escolha ícones que **conectam semanticamente** com a feature. Se não achar, use número grande estilizado.
+
+---
+
+## Etapa 5 — Implementar
+
+Stack: **HTML + Tailwind via CDN, single-file**. Sempre.
 
 ```html
 <!DOCTYPE html>
@@ -113,16 +120,25 @@ Gere o HTML completo seguindo estas regras:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="[DESCRIPTION]">
+  <title>[Título específico — produto/serviço + diferencial]</title>
+  <meta name="description" content="[150-160 chars com proposta de valor concreta]">
   <!-- OG Tags -->
   <meta property="og:title" content="[HEADLINE]">
   <meta property="og:description" content="[SUBHEADLINE]">
   <meta property="og:image" content="[HERO IMAGE URL]">
-  <title>[HEADLINE] | [MARCA]</title>
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Fonte -->
-  <link href="https://fonts.googleapis.com/css2?family=[FONTE]:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=[fonte-escolhida]&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { /* cores customizadas da paleta escolhida */ },
+          fontFamily: { /* fontes escolhidas */ }
+        }
+      }
+    }
+  </script>
   <style>
     :root {
       --cor-primaria: [HEX];
@@ -131,47 +147,22 @@ Gere o HTML completo seguindo estas regras:
       --cor-texto: [HEX];
       --fonte-principal: '[FONTE]', sans-serif;
     }
+    html { scroll-behavior: smooth; }
     body { font-family: var(--fonte-principal); }
     .btn-cta { background-color: var(--cor-destaque); }
     .btn-cta:hover { filter: brightness(1.1); }
   </style>
 </head>
-<body class="bg-white text-gray-900">
-
-  <!-- HERO -->
-  <section id="hero" class="min-h-screen flex items-center ...">
-    ...
-  </section>
-
-  <!-- DOR -->
-  <section id="dor" class="py-20 bg-gray-50 ...">
-    ...
-  </section>
-
-  <!-- SOLUÇÃO -->
-  <section id="solucao" class="py-20 ...">
-    ...
-  </section>
-
-  <!-- DIFERENCIAIS -->
-  <section id="diferenciais" class="py-20 bg-gray-50 ...">
-    ...
-  </section>
-
-  <!-- PROVA SOCIAL -->
-  <section id="prova-social" class="py-20 ...">
-    ...
-  </section>
-
-  <!-- CTA FINAL -->
-  <section id="cta-final" class="py-20 ...">
-    ...
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="py-8 border-t ...">
-    ...
-  </footer>
+<body>
+  <!-- Navbar -->
+  <!-- Hero -->
+  <!-- Prova Social -->
+  <!-- Features / Benefícios -->
+  <!-- Como Funciona -->
+  <!-- Depoimentos -->
+  <!-- FAQ -->
+  <!-- CTA Final -->
+  <!-- Footer -->
 
   <!-- STICKY CTA MOBILE -->
   <div class="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t p-4 shadow-lg z-50">
@@ -180,66 +171,68 @@ Gere o HTML completo seguindo estas regras:
     </a>
   </div>
 
+  <script>
+    lucide.createIcons();
+    // Toggle mobile menu
+    // Fade-in on scroll (IntersectionObserver)
+  </script>
 </body>
 </html>
 ```
 
-Preencha o template completo com o conteúdo real da campanha. Não entregue scaffold vazio — entregue código funcional.
+**Requisitos não-negociáveis:**
+- Mobile-first — toda seção funcionando em 375px
+- Navbar vira hamburger em mobile com toggle JS
+- CTA primário do hero é o elemento mais visível da primeira dobra
+- Smooth scroll nas âncoras de seção
+- Botão do formulário com loading state
+- Zero lorem ipsum, zero código comentado, zero `console.log`
+- Contraste WCAG AA no mínimo
 
 ---
 
-## Passo 4 — Criar no Figma via MCP
+## Etapa 6 — Criar no Figma via MCP
 
-Após gerar o HTML, crie o arquivo Figma usando as ferramentas MCP disponíveis:
-
-### Sequência de criação no Figma
+Após gerar o HTML, crie o arquivo Figma:
 
 1. **Criar novo arquivo** com `mcp__claude_ai_Figma__create_new_file`
    - Nome: `LP — [Nome da Campanha] — [Data]`
 
-2. **Gerar os frames** com `mcp__claude_ai_Figma__generate_diagram` ou via `mcp__claude_ai_Figma__use_figma`
-   - Frame Desktop: 1440px largura
-   - Frame Mobile: 390px largura
-   - Cada seção da LP em frame separado e nomeado
-
-3. **Estrutura de layers no Figma:**
+2. **Estrutura de layers:**
 ```
 LP — [Campanha]
 ├── 📱 Mobile (390px)
 │   ├── 01 Hero
-│   ├── 02 Dor
-│   ├── 03 Solução
-│   ├── 04 Diferenciais
-│   ├── 05 Prova Social
-│   ├── 06 CTA Final
-│   └── 07 Footer
+│   ├── 02 Prova Social
+│   ├── 03 Features
+│   ├── 04 Como Funciona
+│   ├── 05 Depoimentos
+│   ├── 06 FAQ
+│   ├── 07 CTA Final
+│   └── 08 Footer
 └── 🖥️ Desktop (1440px)
-    ├── 01 Hero
-    ├── 02 Dor
-    ├── 03 Solução
-    ├── 04 Diferenciais
-    ├── 05 Prova Social
-    ├── 06 CTA Final
-    └── 07 Footer
+    └── [mesma estrutura]
 ```
 
-4. **Reportar o link** do arquivo Figma criado para o André acessar diretamente
+3. **Reportar o link** do arquivo criado para acesso direto
 
 ---
 
-## Passo 5 — Entrega final
-
-Entregue nesta ordem:
+## Etapa 7 — Entrega final
 
 ```
 ✅ LP PRONTA — [Nome da Campanha]
 
-📄 HTML COMPLETO:
-[bloco de código HTML completo]
+📄 HTML: [bloco de código completo]
 
-🎨 FIGMA:
-Link: [URL do arquivo criado no Figma]
-Frames: Desktop (1440px) + Mobile (390px)
+🎨 FIGMA: [URL do arquivo criado]
+   Frames: Desktop (1440px) + Mobile (390px)
+
+📋 PLACEHOLDERS PARA TROCAR:
+[lista numerada e explícita de cada item que precisa ser substituído]
+
+💡 VARIANTES POSSÍVEIS:
+[1-2 alternativas que poderia fazer: versão dark, paleta alternativa, hero diferente, formulário embutido]
 
 📋 CHECKLIST PRÉ-PUBLICAÇÃO:
 [ ] Substituir imagens placeholder por assets reais
@@ -251,6 +244,26 @@ Frames: Desktop (1440px) + Mobile (390px)
 
 ---
 
-## Referências de LP de alta conversão
+## Arquivos de referência
 
-Veja exemplos de estrutura em [templates/estrutura-lp-b2b.md](templates/estrutura-lp-b2b.md) e [templates/estrutura-lp-consumo.md](templates/estrutura-lp-consumo.md).
+- `references/sections.md` — Como escrever cada seção + diferenças produto vs serviço. Consulte na Etapa 2.
+- `references/copywriting.md` — Frameworks, fórmulas de headline, palavras banidas, exemplos bons vs ruins. Consulte na Etapa 3.
+- `references/design-rules.md` — Paletas curadas por setor, combinações de fonte, layouts de hero, anti-padrões visuais. Consulte na Etapa 4.
+
+---
+
+## Anti-padrões absolutos
+
+Nunca, em nenhuma circunstância:
+
+- Lorem ipsum em qualquer lugar
+- Headlines do tipo "A solução completa para o seu negócio"
+- Hero com gradient roxo-azul + blob SVG
+- Depoimentos com citações vazias ("Excelente!", "Recomendo muito!")
+- Features: "Rápido / Seguro / Escalável" sem contexto
+- Ícones clichê (Zap/Shield/Rocket) desconectados
+- Navbar com 7 links de site institucional
+- Footer inchado com 5 colunas institucionais
+- Mais de 1 CTA primário competindo na primeira dobra
+- Cores `blue-600` puras do Tailwind sem customização
+- Inventar um setor/nicho quando o briefing foi raso — pergunte

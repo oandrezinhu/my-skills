@@ -63,10 +63,22 @@ Cria materiais **on e off** para campanhas pagas:
 | `/start` | `.claude/skills/start/SKILL.md` | **Ponto de entrada.** Orquestra as demandas e monta o plano de execução |
 | `/briefing` | `.claude/skills/briefing/SKILL.md` | Analisa briefing, diagnostica copy, define direção visual |
 | `/prompts` | `.claude/skills/prompts/SKILL.md` | Gera prompts para Freepik, Kling e ElevenLabs |
+| `/roteiro` | `.claude/skills/roteiro/SKILL.md` | Prompts cinematográficos para Sora, Veo, Runway, Kling, Pika, Luma — multi-cena com consistência visual |
 | `/referencias` | `.claude/skills/referencias/SKILL.md` | Sugere referências visuais de alta performance |
-| `/lp` | `.claude/skills/lp/SKILL.md` | Cria landing page (HTML/Tailwind + Figma) |
+| `/lp` | `.claude/skills/lp/SKILL.md` | Cria landing page (HTML/Tailwind + Figma) — sistema anti-genérico com paletas curadas |
 | `/formatos` | `.claude/skills/formatos/SKILL.md` | Desdobra conceito em todos os formatos da campanha |
 | `/identidade` | `.claude/skills/identidade/SKILL.md` | Extrai e documenta identidade visual do cliente |
+| `/design-system` | `.claude/skills/design-system/SKILL.md` | Cria design system completo (tokens, componentes, preview HTML, exporta para Figma) |
+
+### Quando usar qual skill de vídeo
+
+- `/prompts` → vídeos simples de campanha, 1-3 cenas, Kling ou ElevenLabs
+- `/roteiro` → projeto com múltiplas cenas, consistência entre takes, direção cinematográfica apurada, suporte a Sora/Veo/Runway
+
+### Quando usar qual skill de identidade/design
+
+- `/identidade` → cliente novo, extrair e documentar a identidade visual existente
+- `/design-system` → transformar identidade em sistema completo com tokens e componentes no Figma
 
 ### Templates de prompts disponíveis (usados pelo `/prompts`)
 
@@ -95,14 +107,20 @@ Cria materiais **on e off** para campanhas pagas:
 
 ## Status atual do projeto
 
-Fase: **melhoria das skills existentes**
+Fase: **expansão e melhoria das skills**
 Objetivo: tornar cada skill mais precisa, com outputs mais ricos e menos dependência de interação manual.
 
-Ordem de prioridade para melhoria:
+Skills novas adicionadas (abril 2026):
+- `/roteiro` — prompts cinematográficos para IAs de vídeo (Sora, Veo, Runway, Kling, Pika, Luma)
+- `/design-system` — design system completo com tokens, componentes e exportação Figma
+
+Skills melhoradas:
+- `/lp` — upgrade com sistema anti-genérico, copy-first, paletas curadas por setor, referências integradas
+
+Ordem de prioridade para próximas melhorias:
 1. `/referencias` — mais rasa, maior dor de tempo
 2. `/briefing` — falta template de saída padronizado e critérios de pontuação de copy
 3. `/prompts` — templates precisam estar embutidos na skill
 4. `/formatos` — falta spec técnica de exportação (DPI, bleed, perfil de cor)
 5. `/identidade` — falta fluxo para clientes sem material de marca
 6. `/start` — falta exemplos concretos de plano por tipo de demanda
-7. `/lp` — a mais completa, melhorias pontuais

@@ -99,6 +99,8 @@ Para prompts de vídeo (Kling):
 - Indique **ação do sujeito** com verbos precisos
 - Indique o **ritmo** (slow motion, normal speed, time lapse)
 
+> **Demanda cinematográfica?** Se o usuário pedir múltiplas cenas, consistência visual entre cenas, referências de diretores, ou qualidade de curta/filme, use `/roteiro` em vez desta skill. `/roteiro` é especializado em anatomia cinematográfica completa e suporte a Sora, Veo, Runway, Kling, Pika e Luma com direção de câmera apurada.
+
 Para voz (ElevenLabs):
 - Descreva **tom** (confiante, urgente, técnico, acolhedor)
 - Descreva **ritmo** (pausado, acelerado, conversacional)

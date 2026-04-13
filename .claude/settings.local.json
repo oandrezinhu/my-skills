@@ -9,7 +9,25 @@
       "Read(//c/Users/User/AppData/Roaming/Claude/**)",
       "Read(//c/Users/User/**)",
       "Bash(python3 -c ':*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Read(//g/Meu Drive/SSD EXTERNO/V4 COLLI/SKILLS//**)",
+      "Read(//g/Meu Drive/SSD EXTERNO/V4 COLLI/SKILLS/**)",
+      "Bash(mkdir -p /tmp/skills-import)",
+      "Read(//tmp/**)",
+      "Bash(cp \"G:/Meu Drive/SSD EXTERNO/V4 COLLI/SKILLS/design-system-pro.skill\" .)",
+      "Bash(cp \"G:/Meu Drive/SSD EXTERNO/V4 COLLI/SKILLS/landing-page-generator.skill\" .)",
+      "Bash(cp \"G:/Meu Drive/SSD EXTERNO/V4 COLLI/SKILLS/roteirista-cinema-video.skill\" .)",
+      "Bash(unzip -o design-system-pro.skill -d design-system-pro)",
+      "Bash(unzip -o landing-page-generator.skill -d landing-page-generator)",
+      "Bash(unzip -o roteirista-cinema-video.skill -d roteirista-cinema-video)",
+      "Bash(mkdir -p /c/Users/User/my-skills/.claude/skills/design-system/references)",
+      "Bash(mkdir -p /c/Users/User/my-skills/.claude/skills/roteiro)",
+      "Bash(mkdir -p /c/Users/User/my-skills/.claude/skills/lp/references)",
+      "Bash(cp \"/tmp/skills-import/design-system-pro/design-system-pro/references/globals-template.md\" /c/Users/User/my-skills/.claude/skills/design-system/references/)",
+      "Bash(cp \"/tmp/skills-import/design-system-pro/design-system-pro/references/figma-export.md\" /c/Users/User/my-skills/.claude/skills/design-system/references/)",
+      "Bash(cp \"/tmp/skills-import/design-system-pro/design-system-pro/references/styleguide-layout.md\" /c/Users/User/my-skills/.claude/skills/design-system/references/)",
+      "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/copywriting.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)",
+      "Bash(cp \"/tmp/skills-import/landing-page-generator/landing-page-generator/references/sections.md\" /c/Users/User/my-skills/.claude/skills/lp/references/)"
     ]
   }
 }
