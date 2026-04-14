@@ -888,30 +888,70 @@ table.plan tr:hover td{background:rgba(255,255,255,.02);}
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-  CLOSING
+  MOCKUP — DESKTOP (BROWSER + SCROLL)
 ══════════════════════════════════════════════════════ -->
-<div class="slide s-capa">
-  <div class="noise"></div>
-  <div class="glow" style="background:radial-gradient(circle,rgba(34,197,94,.1) 0%,transparent 65%);"></div>
-  <div style="position:relative;z-index:2;text-align:center;max-width:760px;padding:0 40px;">
-    <div class="pill green" style="margin-bottom:28px;">Próximos Passos</div>
-    <h1 class="hero" style="font-size:52px;margin-bottom:20px;">O problema está<br>diagnosticado.<br><span style="color:#22c55e;">A solução tem 45 dias.</span></h1>
-    <p class="lead" style="margin:0 auto 40px;text-align:center;font-size:16px;">Cada semana sem ação é mais uma semana com 80% dos usuários mobile nunca chegando nos produtos, e 61% dos carrinhos sendo abandonados sem recuperação.</p>
-    <div style="display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto;">
-      <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;text-align:left;">
-        <span style="font-size:20px;flex-shrink:0;">⚡</span>
-        <span style="font-size:14px;color:#94a3b8;"><strong style="color:#f1f5f9;">Esta semana:</strong> Cloudflare + WebP nas categorias principais</span>
+<div class="slide" style="background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 48px;gap:16px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="eyebrow green" style="margin:0;">Preview · Desktop</div>
+    <span style="font-size:11px;color:#334155;font-weight:600;letter-spacing:.08em;">domsuprimentosindustriais.com.br</span>
+  </div>
+  <!-- Browser frame -->
+  <div style="width:100%;max-width:1100px;height:calc(100vh - 120px);background:#1e2028;border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.7);display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.07);">
+    <!-- Chrome bar -->
+    <div style="background:#2a2c35;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06);">
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <div style="width:11px;height:11px;border-radius:50%;background:#ff5f56;"></div>
+        <div style="width:11px;height:11px;border-radius:50%;background:#ffbd2e;"></div>
+        <div style="width:11px;height:11px;border-radius:50%;background:#27c93f;"></div>
       </div>
-      <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;text-align:left;">
-        <span style="font-size:20px;flex-shrink:0;">🎯</span>
-        <span style="font-size:14px;color:#94a3b8;"><strong style="color:#f1f5f9;">Semana 3–4:</strong> Novo hero mobile + CTA de orçamento nos produtos</span>
+      <div style="flex:1;background:#1a1c22;border-radius:6px;padding:5px 14px;font-size:12px;color:#475569;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+        🔒 domsuprimentosindustriais.com.br
       </div>
-      <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;text-align:left;">
-        <span style="font-size:20px;flex-shrink:0;">📈</span>
-        <span style="font-size:14px;color:#94a3b8;"><strong style="color:#f1f5f9;">Semana 5–7:</strong> Campanhas reativadas com base saneada</span>
+      <div style="display:flex;gap:14px;flex-shrink:0;">
+        <div style="width:16px;height:16px;border-radius:2px;background:rgba(255,255,255,.06);"></div>
+        <div style="width:16px;height:16px;border-radius:2px;background:rgba(255,255,255,.06);"></div>
+        <div style="width:16px;height:16px;border-radius:2px;background:rgba(255,255,255,.06);"></div>
       </div>
     </div>
-    <p style="font-size:12px;color:#1e293b;margin-top:36px;">D.O.M Suprimentos Industriais · Análise Clarity · Abril 2026</p>
+    <!-- Scrollable page -->
+    <div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent;">
+      <img src="img-analise/🖥 Desktop — 1440px.png" alt="Nova Home Desktop" style="width:100%;display:block;">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  MOCKUP — MOBILE (PHONE + SCROLL)
+══════════════════════════════════════════════════════ -->
+<div class="slide" style="background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 48px;gap:16px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="eyebrow green" style="margin:0;">Preview · Mobile</div>
+    <span style="font-size:11px;color:#334155;font-weight:600;letter-spacing:.08em;">domsuprimentosindustriais.com.br</span>
+  </div>
+  <!-- Phone frame -->
+  <div style="position:relative;width:320px;height:calc(100vh - 120px);background:#111;border-radius:48px;border:8px solid #2a2a2a;box-shadow:0 32px 80px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;">
+    <!-- Notch -->
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:110px;height:30px;background:#111;border-radius:0 0 22px 22px;z-index:20;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#222;"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#1a1a1a;border:1px solid #2a2a2a;"></div>
+    </div>
+    <!-- Status bar -->
+    <div style="height:38px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;padding:0 20px 6px;font-size:11px;font-weight:600;color:#fff;font-family:'Inter',sans-serif;background:#111;z-index:10;">
+      <span>9:41</span>
+      <div style="display:flex;gap:5px;align-items:center;">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><rect x="0" y="3" width="3" height="7" rx="1" fill="white" opacity=".4"/><rect x="4" y="2" width="3" height="8" rx="1" fill="white" opacity=".6"/><rect x="8" y="0" width="3" height="10" rx="1" fill="white" opacity=".8"/><rect x="12" y="0" width="2" height="10" rx="1" fill="white"/></svg>
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="white" opacity=".8"><path d="M6 2C8.2 2 10.1 3 11.4 4.5L12 3.8C10.5 2.1 8.4 1 6 1C3.6 1 1.5 2.1 0 3.8L0.6 4.5C1.9 3 3.8 2 6 2ZM6 4C7.5 4 8.9 4.6 9.9 5.7L10.5 5C9.3 3.8 7.7 3 6 3C4.3 3 2.7 3.8 1.5 5L2.1 5.7C3.1 4.6 4.5 4 6 4ZM6 6C6.9 6 7.8 6.4 8.4 7L9 6.3C8.2 5.5 7.2 5 6 5C4.8 5 3.8 5.5 3 6.3L3.6 7C4.2 6.4 5.1 6 6 6ZM6 8C6.6 8 7 8.4 7 9H5C5 8.4 5.4 8 6 8Z"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3.5" stroke="white" stroke-opacity=".35"/><rect x="2" y="2" width="15" height="8" rx="2" fill="white"/><path d="M22 4.5V7.5C22.8 7.2 23.5 6.5 23.5 6C23.5 5.5 22.8 4.8 22 4.5Z" fill="white" opacity=".4"/></svg>
+      </div>
+    </div>
+    <!-- Scrollable content -->
+    <div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;">
+      <img src="img-analise/📱 Mobile — 390px.png" alt="Nova Home Mobile" style="width:100%;display:block;">
+    </div>
+    <!-- Home indicator -->
+    <div style="height:28px;background:#111;flex-shrink:0;display:flex;align-items:center;justify-content:center;z-index:10;">
+      <div style="width:90px;height:4px;background:rgba(255,255,255,.25);border-radius:2px;"></div>
+    </div>
   </div>
 </div>
 
