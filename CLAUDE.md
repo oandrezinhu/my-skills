@@ -79,6 +79,7 @@ Cria materiais **on e off** para campanhas pagas:
 | `/roteiro` | `.claude/skills/Designer/roteiro/SKILL.md` | Prompts cinematográficos para Sora, Veo, Runway, Kling, Pika, Luma — multi-cena com consistência visual |
 | `/formatos` | `.claude/skills/Designer/formatos/SKILL.md` | Desdobra conceito em todos os formatos da campanha |
 | `/lp` | `.claude/skills/Designer/lp/SKILL.md` | Cria landing page (HTML/Tailwind + Figma) — sistema anti-genérico com paletas curadas |
+| `/greatpages` | `.claude/skills/Designer/greatpages/SKILL.md` | Converte HTML do `/lp` para bloco compatível com o GreatPages (remove CDN, converte Tailwind, escopa CSS/JS) |
 | `/identidade` | `.claude/skills/Designer/identidade/SKILL.md` | Extrai e documenta identidade visual do cliente |
 | `/design-system` | `.claude/skills/Designer/design-system/SKILL.md` | Cria design system completo (tokens, componentes, preview HTML, exporta para Figma) |
 | `/figma-designer` | `.claude/skills/Designer/figma-designer/SKILL.md` | Regras e padrões para criação de layouts Figma via Plugin API — texto que preenche, sem overflow |
@@ -112,6 +113,7 @@ Cria materiais **on e off** para campanhas pagas:
     ├── roteiro/         ← roteiros cinematográficos para IA de vídeo
     ├── formatos/        ← desdobramento por formato
     ├── lp/              ← landing pages HTML/Tailwind
+    ├── greatpages/      ← conversor HTML → bloco GreatPages
     ├── identidade/      ← extração de identidade visual
     ├── design-system/   ← design system completo
     └── figma-designer/  ← regras e código para layouts no Figma

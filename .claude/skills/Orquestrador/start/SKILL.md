@@ -33,6 +33,7 @@ Exemplos:
 | Geração de prompts | `/prompts` | Precisa gerar assets — cria prompts prontos para Freepik, Kling e ElevenLabs |
 | Referências visuais | `/referencias` | Precisa de norte criativo — sugere padrões e referências que performam no segmento |
 | Landing page | `/lp` | Precisa de LP — gera HTML completo e arquivo Figma editável |
+| Converter para GreatPages | `/greatpages` | Tem HTML do `/lp` e precisa publicar no GreatPages — converte para bloco compatível |
 | Desdobramento de formatos | `/formatos` | Tem o conceito criativo — adapta para feed, stories, outdoor, folder, banner |
 | Identidade visual | `/identidade` | Cliente novo ou sem guia de identidade — extrai e documenta o sistema visual |
 
