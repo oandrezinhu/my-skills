@@ -54,7 +54,12 @@
       "Bash(cp \"G:\\\\Meu Drive\\\\SSD EXTERNO\\\\V4 COLLI\\\\D.O.M\\\\2026\\\\ABRIL\\\\1\\\\Clarity_D.O.M_Scroll-PC_04-14-2026 10 15.png\" \"c:\\\\Users\\\\User\\\\my-skills\\\\.claude\\\\skills\\\\Analytics\\\\clarity\\\\img-analise\\\\scroll-pc.png\")",
       "Bash(cp \"G:\\\\Meu Drive\\\\SSD EXTERNO\\\\V4 COLLI\\\\D.O.M\\\\2026\\\\ABRIL\\\\1\\\\Clarity_D.O.M_Toque-Celular_04-14-2026 10 12.png\" \"c:\\\\Users\\\\User\\\\my-skills\\\\.claude\\\\skills\\\\Analytics\\\\clarity\\\\img-analise\\\\toque-mobile.png\")",
       "Bash(cp \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise/Captura de tela 2026-04-14 105116.png\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise/pagespeed-mobile.png\")",
-      "Bash(cp \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise/Captura de tela 2026-04-14 105143.png\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise/pagespeed-desktop.png\")"
+      "Bash(cp \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise/Captura de tela 2026-04-14 105143.png\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise/pagespeed-desktop.png\")",
+      "Bash(mkdir -p \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/DOM\")",
+      "Bash(mv \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/Clarity_D.O.M_Painel_04-14-2026 08 53.csv\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/DOM/\")",
+      "Bash(mv \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/relatorio-dom-abril-2026.html\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/DOM/\")",
+      "Bash(mv \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/apresentacao-dom-abril-2026.html\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/DOM/\")",
+      "Bash(mv \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/img-analise\" \"/c/Users/User/my-skills/.claude/skills/Analytics/clarity/DOM/\")"
     ]
   }
 }
