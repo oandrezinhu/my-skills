@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D.O.M Suprimentos Industriais</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   { DEFAULT: '#1e7e34', light: '#28a745', dark: '#155724', xdark: '#0d3b17' },
+            accent:    { DEFAULT: '#f59e0b', dark: '#d97706' },
+          },
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Scrollbar thin */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #28a745; border-radius: 3px; }
+
+    /* Search glow */
+    .search-input:focus { box-shadow: 0 0 0 3px rgba(30,126,52,.2); }
+
+    /* Product card hover */
+    .product-card { transition: transform .2s ease, box-shadow .2s ease; }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+
+    /* Category card */
+    .cat-card { transition: transform .2s ease, box-shadow .2s ease; }
+    .cat-card:hover { transform: translateY(-2px); }
+
+    /* Floating CTA pulse */
+    .float-pulse { animation: floatPulse 2.5s ease-in-out infinite; }
+    @keyframes floatPulse { 0%,100%{box-shadow:0 4px 20px rgba(30,126,52,.5)} 50%{box-shadow:0 4px 32px rgba(30,126,52,.8)} }
+
+    /* Sticky header shadow on scroll */
+    .header-shadow { box-shadow: 0 2px 16px rgba(0,0,0,.12); }
+
+    /* Announcement marquee */
+    .marquee { animation: marquee 22s linear infinite; }
+    @keyframes marquee { 0%{transform:translateX(100%)} 100%{transform:translateX(-100%)} }
+
+    /* Mobile menu */
+    #mobile-menu { transition: transform .3s ease, opacity .3s ease; }
+    #mobile-menu.closed { transform: translateX(-100%); opacity: 0; pointer-events: none; }
+    #mobile-menu.open { transform: translateX(0); opacity: 1; pointer-events: all; }
+
+    /* Bottom nav mobile */
+    @media(max-width:767px){
+      body { padding-bottom: 64px; }
+    }
+
+    /* Image placeholder */
+    .img-placeholder {
+      background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 50%, #e2e8f0 100%);
+      background-size: 200% 200%;
+      animation: shimmer 1.8s ease infinite;
+    }
+    @keyframes shimmer { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    /* Orçamento modal */
+    #orcamento-modal { transition: opacity .25s ease; }
+    #orcamento-modal.hidden { pointer-events: none; }
+
+    /* Counter animation */
+    .counter-num { transition: all .3s; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+
+<!-- ══════════════════════════════════════════
+  ANNOUNCEMENT BAR
+══════════════════════════════════════════ -->
+<div class="bg-primary-dark text-white text-xs py-2 overflow-hidden relative">
+  <div class="marquee whitespace-nowrap">
+    🚚&nbsp; Frete Grátis acima de R$&nbsp;100,00 &nbsp;·&nbsp;
+    💳&nbsp; Parcelamento em até 12x sem juros &nbsp;·&nbsp;
+    ⚡&nbsp; Entrega rápida para todo o Brasil &nbsp;·&nbsp;
+    🔒&nbsp; Compra 100% segura &nbsp;·&nbsp;
+    📞&nbsp; Atendimento especializado para indústrias &nbsp;·&nbsp;
+    🚚&nbsp; Frete Grátis acima de R$&nbsp;100,00 &nbsp;·&nbsp;
+    💳&nbsp; Parcelamento em até 12x sem juros &nbsp;·&nbsp;
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  HEADER
+══════════════════════════════════════════ -->
+<header id="main-header" class="bg-primary sticky top-0 z-50 transition-shadow duration-200">
+
+  <!-- ROW 1: Logo + Search + Cart -->
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+
+    <!-- Hamburger (mobile) -->
+    <button id="menu-btn" class="md:hidden text-white p-1 flex-shrink-0" aria-label="Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Logo -->
+    <a href="/" class="flex-shrink-0 flex items-center gap-2">
+      <div class="bg-white rounded-lg px-3 py-1.5 leading-none">
+        <span class="text-primary font-black text-xl tracking-tight">D.O.M</span>
+      </div>
+      <span class="hidden sm:block text-white/70 text-xs font-medium leading-tight">Suprimentos<br>Industriais</span>
+    </a>
+
+    <!-- Search Bar -->
+    <div class="flex-1 relative">
+      <input
+        type="search"
+        id="main-search"
+        placeholder="Busque por código, medida ou aplicação..."
+        class="search-input w-full rounded-xl bg-white text-gray-800 placeholder-gray-400 text-sm px-4 py-2.5 pr-12 outline-none border-2 border-transparent focus:border-primary-light transition-all"
+        autocomplete="off"
+      />
+      <button class="absolute right-1 top-1 bottom-1 bg-primary-light hover:bg-primary text-white px-3 rounded-lg transition-colors" aria-label="Buscar">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Cart + Contact (desktop) -->
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <button
+        onclick="openOrcamento()"
+        class="hidden md:flex items-center gap-2 bg-accent hover:bg-accent-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Pedir Orçamento
+      </button>
+      <a href="/carrinho" class="relative text-white p-2" aria-label="Carrinho">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <span class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ROW 2: Category Nav (desktop only) -->
+  <nav class="hidden md:block border-t border-primary-light/30">
+    <div class="max-w-7xl mx-auto px-4">
+      <ul class="flex items-center gap-0 text-sm font-medium text-white/90">
+        <li><a href="/aneis-de-vedacao" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Anéis de Vedação</a></li>
+        <li><a href="/retentores-industriais" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Retentores</a></li>
+        <li><a href="/gaxetas-industriais" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Gaxetas</a></li>
+        <li><a href="/adesivos-e-selantes" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Adesivos e Selantes</a></li>
+        <li><a href="/tintas-industriais" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Tintas Industriais</a></li>
+        <li><a href="/redutores" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Redutores</a></li>
+        <li><a href="/aerossois" class="block px-4 py-2.5 hover:bg-primary-light/20 hover:text-white transition-colors border-b-2 border-transparent hover:border-white/60">Aerossóis</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+<!-- ══════════════════════════════════════════
+  MOBILE MENU DRAWER
+══════════════════════════════════════════ -->
+<div id="mobile-menu" class="closed fixed inset-0 z-40 flex">
+  <div class="w-72 max-w-[85vw] bg-white h-full flex flex-col shadow-2xl overflow-y-auto">
+    <div class="bg-primary p-4 flex items-center justify-between">
+      <span class="text-white font-black text-xl">D.O.M</span>
+      <button id="menu-close" class="text-white/80 hover:text-white p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="flex-1 py-2">
+      <a href="/aneis-de-vedacao" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">⭕</span> Anéis de Vedação
+      </a>
+      <a href="/retentores-industriais" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">🔩</span> Retentores Industriais
+      </a>
+      <a href="/gaxetas-industriais" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">🔧</span> Gaxetas Industriais
+      </a>
+      <a href="/adesivos-e-selantes" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">🧴</span> Adesivos e Selantes
+      </a>
+      <a href="/tintas-industriais" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">🎨</span> Tintas Industriais
+      </a>
+      <a href="/redutores" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">⚙️</span> Redutores
+      </a>
+      <a href="/aerossois" class="flex items-center gap-3 px-5 py-3.5 text-gray-700 hover:bg-green-50 hover:text-primary font-medium border-b border-gray-100">
+        <span class="text-xl">💨</span> Aerossóis
+      </a>
+    </nav>
+    <div class="p-4 border-t border-gray-100">
+      <button onclick="openOrcamento()" class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-3 rounded-xl text-sm transition-colors">
+        Solicitar Orçamento
+      </button>
+    </div>
+  </div>
+  <div id="menu-overlay" class="flex-1 bg-black/50 backdrop-blur-sm"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  HERO — MOBILE FIRST, CATEGORIA EM DESTAQUE
+══════════════════════════════════════════ -->
+<section class="bg-gradient-to-br from-primary-xdark via-primary-dark to-primary text-white overflow-hidden relative">
+
+  <!-- Background texture -->
+  <div class="absolute inset-0 opacity-5" style="background-image:url('data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><g fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;><circle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;1.5&quot; fill=&quot;white&quot;/></g></svg>');background-size:30px 30px;"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 py-10 md:py-16">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+
+      <!-- TEXT SIDE -->
+      <div>
+        <span class="inline-block bg-accent/20 border border-accent/40 text-accent text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wide uppercase">
+          Suprimentos Industriais
+        </span>
+        <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4">
+          Vedações e fixações<br>
+          <span class="text-accent">para a sua indústria.</span>
+        </h1>
+        <p class="text-white/70 text-base md:text-lg mb-8 max-w-md leading-relaxed">
+          Mais de 8.000 produtos em estoque. Entrega rápida para todo o Brasil. Atendimento especializado para compradores industriais.
+        </p>
+
+        <!-- Search prominent no hero (mobile) -->
+        <div class="relative mb-6 md:hidden">
+          <input
+            type="search"
+            placeholder="Busque por código, medida ou produto..."
+            class="w-full rounded-xl bg-white text-gray-800 placeholder-gray-400 text-sm px-4 py-3.5 pr-14 outline-none shadow-lg"
+          />
+          <button class="absolute right-1 top-1 bottom-1 bg-primary text-white px-4 rounded-lg font-semibold text-sm">
+            Buscar
+          </button>
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/aneis-de-vedacao" class="bg-white text-primary hover:bg-gray-50 font-bold px-6 py-3.5 rounded-xl text-center text-sm transition-colors shadow-lg">
+            Ver Anéis de Vedação →
+          </a>
+          <button onclick="openOrcamento()" class="bg-accent hover:bg-accent-dark text-white font-bold px-6 py-3.5 rounded-xl text-center text-sm transition-colors">
+            Solicitar Orçamento
+          </button>
+        </div>
+      </div>
+
+      <!-- CATEGORY QUICK-ACCESS (desktop + mobile stacked) -->
+      <div class="grid grid-cols-3 gap-3">
+        <a href="/aneis-de-vedacao" class="cat-card bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl p-4 text-center cursor-pointer block">
+          <div class="text-3xl mb-2">⭕</div>
+          <div class="text-white font-semibold text-xs leading-tight">Anéis de<br>Vedação</div>
+          <div class="text-white/50 text-xs mt-1">+ acessado</div>
+        </a>
+        <a href="/retentores-industriais" class="cat-card bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl p-4 text-center cursor-pointer block">
+          <div class="text-3xl mb-2">🔩</div>
+          <div class="text-white font-semibold text-xs leading-tight">Retentores<br>Industriais</div>
+        </a>
+        <a href="/gaxetas-industriais" class="cat-card bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl p-4 text-center cursor-pointer block">
+          <div class="text-3xl mb-2">🔧</div>
+          <div class="text-white font-semibold text-xs leading-tight">Gaxetas<br>Industriais</div>
+        </a>
+        <a href="/adesivos-e-selantes" class="cat-card bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl p-4 text-center cursor-pointer block">
+          <div class="text-3xl mb-2">🧴</div>
+          <div class="text-white font-semibold text-xs leading-tight">Adesivos e<br>Selantes</div>
+        </a>
+        <a href="/tintas-industriais" class="cat-card bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl p-4 text-center cursor-pointer block">
+          <div class="text-3xl mb-2">🎨</div>
+          <div class="text-white font-semibold text-xs leading-tight">Tintas<br>Industriais</div>
+        </a>
+        <a href="/redutores" class="cat-card bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl p-4 text-center cursor-pointer block">
+          <div class="text-3xl mb-2">⚙️</div>
+          <div class="text-white font-semibold text-xs leading-tight">Redutores</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  BENEFITS BAR
+══════════════════════════════════════════ -->
+<section class="bg-white border-b border-gray-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 py-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 text-xl">🚚</div>
+        <div>
+          <div class="text-xs font-bold text-gray-800">Frete Grátis</div>
+          <div class="text-xs text-gray-500">Acima de R$&nbsp;100,00</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 text-xl">💳</div>
+        <div>
+          <div class="text-xs font-bold text-gray-800">Parcele em 12x</div>
+          <div class="text-xs text-gray-500">Sem juros no cartão</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 text-xl">🔒</div>
+        <div>
+          <div class="text-xs font-bold text-gray-800">Compra Segura</div>
+          <div class="text-xs text-gray-500">Ambiente 100% seguro</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0 text-xl">⚡</div>
+        <div>
+          <div class="text-xs font-bold text-gray-800">Entrega Rápida</div>
+          <div class="text-xs text-gray-500">Para todo o Brasil</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  MAIS BUSCADOS — dados do Clarity
+══════════════════════════════════════════ -->
+<section class="py-10 md:py-14 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <div class="flex items-end justify-between mb-6">
+      <div>
+        <span class="text-xs font-bold text-primary uppercase tracking-wider">Baseado nos dados de acesso</span>
+        <h2 class="text-2xl md:text-3xl font-black text-gray-900 mt-1">Mais Buscados</h2>
+      </div>
+      <a href="/produtos" class="text-primary font-semibold text-sm hover:underline hidden sm:block">Ver todos →</a>
+    </div>
+
+    <!-- GRID — 2 col mobile, 4 col desktop -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+      <!-- PRODUTO 1 -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder aspect-square w-full relative">
+          <span class="absolute top-2 left-2 bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full">+ Buscado</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-xs text-gray-400 mb-1">Kit O-Ring</p>
+          <h3 class="font-bold text-gray-800 text-sm leading-snug mb-2 flex-1">Kit O-Ring Viton 70 Alta Temperatura — Milímetro/Polegadas</h3>
+          <div class="mb-3">
+            <span class="text-xs text-gray-400 line-through">R$&nbsp;89,90</span>
+            <div class="text-primary font-black text-lg">R$&nbsp;74,90</div>
+            <span class="text-xs text-gray-500">ou 12x de R$&nbsp;6,24</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
+              Comprar
+            </button>
+            <button onclick="openOrcamento()" class="w-full border-2 border-primary text-primary hover:bg-green-50 font-semibold py-2 rounded-xl text-xs transition-colors">
+              Pedir Orçamento
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUTO 2 -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder aspect-square w-full"></div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-xs text-gray-400 mb-1">Medição</p>
+          <h3 class="font-bold text-gray-800 text-sm leading-snug mb-2 flex-1">Medidor de O-Ring STD Cone e Escala</h3>
+          <div class="mb-3">
+            <div class="text-primary font-black text-lg">R$&nbsp;34,90</div>
+            <span class="text-xs text-gray-500">ou 3x de R$&nbsp;11,63</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
+              Comprar
+            </button>
+            <button onclick="openOrcamento()" class="w-full border-2 border-primary text-primary hover:bg-green-50 font-semibold py-2 rounded-xl text-xs transition-colors">
+              Pedir Orçamento
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUTO 3 -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder aspect-square w-full"></div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-xs text-gray-400 mb-1">Gaxeta</p>
+          <h3 class="font-bold text-gray-800 text-sm leading-snug mb-2 flex-1">Gaxeta Vedação Cafeteira Dolce Gusto — Anel de Borracha</h3>
+          <div class="mb-3">
+            <div class="text-primary font-black text-lg">R$&nbsp;12,90</div>
+            <span class="text-xs text-gray-500">ou 2x de R$&nbsp;6,45</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
+              Comprar
+            </button>
+            <button onclick="openOrcamento()" class="w-full border-2 border-primary text-primary hover:bg-green-50 font-semibold py-2 rounded-xl text-xs transition-colors">
+              Pedir Orçamento
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUTO 4 -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder aspect-square w-full"></div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-xs text-gray-400 mb-1">Redutor</p>
+          <h3 class="font-bold text-gray-800 text-sm leading-snug mb-2 flex-1">Redutor de Velocidade ERM-40 para Motor 0,5cv — Eixo 18mm</h3>
+          <div class="mb-3">
+            <div class="text-primary font-black text-lg">R$&nbsp;289,90</div>
+            <span class="text-xs text-gray-500">ou 12x de R$&nbsp;24,15</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
+              Comprar
+            </button>
+            <button onclick="openOrcamento()" class="w-full border-2 border-primary text-primary hover:bg-green-50 font-semibold py-2 rounded-xl text-xs transition-colors">
+              Pedir Orçamento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="/produtos" class="block sm:hidden text-center text-primary font-semibold text-sm mt-6 hover:underline">Ver todos os produtos →</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  B2B ORÇAMENTO BANNER — CTA PRINCIPAL
+══════════════════════════════════════════ -->
+<section class="bg-gradient-to-r from-primary-xdark to-primary py-10 md:py-14 relative overflow-hidden">
+  <div class="absolute right-0 top-0 bottom-0 w-64 opacity-5 hidden md:block" style="background:url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;><circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;white&quot; stroke-width=&quot;8&quot; fill=&quot;none&quot;/></svg>') center/cover;"></div>
+
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+
+      <div class="text-center md:text-left">
+        <span class="inline-block bg-accent/20 border border-accent/40 text-accent text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wide">
+          Para compradores industriais
+        </span>
+        <h2 class="text-2xl md:text-4xl font-black text-white mb-3">
+          Compra em volume?<br>
+          <span class="text-accent">Solicite seu orçamento.</span>
+        </h2>
+        <p class="text-white/70 text-sm md:text-base max-w-md leading-relaxed">
+          Atendimento especializado, condições exclusivas e prazo de entrega prioritário para indústrias e revendedores.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3 w-full md:w-auto">
+        <button
+          onclick="openOrcamento()"
+          class="float-pulse bg-accent hover:bg-accent-dark text-white font-black text-base px-10 py-4 rounded-2xl transition-colors shadow-xl whitespace-nowrap"
+        >
+          Solicitar Orçamento Agora →
+        </button>
+        <p class="text-white/50 text-xs text-center">Resposta em até 24h úteis · Sem compromisso</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  NAVEGUE POR CATEGORIA
+══════════════════════════════════════════ -->
+<section class="py-10 md:py-14 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-8 text-center md:text-left">Navegue por Categoria</h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+      <a href="/aneis-de-vedacao" class="cat-card group flex flex-col items-center gap-3 p-5 bg-gray-50 hover:bg-green-50 rounded-2xl border border-gray-100 hover:border-primary/30 text-center">
+        <div class="text-4xl group-hover:scale-110 transition-transform">⭕</div>
+        <div class="text-sm font-semibold text-gray-700 group-hover:text-primary leading-tight">Anéis de Vedação</div>
+      </a>
+      <a href="/retentores-industriais" class="cat-card group flex flex-col items-center gap-3 p-5 bg-gray-50 hover:bg-green-50 rounded-2xl border border-gray-100 hover:border-primary/30 text-center">
+        <div class="text-4xl group-hover:scale-110 transition-transform">🔩</div>
+        <div class="text-sm font-semibold text-gray-700 group-hover:text-primary leading-tight">Retentores</div>
+      </a>
+      <a href="/gaxetas-industriais" class="cat-card group flex flex-col items-center gap-3 p-5 bg-gray-50 hover:bg-green-50 rounded-2xl border border-gray-100 hover:border-primary/30 text-center">
+        <div class="text-4xl group-hover:scale-110 transition-transform">🔧</div>
+        <div class="text-sm font-semibold text-gray-700 group-hover:text-primary leading-tight">Gaxetas</div>
+      </a>
+      <a href="/adesivos-e-selantes" class="cat-card group flex flex-col items-center gap-3 p-5 bg-gray-50 hover:bg-green-50 rounded-2xl border border-gray-100 hover:border-primary/30 text-center">
+        <div class="text-4xl group-hover:scale-110 transition-transform">🧴</div>
+        <div class="text-sm font-semibold text-gray-700 group-hover:text-primary leading-tight">Adesivos e Selantes</div>
+      </a>
+      <a href="/tintas-industriais" class="cat-card group flex flex-col items-center gap-3 p-5 bg-gray-50 hover:bg-green-50 rounded-2xl border border-gray-100 hover:border-primary/30 text-center">
+        <div class="text-4xl group-hover:scale-110 transition-transform">🎨</div>
+        <div class="text-sm font-semibold text-gray-700 group-hover:text-primary leading-tight">Tintas Industriais</div>
+      </a>
+      <a href="/redutores" class="cat-card group flex flex-col items-center gap-3 p-5 bg-gray-50 hover:bg-green-50 rounded-2xl border border-gray-100 hover:border-primary/30 text-center">
+        <div class="text-4xl group-hover:scale-110 transition-transform">⚙️</div>
+        <div class="text-sm font-semibold text-gray-700 group-hover:text-primary leading-tight">Redutores</div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  SOCIAL PROOF — NÚMEROS DA EMPRESA
+══════════════════════════════════════════ -->
+<section class="bg-primary py-10 md:py-12 text-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-4xl md:text-5xl font-black text-accent mb-1" data-count="15">15+</div>
+        <div class="text-sm font-medium text-white/70">Anos no mercado</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-black text-accent mb-1">8.000+</div>
+        <div class="text-sm font-medium text-white/70">Produtos em estoque</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-black text-accent mb-1">12.000+</div>
+        <div class="text-sm font-medium text-white/70">Clientes atendidos</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-black text-accent mb-1">26</div>
+        <div class="text-sm font-medium text-white/70">Estados com entrega</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  OFERTAS — GRID DE PRODUTOS
+══════════════════════════════════════════ -->
+<section class="py-10 md:py-14 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <div class="flex items-end justify-between mb-6">
+      <div>
+        <span class="text-xs font-bold text-primary uppercase tracking-wider">Preços especiais</span>
+        <h2 class="text-2xl md:text-3xl font-black text-gray-900 mt-1">Ofertas da Semana</h2>
+      </div>
+      <a href="/ofertas" class="text-primary font-semibold text-sm hover:underline hidden sm:block">Ver todas →</a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <!-- CARDS REPETÍVEIS — estrutura padrão -->
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder w-full" style="padding-top:100%;position:relative;">
+          <span class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">-15%</span>
+        </div>
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-gray-800 text-xs leading-snug mb-2 flex-1">Anel O-Ring 2-178 Polegada</h3>
+          <div class="text-primary font-black text-base mb-2">R$&nbsp;8,90</div>
+          <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 rounded-lg text-xs transition-colors mb-1">Comprar</button>
+          <button onclick="openOrcamento()" class="w-full border border-primary text-primary font-medium py-1.5 rounded-lg text-xs transition-colors hover:bg-green-50">Orçamento</button>
+        </div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder w-full" style="padding-top:100%;"></div>
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-gray-800 text-xs leading-snug mb-2 flex-1">Retentor 30x52x7mm Nacional</h3>
+          <div class="text-primary font-black text-base mb-2">R$&nbsp;14,50</div>
+          <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 rounded-lg text-xs transition-colors mb-1">Comprar</button>
+          <button onclick="openOrcamento()" class="w-full border border-primary text-primary font-medium py-1.5 rounded-lg text-xs transition-colors hover:bg-green-50">Orçamento</button>
+        </div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder w-full" style="padding-top:100%;"></div>
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-gray-800 text-xs leading-snug mb-2 flex-1">Gaxeta Trançada 10mm em PTFE</h3>
+          <div class="text-primary font-black text-base mb-2">R$&nbsp;42,00</div>
+          <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 rounded-lg text-xs transition-colors mb-1">Comprar</button>
+          <button onclick="openOrcamento()" class="w-full border border-primary text-primary font-medium py-1.5 rounded-lg text-xs transition-colors hover:bg-green-50">Orçamento</button>
+        </div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col">
+        <div class="img-placeholder w-full" style="padding-top:100%;"></div>
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-gray-800 text-xs leading-snug mb-2 flex-1">Adesivo Loctite 243 50ml Trava Rosca</h3>
+          <div class="text-primary font-black text-base mb-2">R$&nbsp;67,90</div>
+          <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 rounded-lg text-xs transition-colors mb-1">Comprar</button>
+          <button onclick="openOrcamento()" class="w-full border border-primary text-primary font-medium py-1.5 rounded-lg text-xs transition-colors hover:bg-green-50">Orçamento</button>
+        </div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col hidden sm:flex">
+        <div class="img-placeholder w-full" style="padding-top:100%;"></div>
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-gray-800 text-xs leading-snug mb-2 flex-1">Spray Lubrificante Multi-Uso 300ml</h3>
+          <div class="text-primary font-black text-base mb-2">R$&nbsp;22,90</div>
+          <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 rounded-lg text-xs transition-colors mb-1">Comprar</button>
+          <button onclick="openOrcamento()" class="w-full border border-primary text-primary font-medium py-1.5 rounded-lg text-xs transition-colors hover:bg-green-50">Orçamento</button>
+        </div>
+      </div>
+    </div>
+
+    <a href="/ofertas" class="block sm:hidden text-center text-primary font-semibold text-sm mt-6 hover:underline">Ver todas as ofertas →</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  NEWSLETTER — MID-PAGE (não no rodapé)
+══════════════════════════════════════════ -->
+<section class="bg-white py-10 md:py-14 border-y border-gray-100">
+  <div class="max-w-2xl mx-auto px-4 text-center">
+    <div class="text-3xl mb-4">📋</div>
+    <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-3">
+      Receba cotações exclusivas
+    </h2>
+    <p class="text-gray-500 text-sm md:text-base mb-8 leading-relaxed">
+      Cadastre seu e-mail e seja o primeiro a saber sobre novos produtos, promoções para indústrias e atualizações do catálogo.
+    </p>
+    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="submitNewsletter(event)">
+      <input
+        type="email"
+        placeholder="seu@email.com.br"
+        class="flex-1 border-2 border-gray-200 focus:border-primary rounded-xl px-4 py-3 text-sm outline-none transition-colors"
+        required
+      />
+      <button type="submit" class="bg-primary hover:bg-primary-dark text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors whitespace-nowrap">
+        Quero Receber →
+      </button>
+    </form>
+    <p class="text-xs text-gray-400 mt-3">Sem spam. Cancele quando quiser.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  FORMAS DE PAGAMENTO
+══════════════════════════════════════════ -->
+<section class="bg-gray-50 py-8 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4">
+    <p class="text-center text-xs font-bold text-gray-400 uppercase tracking-wider mb-5">Formas de Pagamento Aceitas</p>
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">💳 Visa</div>
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">💳 Mastercard</div>
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">💳 Elo</div>
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">💳 Amex</div>
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">🏦 Boleto</div>
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">⚡ Pix</div>
+      <div class="bg-white border border-gray-200 rounded-lg px-4 py-2 text-xs font-bold text-gray-600 flex items-center gap-2">🏦 Transferência</div>
+    </div>
+    <p class="text-center text-xs text-gray-400 mt-3">Parcelamento em até 12x sem juros no cartão de crédito</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+  FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-primary-xdark text-white">
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+
+      <!-- MARCA -->
+      <div class="col-span-2 md:col-span-1">
+        <div class="bg-white/10 inline-block rounded-xl px-4 py-2 mb-4">
+          <span class="text-white font-black text-2xl">D.O.M</span>
+        </div>
+        <p class="text-white/60 text-sm leading-relaxed mb-4">
+          Suprimentos industriais com qualidade e atendimento especializado para a sua operação.
+        </p>
+        <p class="text-white/40 text-xs">São Paulo, SP — Brasil</p>
+      </div>
+
+      <!-- CATEGORIAS -->
+      <div>
+        <h4 class="font-bold text-sm mb-4 text-white/90">Departamentos</h4>
+        <ul class="space-y-2.5">
+          <li><a href="/aneis-de-vedacao" class="text-white/60 hover:text-white text-sm transition-colors">Anéis de Vedação</a></li>
+          <li><a href="/retentores-industriais" class="text-white/60 hover:text-white text-sm transition-colors">Retentores</a></li>
+          <li><a href="/gaxetas-industriais" class="text-white/60 hover:text-white text-sm transition-colors">Gaxetas</a></li>
+          <li><a href="/adesivos-e-selantes" class="text-white/60 hover:text-white text-sm transition-colors">Adesivos e Selantes</a></li>
+          <li><a href="/redutores" class="text-white/60 hover:text-white text-sm transition-colors">Redutores</a></li>
+        </ul>
+      </div>
+
+      <!-- EMPRESA -->
+      <div>
+        <h4 class="font-bold text-sm mb-4 text-white/90">Empresa</h4>
+        <ul class="space-y-2.5">
+          <li><a href="/sobre" class="text-white/60 hover:text-white text-sm transition-colors">Sobre nós</a></li>
+          <li><a href="/politica-envio" class="text-white/60 hover:text-white text-sm transition-colors">Política de envio</a></li>
+          <li><a href="/trocas-devolucoes" class="text-white/60 hover:text-white text-sm transition-colors">Trocas e devoluções</a></li>
+          <li><a href="/privacidade" class="text-white/60 hover:text-white text-sm transition-colors">Privacidade</a></li>
+        </ul>
+      </div>
+
+      <!-- CONTATO -->
+      <div>
+        <h4 class="font-bold text-sm mb-4 text-white/90">Entre em Contato</h4>
+        <ul class="space-y-3">
+          <li>
+            <button onclick="openOrcamento()" class="text-accent hover:text-accent-dark text-sm font-semibold transition-colors text-left">
+              📋 Solicitar Orçamento
+            </button>
+          </li>
+          <li><a href="mailto:contato@domsuprimentos.com.br" class="text-white/60 hover:text-white text-sm transition-colors">✉️ contato@domsuprimentos.com.br</a></li>
+          <li><a href="/contato" class="text-white/60 hover:text-white text-sm transition-colors">📍 Fale Conosco</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="border-t border-white/10 px-4 py-5">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-white/40 text-xs text-center sm:text-left">© 2026 D.O.M Suprimentos Industriais. Todos os direitos reservados.</p>
+      <p class="text-white/30 text-xs">CNPJ: 00.000.000/0001-00</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+  MOBILE BOTTOM NAVIGATION
+══════════════════════════════════════════ -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-30 safe-area-bottom">
+  <div class="grid grid-cols-4 h-16">
+    <a href="/" class="flex flex-col items-center justify-center gap-1 text-primary">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+      <span class="text-xs font-semibold">Início</span>
+    </a>
+    <button id="search-btn-mobile" class="flex flex-col items-center justify-center gap-1 text-gray-500" onclick="document.getElementById('main-search').focus()">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+      <span class="text-xs font-medium">Buscar</span>
+    </button>
+    <button onclick="openOrcamento()" class="flex flex-col items-center justify-center gap-1 text-gray-500">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <span class="text-xs font-medium">Orçamento</span>
+    </button>
+    <a href="/carrinho" class="relative flex flex-col items-center justify-center gap-1 text-gray-500">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      <span class="text-xs font-medium">Carrinho</span>
+    </a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+  MODAL ORÇAMENTO
+══════════════════════════════════════════ -->
+<div id="orcamento-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4" onclick="closeOrcamento(event)">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+  <div class="relative bg-white rounded-3xl rounded-b-3xl sm:rounded-3xl w-full max-w-md shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="bg-primary p-6 text-white">
+      <button onclick="closeOrcamento()" class="absolute top-4 right-4 text-white/70 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 class="text-xl font-black mb-1">Solicitar Orçamento</h3>
+      <p class="text-white/70 text-sm">Resposta em até 24h úteis. Sem compromisso.</p>
+    </div>
+
+    <!-- Form -->
+    <form id="orcamento-form" class="p-6 space-y-4" onsubmit="submitOrcamento(event)">
+      <div>
+        <label class="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Nome completo *</label>
+        <input type="text" required placeholder="Seu nome" class="w-full border-2 border-gray-200 focus:border-primary rounded-xl px-4 py-3 text-sm outline-none transition-colors"/>
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">E-mail *</label>
+        <input type="email" required placeholder="seu@email.com.br" class="w-full border-2 border-gray-200 focus:border-primary rounded-xl px-4 py-3 text-sm outline-none transition-colors"/>
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Empresa</label>
+        <input type="text" placeholder="Nome da empresa (opcional)" class="w-full border-2 border-gray-200 focus:border-primary rounded-xl px-4 py-3 text-sm outline-none transition-colors"/>
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Descreva o que precisa *</label>
+        <textarea required rows="3" placeholder="Ex: 500 unidades de anel O-Ring NBR 70 Shore, medida 50x3mm..." class="w-full border-2 border-gray-200 focus:border-primary rounded-xl px-4 py-3 text-sm outline-none transition-colors resize-none"></textarea>
+      </div>
+      <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-black py-4 rounded-xl text-sm transition-colors">
+        Enviar Solicitação →
+      </button>
+      <p class="text-xs text-gray-400 text-center">Seus dados são protegidos e não serão compartilhados.</p>
+    </form>
+
+    <!-- Success state (hidden) -->
+    <div id="orcamento-success" class="hidden p-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h4 class="text-xl font-black text-gray-900 mb-2">Orçamento recebido!</h4>
+      <p class="text-gray-500 text-sm mb-6">Nossa equipe entrará em contato em até 24h úteis.</p>
+      <button onclick="closeOrcamento()" class="bg-primary text-white font-bold px-8 py-3 rounded-xl text-sm">Fechar</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+// ── Mobile Menu ──────────────────────────
+const menuBtn   = document.getElementById('menu-btn');
+const menuClose = document.getElementById('menu-close');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
+
+function openMenu() {
+  mobileMenu.classList.remove('closed');
+  mobileMenu.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  mobileMenu.classList.add('closed');
+  document.body.style.overflow = '';
+}
+menuBtn.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+menuOverlay.addEventListener('click', closeMenu);
+
+// ── Sticky header shadow ──────────────────
+const header = document.getElementById('main-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('header-shadow', window.scrollY > 10);
+});
+
+// ── Orçamento Modal ───────────────────────
+function openOrcamento() {
+  const modal = document.getElementById('orcamento-modal');
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeOrcamento(e) {
+  if(e && e.target !== document.getElementById('orcamento-modal')) return;
+  const modal = document.getElementById('orcamento-modal');
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') {
+    document.getElementById('orcamento-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+});
+
+// ── Form Submit ───────────────────────────
+function submitOrcamento(e) {
+  e.preventDefault();
+  document.getElementById('orcamento-form').classList.add('hidden');
+  document.getElementById('orcamento-success').classList.remove('hidden');
+}
+function submitNewsletter(e) {
+  e.preventDefault();
+  const form = document.getElementById('newsletter-form');
+  form.innerHTML = '<p class="text-primary font-bold text-center py-2">✅ Obrigado! Você receberá novidades em breve.</p>';
+}
+
+// ── Search scroll to top on mobile ────────
+document.getElementById('search-btn-mobile')?.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
