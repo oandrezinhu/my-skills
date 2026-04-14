@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>D.O.M — Diagnóstico do E-commerce</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;overflow:hidden;width:100vw;height:100vh;}
+
+.deck{width:100%;height:100%;position:relative;}
+.slide{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .45s ease,transform .45s ease;
+  transform:translateX(32px);
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.slide.prev{opacity:0;transform:translateX(-32px);}
+
+/* PROGRESS */
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#ef4444,#f97316);transition:width .45s ease;z-index:200;}
+
+/* NAV */
+.nav{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:14px;z-index:200;
+  background:rgba(10,10,10,.8);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:9px 18px;
+}
+.nav button{background:none;border:none;color:#fff;cursor:pointer;font-size:18px;opacity:.6;transition:opacity .2s;padding:4px 8px;border-radius:6px;}
+.nav button:hover{opacity:1;background:rgba(255,255,255,.08);}
+.nav .counter{color:#fff;font-size:12px;opacity:.5;min-width:52px;text-align:center;font-weight:600;letter-spacing:.05em;}
+.hint{position:fixed;top:18px;left:24px;font-size:11px;color:#333;z-index:200;}
+
+/* ─── TIPO CAPA ─── */
+.s-capa{
+  background:#0a0a0a;
+  justify-content:center;align-items:center;text-align:center;
+  position:relative;overflow:hidden;
+}
+.s-capa .noise{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+.s-capa .glow{
+  position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(239,68,68,.12) 0%,transparent 65%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+}
+
+/* ─── TIPO DARK ─── */
+.s-dark{background:#0d0d0d;padding:56px 72px;justify-content:center;display:flex;flex-direction:column;overflow:hidden;}
+.s-dark.pad-top{justify-content:flex-start;padding-top:44px;overflow:hidden;}
+
+/* ─── TIPO SPLIT (imagem + texto) ─── */
+.s-split{background:#0d0d0d;display:grid;grid-template-columns:1fr 1fr;height:100%;}
+.s-split .img-side{overflow:hidden;position:relative;}
+.s-split .img-side img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.s-split .img-side .overlay{position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,#0d0d0d);}
+.s-split .text-side{padding:56px 60px 56px 48px;display:flex;flex-direction:column;justify-content:center;}
+
+/* ─── TIPO FULLSCREEN IMG ─── */
+.s-img{background:#000;position:relative;overflow:hidden;}
+.s-img img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.s-img .overlay-bottom{position:absolute;bottom:0;left:0;right:0;padding:48px 72px 80px;background:linear-gradient(to top,rgba(0,0,0,.95) 40%,transparent);}
+.s-img .overlay-full{position:absolute;inset:0;background:rgba(0,0,0,.55);}
+
+/* ─── TIPO COMPARAÇÃO ─── */
+.s-compare{background:#0d0d0d;padding:48px 72px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;overflow:hidden;}
+
+/* ─── TIPOGRAFIA ─── */
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#ef4444;margin-bottom:14px;}
+.eyebrow.blue{color:#3b82f6;}
+.eyebrow.amber{color:#f59e0b;}
+.eyebrow.green{color:#22c55e;}
+.eyebrow.gray{color:#475569;}
+h1.hero{font-size:64px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:20px;}
+h1.hero span{color:#ef4444;}
+h2.slide-title{font-size:38px;font-weight:800;color:#f1f5f9;line-height:1.15;margin-bottom:8px;}
+h2.slide-title span{color:#ef4444;}
+h2.slide-title span.blue{color:#3b82f6;}
+h2.slide-title span.amber{color:#f59e0b;}
+h2.slide-title span.green{color:#22c55e;}
+.lead{font-size:17px;color:#64748b;line-height:1.75;max-width:680px;}
+.lead strong{color:#94a3b8;}
+.divider{width:40px;height:3px;background:#ef4444;border-radius:2px;margin:18px 0 28px;}
+.divider.blue{background:#3b82f6;}
+.divider.amber{background:#f59e0b;}
+.divider.green{background:#22c55e;}
+
+/* ─── BIG NUMBER ─── */
+.big-num{font-size:80px;font-weight:900;line-height:1;letter-spacing:-.02em;}
+.big-num.red{color:#ef4444;}
+.big-num.amber{color:#f59e0b;}
+.big-num.green{color:#22c55e;}
+.big-num.blue{color:#3b82f6;}
+.big-num.white{color:#f1f5f9;}
+
+/* ─── PAIN CARD ─── */
+.pain-card{
+  background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18);
+  border-radius:16px;padding:24px 28px;
+}
+.pain-card.amber{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.18);}
+.pain-card.blue{background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.18);}
+.pain-card.green{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.18);}
+.pain-card.neutral{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08);}
+.pain-card h3{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:8px;}
+.pain-card p{font-size:13px;color:#64748b;line-height:1.65;}
+.pain-card p strong{color:#94a3b8;}
+
+/* ─── ANNOTATION ─── */
+.annotation{
+  position:absolute;background:#ef4444;color:#fff;
+  font-size:11px;font-weight:700;padding:5px 12px;border-radius:50px;
+  white-space:nowrap;box-shadow:0 4px 12px rgba(239,68,68,.4);
+}
+.annotation.amber{background:#f59e0b;box-shadow:0 4px 12px rgba(245,158,11,.4);}
+.annotation.blue{background:#3b82f6;box-shadow:0 4px 12px rgba(59,130,246,.4);}
+.annotation::before{content:'';position:absolute;border:5px solid transparent;}
+
+/* ─── STEP FLOW ─── */
+.flow{display:flex;align-items:center;gap:0;}
+.flow-step{
+  flex:1;text-align:center;padding:20px 16px;
+  background:rgba(255,255,255,.03);
+  border-top:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  position:relative;
+}
+.flow-step:first-child{border-left:1px solid rgba(255,255,255,.07);border-radius:12px 0 0 12px;}
+.flow-step:last-child{border-right:1px solid rgba(255,255,255,.07);border-radius:0 12px 12px 0;}
+.flow-step.dead{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25);}
+.flow-step .step-icon{font-size:28px;margin-bottom:8px;}
+.flow-step .step-label{font-size:12px;color:#475569;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.flow-step .step-val{font-size:26px;font-weight:900;color:#f1f5f9;}
+.flow-step.dead .step-val{color:#ef4444;}
+.flow-arrow{font-size:20px;color:#1e293b;flex-shrink:0;margin:0 -1px;}
+.flow-drop{
+  position:absolute;top:-32px;left:50%;transform:translateX(-50%);
+  background:#ef4444;color:#fff;font-size:10px;font-weight:700;
+  padding:3px 10px;border-radius:50px;white-space:nowrap;
+}
+
+/* ─── METRIC ROW ─── */
+.metric-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.metric-row:last-child{border-bottom:none;}
+.metric-row .m-label{font-size:14px;color:#64748b;font-weight:500;}
+.metric-row .m-now{font-size:20px;font-weight:800;}
+.metric-row .m-arrow{font-size:16px;color:#334155;}
+.metric-row .m-goal{font-size:18px;font-weight:700;color:#22c55e;}
+
+/* ─── HIGHLIGHT ─── */
+.hl{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(239,68,68,.04));border:1px solid rgba(239,68,68,.2);border-radius:16px;padding:24px 28px;}
+.hl.blue{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(59,130,246,.04));border-color:rgba(59,130,246,.2);}
+.hl.amber{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(245,158,11,.04));border-color:rgba(245,158,11,.2);}
+.hl p{font-size:18px;font-weight:600;color:#e2e8f0;line-height:1.65;}
+.hl p strong{color:#fff;}
+
+/* ─── CHECKLIST ─── */
+.cl{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.cl li{display:flex;gap:12px;font-size:14px;color:#64748b;line-height:1.55;align-items:flex-start;}
+.cl li b{color:#94a3b8;}
+.cl.week li::before{content:'□';color:#475569;flex-shrink:0;font-size:16px;margin-top:-1px;}
+
+/* ─── BADGE PILL ─── */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:50px;}
+.pill.red{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.2);}
+.pill.amber{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.2);}
+.pill.blue{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.2);}
+.pill.green{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.2);}
+.pill.gray{background:rgba(255,255,255,.06);color:#94a3b8;border:1px solid rgba(255,255,255,.1);}
+
+/* ─── TIMELINE ─── */
+.tl{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:20px;padding-bottom:20px;position:relative;}
+.tl-item:not(:last-child)::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:linear-gradient(to bottom,rgba(255,255,255,.1),transparent);}
+.tl-dot{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;}
+.tl-body{flex:1;padding-top:8px;}
+.tl-title{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:4px;}
+.tl-date{font-size:12px;color:#334155;margin-bottom:8px;font-weight:600;}
+.tl-items{display:flex;flex-direction:column;gap:5px;}
+.tl-items span{font-size:13px;color:#64748b;display:flex;gap:8px;}
+.tl-items span::before{content:'→';color:#475569;flex-shrink:0;}
+
+/* ─── TABLE ─── */
+table.plan{width:100%;border-collapse:collapse;}
+table.plan th{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#334155;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);}
+table.plan td{padding:13px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);}
+table.plan tr:hover td{background:rgba(255,255,255,.02);}
+.td-m{color:#e2e8f0;font-weight:600;}
+.td-now-bad{color:#ef4444;font-weight:800;}
+.td-now-ok{color:#f59e0b;font-weight:800;}
+.td-goal{color:#22c55e;font-weight:700;}
+.td-r{color:#475569;font-size:12px;}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="bar"></div>
+<div class="hint">← → navegar · F tela cheia</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════════════════════════════════════════════
+  01 — CAPA
+══════════════════════════════════════════════════════ -->
+<div class="slide s-capa active">
+  <div class="noise"></div>
+  <div class="glow"></div>
+  <div style="position:relative;z-index:2;text-align:center;max-width:800px;padding:0 40px;">
+    <div class="pill gray" style="margin-bottom:28px;">
+      <span style="width:6px;height:6px;border-radius:50%;background:#ef4444;animation:pulse 2s infinite;display:inline-block;"></span>
+      Diagnóstico · Abril 2026
+    </div>
+    <h1 class="hero">Seu e-commerce está<br><span>perdendo clientes</span><br>toda hora.</h1>
+    <p class="lead" style="margin:0 auto 40px;text-align:center;">Os dados do Microsoft Clarity e do Google registraram o comportamento de <strong>459 usuários reais</strong> nos últimos 60 dias.<br>O que eles encontraram não é bom.</p>
+    <div style="display:flex;gap:40px;justify-content:center;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div class="big-num red" style="font-size:56px;">0,48%</div>
+        <div style="font-size:13px;color:#334155;margin-top:4px;">Conversão e-commerce</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,.07);"></div>
+      <div style="text-align:center;">
+        <div class="big-num amber" style="font-size:56px;">45</div>
+        <div style="font-size:13px;color:#334155;margin-top:4px;">Score mobile no Google</div>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,.07);"></div>
+      <div style="text-align:center;">
+        <div class="big-num red" style="font-size:56px;">20%</div>
+        <div style="font-size:13px;color:#334155;margin-top:4px;">Mobile que vê os produtos</div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}</style>
+
+
+<!-- ══════════════════════════════════════════════════════
+  02 — O GOOGLE PUNE SEU SITE
+══════════════════════════════════════════════════════ -->
+<div class="slide s-compare">
+  <div style="display:flex;flex-direction:column;justify-content:center;">
+    <div class="eyebrow">Google PageSpeed Insights</div>
+    <h2 class="slide-title">O Google avalia seu site.<br><span>O resultado é um problema.</span></h2>
+    <div class="divider"></div>
+    <p class="lead" style="margin-bottom:28px;">O score de performance mobile determina <strong>onde você aparece no Google</strong>. 72% do seu tráfego vem de busca orgânica. Um score de 45 significa que você está sendo penalizado a cada dia que passa sem correção.</p>
+    <div class="hl" style="margin-bottom:16px;">
+      <p style="font-size:16px;">O LCP mobile está em <strong>9,7 segundos</strong>. O Google considera "bom" qualquer coisa abaixo de <strong>2,5s</strong>. Você está <strong>4× acima do limite</strong>.</p>
+    </div>
+    <p style="font-size:13px;color:#334155;">Cada posição perdida no Google = menos tráfego orgânico = menos oportunidade de venda.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;height:calc(100vh - 110px);min-height:0;">
+    <div style="border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07);flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div style="background:rgba(239,68,68,.1);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+        <span style="font-size:12px;font-weight:700;color:#fca5a5;text-transform:uppercase;letter-spacing:.1em;">📱 Mobile</span>
+        <span class="pill red">Score 45 — Ruim</span>
+      </div>
+      <div style="flex:1;overflow:hidden;min-height:0;">
+        <img src="img-analise/pagespeed-mobile.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" alt="PageSpeed Mobile"/>
+      </div>
+    </div>
+    <div style="border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07);flex:1;display:flex;flex-direction:column;min-height:0;">
+      <div style="background:rgba(245,158,11,.08);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+        <span style="font-size:12px;font-weight:700;color:#fcd34d;text-transform:uppercase;letter-spacing:.1em;">💻 Desktop</span>
+        <span class="pill amber">Score 79 — Melhorável</span>
+      </div>
+      <div style="flex:1;overflow:hidden;min-height:0;">
+        <img src="img-analise/pagespeed-desktop.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" alt="PageSpeed Desktop"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  03 — A JORNADA QUE QUEBRA
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark">
+  <div class="eyebrow">Comportamento real do usuário</div>
+  <h2 class="slide-title">O caminho que seu cliente percorre —<br><span>e onde ele desiste.</span></h2>
+  <div class="divider"></div>
+  <div style="margin-bottom:32px;position:relative;padding-top:36px;">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-icon">🔍</div>
+        <div class="step-label">Chegou</div>
+        <div class="step-val">459</div>
+        <div style="font-size:11px;color:#334155;margin-top:4px;">usuários reais</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon">👀</div>
+        <div class="step-label">Viu produtos</div>
+        <div class="step-val" style="color:#f59e0b;">~92</div>
+        <div style="font-size:11px;color:#334155;margin-top:4px;">chegaram até a seção</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-icon">🛒</div>
+        <div class="step-label">Adicionou</div>
+        <div class="step-val" style="color:#f59e0b;">18</div>
+        <div style="font-size:11px;color:#334155;margin-top:4px;">ao carrinho</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step dead">
+        <div class="flow-drop">↓ 61% abandonaram</div>
+        <div class="step-icon">😤</div>
+        <div class="step-label">Tentou comprar</div>
+        <div class="step-val">7</div>
+        <div style="font-size:11px;color:#ef4444;margin-top:4px;">iniciaram checkout</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step dead">
+        <div class="step-icon">💸</div>
+        <div class="step-label">Comprou</div>
+        <div class="step-val">4</div>
+        <div style="font-size:11px;color:#ef4444;margin-top:4px;">em 60 dias</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:8px;">
+    <div class="pain-card">
+      <h3>80% saem antes de ver um produto</h3>
+      <p>O scroll mobile é tão ruim que <strong>apenas 20% dos visitantes mobile</strong> chegam até a seção de produtos. Os outros 80% veem só o hero e vão embora.</p>
+    </div>
+    <div class="pain-card amber">
+      <h3>61% desistem entre carrinho e checkout</h3>
+      <p>De 18 que adicionaram ao carrinho, <strong>apenas 7 tentaram pagar</strong>. O processo de compra está criando atrito onde deveria ser invisível.</p>
+    </div>
+    <div class="pain-card neutral">
+      <h3>O formulário converte 13× mais</h3>
+      <p>O formulário de contato teve <strong>6,3% de conversão</strong> contra 0,48% do e-commerce. O cliente quer negociar — o site não oferece esse caminho.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  04 — A HOME (DIAGNÓSTICO VISUAL)
+══════════════════════════════════════════════════════ -->
+<div class="slide s-split">
+  <div class="img-side" style="position:relative;">
+    <img src="img-analise/home.png" alt="Home D.O.M" style="object-position:top;"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,#0d0d0d);"></div>
+
+    <!-- ANOTAÇÕES -->
+    <div class="annotation" style="top:11%;left:4%;">Hero errado — Aerossóis = 9 sessões</div>
+    <div style="position:absolute;top:11%;left:4%;margin-top:26px;width:45%;height:1px;background:rgba(239,68,68,.4);"></div>
+
+    <div class="annotation amber" style="top:32%;left:4%;">Categorias com área de toque insuficiente</div>
+
+    <div class="annotation" style="top:46%;left:4%;">Produtos — só 20% dos usuários mobile chegam aqui</div>
+
+    <div class="annotation" style="top:74%;left:4%;">Banner sem CTA claro</div>
+
+    <div class="annotation" style="top:88%;left:4%;">Newsletter — menos de 10% visualiza</div>
+  </div>
+
+  <div class="text-side">
+    <div class="eyebrow">Home — Diagnóstico Visual</div>
+    <h2 class="slide-title">A página está gritando<br><span>o produto errado.</span></h2>
+    <div class="divider"></div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="pain-card">
+        <h3>🎯 Aerossóis no hero — mas ninguém quer</h3>
+        <p>A categoria em destaque principal gerou <strong>9 sessões</strong> em 60 dias. Anéis de Vedação — invisível no hero — trouxe <strong>228 sessões</strong>. O banner está invertido.</p>
+      </div>
+      <div class="pain-card amber">
+        <h3>🔍 Busca interna = 4ª página mais visitada</h3>
+        <p>63 sessões foram direto para a busca. Isso significa que o menu <strong>não está funcionando</strong> como navegação — o usuário precisa "escapar" para a busca para encontrar o que quer.</p>
+      </div>
+      <div class="pain-card neutral">
+        <h3>🛒 Zero opção de orçamento</h3>
+        <p>Somente o botão "Comprar". Nenhum <strong>canal B2B visível</strong> — sem WhatsApp, sem "solicitar cotação", sem formulário rápido nos produtos. O cliente industrial não se sente em casa.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  05 — ONDE O OLHO CLICA (DESKTOP)
+══════════════════════════════════════════════════════ -->
+<div class="slide s-split">
+  <div class="img-side">
+    <img src="img-analise/click-pc.png" alt="Heatmap cliques desktop" style="object-position:top;"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,#0d0d0d);"></div>
+  </div>
+  <div class="text-side">
+    <div class="eyebrow">Heatmap de Cliques · Desktop</div>
+    <h2 class="slide-title">Todo calor está<br><span>no lugar errado.</span></h2>
+    <div class="divider"></div>
+    <p class="lead" style="margin-bottom:28px;">O mapa de cliques mostra onde a atenção vai. No desktop, <strong>quase todo calor está no hero de Aerossóis</strong> — a categoria com menos tráfego do site.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="pain-card">
+        <h3>🔴 O botão "VER MAIS" recebe cliques — e frustra</h3>
+        <p>Usuários clicam no CTA do hero esperando encontrar o que precisam. Chegam em Aerossóis. <strong>Não é o que vieram buscar.</strong></p>
+      </div>
+      <div class="pain-card amber">
+        <h3>🟡 Ícones de categoria: pequenos mas tentados</h3>
+        <p>Os ícones de navegação aparecem no mapa de calor — usuários tentam usá-los. <strong>Área insuficiente</strong> no mobile faz com que muitos cliques errem o alvo.</p>
+      </div>
+      <div class="pain-card neutral">
+        <h3>⚪ Grade de produtos: fria</h3>
+        <p>O grid de produtos — o coração do e-commerce — tem <strong>praticamente zero calor</strong> no mapa. Os produtos existem mas não são vistos como destino de clique.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  06 — ONDE O DEDO TOCA (MOBILE)
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark" style="display:grid;grid-template-columns:1fr 1.6fr;gap:40px;align-items:center;padding:56px 72px;">
+  <div style="display:flex;justify-content:center;height:calc(100vh - 120px);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07);background:#000;">
+    <img src="img-analise/toque-mobile.png" style="height:100%;width:auto;object-fit:contain;object-position:top;" alt="Heatmap toque mobile"/>
+  </div>
+  <div>
+    <div class="eyebrow">Heatmap de Toque · Mobile</div>
+    <h2 class="slide-title">57% do seu tráfego é mobile.<br><span>E está tocando no nada.</span></h2>
+    <div class="divider"></div>
+    <p class="lead" style="margin-bottom:28px;">No celular, os toques ficam concentrados no topo. Quanto mais desce, menos o dedo toca. Os produtos ficam na parte <strong>que ninguém alcança.</strong></p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="pain-card">
+        <h3>👆 Dead click no "Frete Grátis"</h3>
+        <p>A barra de frete grátis aparece quente no mapa — mas não é clicável. <strong>O usuário está tentando interagir com algo inerte.</strong> Frustração silenciosa.</p>
+      </div>
+      <div class="pain-card amber">
+        <h3>📦 Carrossel de Lançamentos: invisível</h3>
+        <p>O usuário não percebe que o carrossel pode ser deslizado. <strong>Sem indicador visual de swipe</strong>, os produtos ficam escondidos atrás do primeiro item.</p>
+      </div>
+      <div class="hl blue" style="margin-top:4px;">
+        <p style="font-size:15px;">O botão de compra está <strong>no lugar onde o dedo não chega</strong>. Não é falta de interesse — é falha de layout.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  07 — O CLIFF DO SCROLL (MOBILE) — slide mais forte
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark" style="display:grid;grid-template-columns:1fr 1.6fr;gap:40px;align-items:center;padding:56px 72px;">
+  <div style="display:flex;justify-content:center;height:calc(100vh - 120px);border-radius:16px;overflow:hidden;border:1px solid rgba(239,68,68,.2);background:#000;box-shadow:0 0 40px rgba(239,68,68,.08);">
+    <img src="img-analise/scroll-mobile.png" style="height:100%;width:auto;object-fit:contain;object-position:top;" alt="Scroll Map Mobile"/>
+  </div>
+  <div>
+    <div class="eyebrow">Scroll Map · Mobile · CRÍTICO</div>
+    <h2 class="slide-title">Seu e-commerce <span>some</span><br>antes de começar.</h2>
+    <div class="divider"></div>
+    <p class="lead" style="margin-bottom:24px;">Cada faixa de cor representa quantos usuários chegam até aquela parte da página. <strong>O vermelho vira azul em segundos.</strong></p>
+
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#ef4444;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Hero (Aerossóis)</span>
+        <span style="font-size:18px;font-weight:800;color:#f1f5f9;">100%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#eab308;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Frete Grátis + Lançamentos</span>
+        <span style="font-size:18px;font-weight:800;color:#f59e0b;">~55%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#22c55e;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Ícones de categoria</span>
+        <span style="font-size:18px;font-weight:800;color:#f59e0b;">~35%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#06b6d4;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;"><strong style="color:#f1f5f9;">Seção de produtos</strong></span>
+        <span style="font-size:22px;font-weight:900;color:#ef4444;">~20%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;">
+        <div style="width:14px;height:14px;border-radius:3px;background:#3b82f6;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Newsletter + footer</span>
+        <span style="font-size:18px;font-weight:800;color:#475569;">~8%</span>
+      </div>
+    </div>
+
+    <div class="hl" style="margin-top:8px;">
+      <p style="font-size:15px;"><strong>8 em cada 10 usuários mobile</strong> vão embora sem ver um único produto. O e-commerce, para eles, não existe.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  08 — SCROLL DESKTOP: também perde muito
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark" style="display:grid;grid-template-columns:1fr 1.6fr;gap:40px;align-items:center;padding:56px 72px;">
+  <div style="display:flex;justify-content:center;height:calc(100vh - 120px);border-radius:16px;overflow:hidden;border:1px solid rgba(245,158,11,.15);background:#000;">
+    <img src="img-analise/scroll-pc.png" style="width:100%;object-fit:cover;object-position:top;" alt="Scroll Map Desktop"/>
+  </div>
+  <div>
+    <div class="eyebrow amber">Scroll Map · Desktop</div>
+    <h2 class="slide-title">No desktop é melhor.<br><span class="amber">Mas ainda perde metade.</span></h2>
+    <div class="divider amber"></div>
+    <p class="lead" style="margin-bottom:24px;">O desktop rola mais fundo que o mobile — mas a lógica é a mesma: <strong>quanto mais desce, mais vazio fica.</strong> Os produtos principais só são vistos por ~45% no desktop.</p>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#ef4444;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Hero + Navegação</span>
+        <span style="font-size:18px;font-weight:800;color:#f1f5f9;">100%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#f97316;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Benefícios (frete, boleto)</span>
+        <span style="font-size:18px;font-weight:800;color:#f1f5f9;">~85%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#eab308;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Lançamentos + categorias</span>
+        <span style="font-size:18px;font-weight:800;color:#f59e0b;">~65%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="width:14px;height:14px;border-radius:3px;background:#22c55e;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;"><strong style="color:#f1f5f9;">Seção de produtos</strong></span>
+        <span style="font-size:20px;font-weight:900;color:#f59e0b;">~45%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:10px 0;">
+        <div style="width:14px;height:14px;border-radius:3px;background:#3b82f6;flex-shrink:0;"></div>
+        <span style="font-size:14px;color:#94a3b8;flex:1;">Newsletter + footer</span>
+        <span style="font-size:18px;font-weight:800;color:#475569;">~10%</span>
+      </div>
+    </div>
+    <div class="hl amber">
+      <p style="font-size:15px;">Mesmo no desktop — o dispositivo mais favorável — <strong>mais da metade dos usuários vai embora antes de chegar aos produtos.</strong></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  09 — O CLIENTE B2B VS O SITE ATUAL
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark">
+  <div class="eyebrow">O Público vs. O Site</div>
+  <h2 class="slide-title">Seu cliente é B2B.<br><span>Seu site foi feito para B2C.</span></h2>
+  <div class="divider"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+    <div>
+      <p style="font-size:13px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px;">O que o comprador industrial faz</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="pain-card neutral" style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-size:22px;flex-shrink:0;">🔍</span>
+          <div><h3 style="margin-bottom:4px;">Busca por especificação técnica</h3><p>Código, medida, material. Não por "promoção do dia". O campo de busca precisa ser proeminente e inteligente.</p></div>
+        </div>
+        <div class="pain-card neutral" style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-size:22px;flex-shrink:0;">📋</span>
+          <div><h3 style="margin-bottom:4px;">Coleta specs para cotar</h3><p>9,21% das sessões usaram clique direito para salvar imagens. O usuário está <strong>montando uma lista de cotação</strong> manualmente.</p></div>
+        </div>
+        <div class="pain-card neutral" style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-size:22px;flex-shrink:0;">💬</span>
+          <div><h3 style="margin-bottom:4px;">Prefere negociar antes de pagar</h3><p>O formulário converteu <strong>6,3%</strong>. O carrinho, 2,2%. O cliente quer conversar sobre preço e prazo antes de clicar em comprar.</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px;">O que o site oferece hoje</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="pain-card" style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-size:22px;flex-shrink:0;">❌</span>
+          <div><h3 style="margin-bottom:4px;">Hero de produto não estratégico</h3><p>Aerossóis em destaque — categoria de menor intenção de compra. A maior dor do comprador industrial não aparece above the fold.</p></div>
+        </div>
+        <div class="pain-card" style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-size:22px;flex-shrink:0;">❌</span>
+          <div><h3 style="margin-bottom:4px;">Sem PDF de especificações</h3><p>Nenhuma forma de baixar ficha técnica. O comprador precisa copiar dados manualmente — e frequentemente desiste no meio do processo.</p></div>
+        </div>
+        <div class="pain-card" style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-size:22px;flex-shrink:0;">❌</span>
+          <div><h3 style="margin-bottom:4px;">Só botão "Comprar" nos produtos</h3><p>Zero canal de orçamento visível. O cliente B2B não encontra um caminho que faça sentido para ele — e vai embora.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  10 — O CUSTO REAL (QUANTO ESTÁ PERDENDO)
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark" style="justify-content:center;align-items:center;text-align:center;">
+  <div class="eyebrow gray" style="text-align:center;">O custo do status quo</div>
+  <h2 class="slide-title" style="font-size:44px;margin-bottom:8px;">Em 60 dias, com 459 usuários reais,<br>seu site fechou <span>4 vendas.</span></h2>
+  <div class="divider" style="margin:20px auto;"></div>
+
+  <div style="display:flex;gap:48px;justify-content:center;margin-bottom:40px;flex-wrap:wrap;">
+    <div>
+      <div class="big-num red">4</div>
+      <div style="font-size:14px;color:#334155;margin-top:6px;">compras concluídas</div>
+    </div>
+    <div style="width:1px;background:rgba(255,255,255,.06);"></div>
+    <div>
+      <div class="big-num amber">18</div>
+      <div style="font-size:14px;color:#334155;margin-top:6px;">carrinhos criados</div>
+      <div style="font-size:12px;color:#475569;margin-top:2px;">78% não compraram</div>
+    </div>
+    <div style="width:1px;background:rgba(255,255,255,.06);"></div>
+    <div>
+      <div class="big-num white">52</div>
+      <div style="font-size:14px;color:#334155;margin-top:6px;">leads no formulário</div>
+      <div style="font-size:12px;color:#22c55e;margin-top:2px;">sem nutrição pós-contato</div>
+    </div>
+    <div style="width:1px;background:rgba(255,255,255,.06);"></div>
+    <div>
+      <div class="big-num red">44%</div>
+      <div style="font-size:14px;color:#334155;margin-top:6px;">das sessões eram bots</div>
+      <div style="font-size:12px;color:#ef4444;margin-top:2px;">dados distorcidos</div>
+    </div>
+  </div>
+
+  <div style="max-width:720px;margin:0 auto;">
+    <div class="hl" style="text-align:left;">
+      <p style="font-size:17px;">Cada mês sem reestruturação é um mês com <strong>0,48% de conversão</strong>, sem remarketing nos 52 leads captados, sem recuperação dos 14 carrinhos abandonados. <strong>O problema não está se resolvendo sozinho.</strong></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  11 — O QUE PRECISA MUDAR (VISÃO DE SOLUÇÃO)
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark">
+  <div class="eyebrow green">Reestruturação</div>
+  <h2 class="slide-title">O que muda com uma <span class="green">reestruturação focada.</span></h2>
+  <div class="divider green"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <p style="font-size:13px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;">Hoje — o que o usuário encontra</p>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12);border-radius:12px;">
+        <span style="color:#ef4444;font-size:18px;flex-shrink:0;">→</span>
+        <span style="font-size:14px;color:#64748b;">Hero de Aerossóis (9 sessões) em vez de Anéis de Vedação (228 sessões)</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12);border-radius:12px;">
+        <span style="color:#ef4444;font-size:18px;flex-shrink:0;">→</span>
+        <span style="font-size:14px;color:#64748b;">Página que leva 9,7s para carregar no celular</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12);border-radius:12px;">
+        <span style="color:#ef4444;font-size:18px;flex-shrink:0;">→</span>
+        <span style="font-size:14px;color:#64748b;">80% dos usuários mobile nunca chegam nos produtos</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12);border-radius:12px;">
+        <span style="color:#ef4444;font-size:18px;flex-shrink:0;">→</span>
+        <span style="font-size:14px;color:#64748b;">Somente "Comprar" — sem caminho B2B de orçamento</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12);border-radius:12px;">
+        <span style="color:#ef4444;font-size:18px;flex-shrink:0;">→</span>
+        <span style="font-size:14px;color:#64748b;">52 leads captados sem nenhum follow-up automatizado</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <p style="font-size:13px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px;">Depois — o que o usuário vai encontrar</p>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:12px;">
+        <span style="color:#22c55e;font-size:18px;flex-shrink:0;">✓</span>
+        <span style="font-size:14px;color:#64748b;">Hero mobile-first com as 3 categorias mais buscadas acima da dobra</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:12px;">
+        <span style="color:#22c55e;font-size:18px;flex-shrink:0;">✓</span>
+        <span style="font-size:14px;color:#64748b;">LCP abaixo de 2,5s — performance no Google recuperada</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:12px;">
+        <span style="color:#22c55e;font-size:18px;flex-shrink:0;">✓</span>
+        <span style="font-size:14px;color:#64748b;">Scroll depth de 45% para 65%+ — produtos vistos por mais gente</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:12px;">
+        <span style="color:#22c55e;font-size:18px;flex-shrink:0;">✓</span>
+        <span style="font-size:14px;color:#64748b;">Botão "Solicitar Orçamento" + WhatsApp visível em todos os produtos</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.12);border-radius:12px;">
+        <span style="color:#22c55e;font-size:18px;flex-shrink:0;">✓</span>
+        <span style="font-size:14px;color:#64748b;">Sequência de e-mail automática para cada lead do formulário</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  12 — PLANO 45 DIAS
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark pad-top">
+  <div class="eyebrow blue">Plano de Execução</div>
+  <h2 class="slide-title" style="font-size:32px;">45 dias para <span class="blue">reverter o cenário.</span></h2>
+  <div class="divider blue"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;flex:1;min-height:0;overflow:hidden;">
+
+    <div style="border:1px solid rgba(239,68,68,.2);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:0;">
+      <div style="background:rgba(239,68,68,.1);padding:12px 18px;flex-shrink:0;">
+        <p style="font-size:11px;font-weight:700;color:#fca5a5;text-transform:uppercase;letter-spacing:.12em;">Semana 1–2 · 14–28/04</p>
+        <p style="font-size:15px;font-weight:800;color:#f1f5f9;margin-top:3px;">Fundação</p>
+        <p style="font-size:11px;color:#64748b;margin-top:2px;">Eliminar o que está destruindo silenciosamente</p>
+      </div>
+      <div style="padding:14px 18px;display:flex;flex-direction:column;gap:9px;flex:1;overflow:hidden;">
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Ativar Cloudflare — bloquear 366 sessões de bot</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Converter imagens para WebP — atacar o LCP de 9,7s</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Corrigir erros de JavaScript nas categorias</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Documentar baseline antes de qualquer mudança</span></div>
+        <div style="margin-top:auto;padding:10px 12px;background:rgba(239,68,68,.06);border-radius:8px;font-size:12px;color:#fca5a5;"><strong>Meta:</strong> LCP &lt;2,5s · Bots bloqueados</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid rgba(245,158,11,.2);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:0;">
+      <div style="background:rgba(245,158,11,.08);padding:12px 18px;flex-shrink:0;">
+        <p style="font-size:11px;font-weight:700;color:#fcd34d;text-transform:uppercase;letter-spacing:.12em;">Semana 3–4 · 29/04–12/05</p>
+        <p style="font-size:15px;font-weight:800;color:#f1f5f9;margin-top:3px;">Conversão B2B</p>
+        <p style="font-size:11px;color:#64748b;margin-top:2px;">Alinhar o site com quem realmente compra</p>
+      </div>
+      <div style="padding:14px 18px;display:flex;flex-direction:column;gap:9px;flex:1;overflow:hidden;">
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Novo hero mobile-first: Anéis → Retentores → Gaxetas</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Botão "Solicitar Orçamento" em todos os produtos</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Filtros de categoria acima da listagem</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Checkout sem cadastro obrigatório</span></div>
+        <div style="margin-top:auto;padding:10px 12px;background:rgba(245,158,11,.06);border-radius:8px;font-size:12px;color:#fcd34d;"><strong>Meta:</strong> Scroll &gt;55% · Drop checkout &lt;35%</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid rgba(59,130,246,.2);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:0;">
+      <div style="background:rgba(59,130,246,.08);padding:12px 18px;flex-shrink:0;">
+        <p style="font-size:11px;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.12em;">Semana 5–7 · 13–29/05</p>
+        <p style="font-size:15px;font-weight:800;color:#f1f5f9;margin-top:3px;">Crescimento</p>
+        <p style="font-size:11px;color:#64748b;margin-top:2px;">Ativar tráfego pago com base saudável</p>
+      </div>
+      <div style="padding:14px 18px;display:flex;flex-direction:column;gap:9px;flex:1;overflow:hidden;">
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Pixel do Google + listas de remarketing</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>Reativar campanhas com proteção anti-fraude</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>E-mail automático para os 52 leads captados</span></div>
+        <div style="font-size:13px;color:#64748b;display:flex;gap:8px;line-height:1.45;">□<span>PDFs de specs nos 5 produtos mais acessados</span></div>
+        <div style="margin-top:auto;padding:10px 12px;background:rgba(59,130,246,.06);border-radius:8px;font-size:12px;color:#93c5fd;"><strong>Meta:</strong> Campanhas ativas · Pixel instalado</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  13 — METAS PÓS-REESTRUTURAÇÃO
+══════════════════════════════════════════════════════ -->
+<div class="slide s-dark">
+  <div class="eyebrow green">O que muda nos números</div>
+  <h2 class="slide-title">De onde estamos <span class="green">para onde vamos.</span></h2>
+  <div class="divider green"></div>
+  <table class="plan">
+    <thead>
+      <tr>
+        <th>Métrica</th>
+        <th style="text-align:center;">Hoje</th>
+        <th style="text-align:center;">→</th>
+        <th style="text-align:center;">Meta 45 dias</th>
+        <th>O que muda</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-m">Performance mobile (Google)</td>
+        <td style="text-align:center;" class="td-now-bad">45 / 100</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">&gt; 85 / 100</td>
+        <td class="td-r">Imagens WebP + scripts diferidos</td>
+      </tr>
+      <tr>
+        <td class="td-m">LCP mobile</td>
+        <td style="text-align:center;" class="td-now-bad">9,7s</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">&lt; 2,5s</td>
+        <td class="td-r">Otimização de imagens + CDN</td>
+      </tr>
+      <tr>
+        <td class="td-m">Sessões de bot</td>
+        <td style="text-align:center;" class="td-now-bad">44%</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">&lt; 10%</td>
+        <td class="td-r">Cloudflare ativado</td>
+      </tr>
+      <tr>
+        <td class="td-m">Scroll depth médio</td>
+        <td style="text-align:center;" class="td-now-ok">45%</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">&gt; 65%</td>
+        <td class="td-r">Hero mobile-first + filtros no topo</td>
+      </tr>
+      <tr>
+        <td class="td-m">Drop carrinho → checkout</td>
+        <td style="text-align:center;" class="td-now-bad">61%</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">&lt; 35%</td>
+        <td class="td-r">Checkout sem cadastro obrigatório</td>
+      </tr>
+      <tr>
+        <td class="td-m">Conversão e-commerce</td>
+        <td style="text-align:center;" class="td-now-bad">0,48%</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">&gt; 1,5%</td>
+        <td class="td-r">Fluxo B2B + checkout corrigido</td>
+      </tr>
+      <tr>
+        <td class="td-m">Leads com follow-up</td>
+        <td style="text-align:center;" class="td-now-bad">0%</td>
+        <td style="text-align:center;color:#334155;">→</td>
+        <td style="text-align:center;" class="td-goal">100%</td>
+        <td class="td-r">E-mail automático ativado</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  14 — ENCERRAMENTO / CTA
+══════════════════════════════════════════════════════ -->
+<div class="slide s-capa">
+  <div class="noise"></div>
+  <div class="glow" style="background:radial-gradient(circle,rgba(34,197,94,.1) 0%,transparent 65%);"></div>
+  <div style="position:relative;z-index:2;text-align:center;max-width:760px;padding:0 40px;">
+    <div class="pill green" style="margin-bottom:28px;">Próximos Passos</div>
+    <h1 class="hero" style="font-size:52px;margin-bottom:20px;">O problema está<br>diagnosticado.<br><span style="color:#22c55e;">A solução tem 45 dias.</span></h1>
+    <p class="lead" style="margin:0 auto 40px;text-align:center;font-size:16px;">Cada semana sem ação é mais uma semana com 80% dos usuários mobile nunca chegando nos produtos, e 61% dos carrinhos sendo abandonados sem recuperação.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto;">
+      <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;text-align:left;">
+        <span style="font-size:20px;flex-shrink:0;">⚡</span>
+        <span style="font-size:14px;color:#94a3b8;"><strong style="color:#f1f5f9;">Esta semana:</strong> Cloudflare + WebP nas categorias principais</span>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;text-align:left;">
+        <span style="font-size:20px;flex-shrink:0;">🎯</span>
+        <span style="font-size:14px;color:#94a3b8;"><strong style="color:#f1f5f9;">Semana 3–4:</strong> Novo hero mobile + CTA de orçamento nos produtos</span>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;text-align:left;">
+        <span style="font-size:20px;flex-shrink:0;">📈</span>
+        <span style="font-size:14px;color:#94a3b8;"><strong style="color:#f1f5f9;">Semana 5–7:</strong> Campanhas reativadas com base saneada</span>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#1e293b;margin-top:36px;">D.O.M Suprimentos Industriais · Análise Clarity · Abril 2026</p>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <button onclick="go(-1)">←</button>
+  <span class="counter" id="counter">1 / 14</span>
+  <button onclick="go(1)">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const bar    = document.getElementById('bar');
+const ctr    = document.getElementById('counter');
+const total  = slides.length;
+let cur = 0;
+
+function go(dir){
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('prev');
+  const old = cur;
+  cur = Math.max(0, Math.min(total-1, cur+dir));
+  setTimeout(()=>slides[old].classList.remove('prev'), 450);
+  slides[cur].classList.add('active');
+  update();
+}
+
+function update(){
+  bar.style.width = ((cur+1)/total*100)+'%';
+  ctr.textContent = (cur+1)+' / '+total;
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(1);}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(-1);}
+  if(e.key==='f'||e.key==='F'){!document.fullscreenElement?document.documentElement.requestFullscreen():document.exitFullscreen();}
+  if(e.key==='Home'){cur=0;slides.forEach(s=>s.classList.remove('active','prev'));slides[0].classList.add('active');update();}
+  if(e.key==='End'){cur=total-1;slides.forEach(s=>s.classList.remove('active','prev'));slides[total-1].classList.add('active');update();}
+});
+
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].clientX;if(Math.abs(dx)>50)go(dx>0?1:-1);});
+
+update();
+</script>
+</body>
+</html>
