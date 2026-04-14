@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Samech FEIMEC 2026 — AD 1: ESTAMOS AQUI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111;
+      font-family: 'Poppins', sans-serif;
+      padding: 48px 32px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 48px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .format-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .format-label {
+      color: #8A9BB0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Scale wrappers — 25% do tamanho real */
+    .story-wrapper   { width: 270px;  height: 480px;  overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .feed-wrapper    { width: 270px;  height: 337px;  overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .display-wrapper { width: 480px;  height: 270px;  overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+
+    /* Frames reais — serão escalados via transform */
+    .story-frame   { width: 1080px; height: 1920px; transform: scale(0.25); transform-origin: top left; position: relative; overflow: hidden; }
+    .feed-frame    { width: 1080px; height: 1350px; transform: scale(0.25); transform-origin: top left; position: relative; overflow: hidden; }
+    .display-frame { width: 1920px; height: 1080px; transform: scale(0.25); transform-origin: top left; position: relative; overflow: hidden; }
+
+    /* Background industrial */
+    .bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 40%, #2e2e2e 0%, #181818 45%, #0a0a0a 100%);
+    }
+
+    /* Overlay Samech: branco + mix-blend-multiply + opacity 0.69 */
+    .overlay {
+      position: absolute; inset: 0;
+      background: #fff;
+      mix-blend-mode: multiply;
+      opacity: 0.69;
+      pointer-events: none;
+    }
+
+    /* Logo container: bg branco, border-radius 18, padding 13, gap 23 */
+    .logo-box {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 23px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 13px;
+    }
+
+    /* Bloco de texto — coluna vertical com gaps */
+    .text-block {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Headline: ExtraBold, branco, uppercase, line-height tight */
+    .headline {
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 0.88;        /* tight sem sobreposição no browser */
+      width: 100%;
+    }
+
+    /* Subheadline: SemiBold, vermelho, alinhado à direita */
+    .subheadline {
+      color: #ED1D26;
+      font-weight: 600;
+      text-align: right;
+      line-height: 1.2;
+      width: 100%;
+    }
+
+    /* Info box: bg semi-transparente, rounded 14, padding */
+    .info-box {
+      background: rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 14px 18px;
+      width: 100%;
+    }
+
+    .info-text {
+      color: #fff;
+      font-weight: 500;
+      text-align: right;
+      line-height: 1.45;
+      width: 100%;
+    }
+
+    /* CTA: branco, texto preto, SemiBold — centro */
+    .cta-wrap {
+      text-align: center;
+      width: 100%;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: #fff;
+      color: #0a0a0a;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Footer: SemiBold, branco, centralizado */
+    .footer-text {
+      position: absolute;
+      left: 80px; right: 80px;
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       STORY 9:16 — 1080 × 1920
+       Logo: top-center, y=187
+       Texto: x=186, y=480, w=708
+       Safe zone texto: y=350–1050
+  ===================================================== -->
+  <div class="format-group">
+    <div class="format-label">Story 9:16 — 1080 × 1920</div>
+    <div class="story-wrapper">
+      <div class="story-frame">
+        <div class="bg"></div>
+        <div class="overlay"></div>
+
+        <!-- Logo: centro horizontal, y=187 -->
+        <!-- Container w = 231+23+227+13+13 = 507px | x = (1080−507)/2 = 286 -->
+        <div class="logo-box" style="left:286px; top:187px;">
+          <img src="../.claude/skills/Clientes/Samech/samech.svg"  width="231" height="62" alt="Samech Vedações">
+          <img src="../.claude/skills/Clientes/Samech/oringone.svg" width="227" height="62" alt="OringOne">
+        </div>
+
+        <!-- Bloco de texto: x=186, y=480, w=708 -->
+        <div class="text-block" style="left:186px; top:480px; width:708px;">
+          <div class="headline" style="font-size:150px;">ESTAMOS AQUI</div>
+          <div class="subheadline" style="font-size:37px;">Estande M016 — FEIMEC 2026</div>
+          <div class="info-box">
+            <div class="info-text" style="font-size:29px;">Vedações sob medida, O-rings de grandes dimensões e diagnóstico técnico na hora. Passe 5 minutos com a gente.</div>
+          </div>
+          <div class="cta-wrap">
+            <span class="cta-btn" style="font-size:32px; padding:20px 56px;">Vir ao estande agora</span>
+          </div>
+        </div>
+
+        <!-- Footer: y=1690 -->
+        <div class="footer-text" style="top:1690px; font-size:25px;">
+          FEIMEC 2026 &nbsp;·&nbsp; 05 A 09 DE MAIO &nbsp;·&nbsp; SÃO PAULO EXPO
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       FEED 4:5 — 1080 × 1350
+       Logo: bottom-right, x=502, y=1190
+       Texto: x=186, y=120, w=708
+       Safe zone texto: y=100–780
+  ===================================================== -->
+  <div class="format-group">
+    <div class="format-label">Feed 4:5 — 1080 × 1350</div>
+    <div class="feed-wrapper">
+      <div class="feed-frame">
+        <div class="bg"></div>
+        <div class="overlay"></div>
+
+        <!-- Logo: x=502, y=1190 -->
+        <div class="logo-box" style="left:502px; top:1190px;">
+          <img src="../.claude/skills/Clientes/Samech/samech.svg"  width="231" height="62" alt="Samech Vedações">
+          <img src="../.claude/skills/Clientes/Samech/oringone.svg" width="227" height="62" alt="OringOne">
+        </div>
+
+        <!-- Bloco de texto: x=186, y=120, w=708 -->
+        <div class="text-block" style="left:186px; top:120px; width:708px;">
+          <div class="headline" style="font-size:150px;">ESTAMOS AQUI</div>
+          <div class="subheadline" style="font-size:37px;">Estande M016 — FEIMEC 2026</div>
+          <div class="info-box">
+            <div class="info-text" style="font-size:29px;">Vedações sob medida, O-rings de grandes dimensões e diagnóstico técnico na hora. Passe 5 minutos com a gente.</div>
+          </div>
+          <div class="cta-wrap">
+            <span class="cta-btn" style="font-size:32px; padding:20px 56px;">Vir ao estande agora</span>
+          </div>
+        </div>
+
+        <!-- Footer: y=1090 -->
+        <div class="footer-text" style="top:1090px; font-size:25px;">
+          FEIMEC 2026 &nbsp;·&nbsp; 05 A 09 DE MAIO &nbsp;·&nbsp; SÃO PAULO EXPO
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       DISPLAY 16:9 — 1920 × 1080
+       Logo: top-left, x=57, y=84
+       Texto: x=829, y=140, w=780
+  ===================================================== -->
+  <div class="format-group" style="flex-basis:100%; align-items:center;">
+    <div class="format-label">Display 16:9 — 1920 × 1080</div>
+    <div class="display-wrapper">
+      <div class="display-frame">
+        <div class="bg"></div>
+        <div class="overlay"></div>
+
+        <!-- Logo: x=57, y=84 -->
+        <div class="logo-box" style="left:57px; top:84px;">
+          <img src="../.claude/skills/Clientes/Samech/samech.svg"  width="231" height="62" alt="Samech Vedações">
+          <img src="../.claude/skills/Clientes/Samech/oringone.svg" width="227" height="62" alt="OringOne">
+        </div>
+
+        <!-- Bloco de texto: x=829, y=140, w=780 -->
+        <div class="text-block" style="left:829px; top:140px; width:780px;">
+          <div class="headline" style="font-size:166px;">ESTAMOS AQUI</div>
+          <div class="subheadline" style="font-size:46px;">Estande M016 — FEIMEC 2026</div>
+          <div class="info-box">
+            <div class="info-text" style="font-size:35px;">Vedações sob medida, O-rings de grandes dimensões e diagnóstico técnico na hora. Passe 5 minutos com a gente.</div>
+          </div>
+          <div class="cta-wrap">
+            <span class="cta-btn" style="font-size:36px; padding:22px 62px;">Vir ao estande agora</span>
+          </div>
+        </div>
+
+        <!-- Footer: y=970 -->
+        <div class="footer-text" style="top:970px; font-size:34px;">
+          FEIMEC 2026 &nbsp;·&nbsp; 05 A 09 DE MAIO &nbsp;·&nbsp; SÃO PAULO EXPO
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

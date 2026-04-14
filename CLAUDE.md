@@ -82,6 +82,13 @@ Cria materiais **on e off** para campanhas pagas:
 | `/identidade` | `.claude/skills/Designer/identidade/SKILL.md` | Extrai e documenta identidade visual do cliente |
 | `/design-system` | `.claude/skills/Designer/design-system/SKILL.md` | Cria design system completo (tokens, componentes, preview HTML, exporta para Figma) |
 | `/figma-designer` | `.claude/skills/Designer/figma-designer/SKILL.md` | Regras e padrões para criação de layouts Figma via Plugin API — texto que preenche, sem overflow |
+
+### 📊 Analytics
+
+| Comando | Arquivo | O que faz |
+|---|---|---|
+| `/clarity` | `.claude/skills/Analytics/clarity/SKILL.md` | Analisa dados do Microsoft Clarity e gera plano de ação CRO priorizado |
+
 ### Quando usar qual skill
 
 **Vídeo:**
@@ -112,7 +119,10 @@ Cria materiais **on e off** para campanhas pagas:
 ```
 .claude/skills/Clientes/
 ├── global_ds.md         ← regras globais de performance (leitura obrigatória antes de qualquer criativo)
-└── samech.md            ← identidade + copy do cliente
+└── Samech/
+    ├── samech.md        ← identidade visual, design system, copies e campanhas ativas
+    ├── samech.svg       ← logo Samech Vedações (231×62 nos criativos)
+    └── oringone.svg     ← logo OringOne (227×62 nos criativos)
 ```
 
 ### Templates de prompts disponíveis (usados pelo `/prompts`)
