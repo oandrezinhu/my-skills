@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone Experience Day 2026 — 22 de Maio · São Paulo</title>
+  <meta name="description" content="O maior evento hands-on de iPhone do Brasil. 2.000 participantes, 24 demos ao vivo e 8 horas de experiências que você não vê em nenhum keynote.">
+  <meta property="og:title" content="iPhone Experience Day 2026">
+  <meta property="og:description" content="O dia em que você experimenta o que vem a seguir. 22 de maio · São Paulo.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1200&q=80">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            apple: {
+              black:   '#000000',
+              surface: '#141414',
+              card:    '#1C1C1E',
+              border:  '#2D2D2D',
+              muted:   '#6E6E73',
+              light:   '#F5F5F7',
+              blue:    '#0071E3',
+              'blue-hover': '#0077ED',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg:        #000000;
+      --surface:   #141414;
+      --card:      #1C1C1E;
+      --border:    #2D2D2D;
+      --muted:     #6E6E73;
+      --light:     #F5F5F7;
+      --blue:      #0071E3;
+      --blue-h:    #0077ED;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--light);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navbar ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+    }
+    #navbar.scrolled {
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── CTA Buttons ── */
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 980px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-primary:hover  { background: var(--blue-h); }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--light);
+      font-weight: 500;
+      border-radius: 980px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.05); }
+
+    /* ── Hero ── */
+    .hero-bg {
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,1) 100%),
+        url('https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center top;
+    }
+
+    /* ── Countdown ── */
+    .countdown-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ── Cards ── */
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(0,113,227,0.5);
+      transform: translateY(-3px);
+    }
+
+    .pricing-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: border-color 0.2s;
+    }
+    .pricing-card.featured {
+      border-color: var(--blue);
+      background: linear-gradient(145deg, #0A1A2E, #0C1C30);
+    }
+    .pricing-card:hover { border-color: var(--blue); }
+
+    /* ── FAQ Accordion ── */
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-trigger {
+      width: 100%; text-align: left;
+      background: transparent; border: none;
+      color: var(--light); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0;
+      font-size: 1rem; font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      transition: color 0.2s;
+    }
+    .faq-trigger:hover { color: #fff; }
+    .faq-icon { transition: transform 0.3s; color: var(--muted); flex-shrink: 0; margin-left: 16px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--blue); }
+    .faq-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+      color: var(--muted); line-height: 1.65; font-size: 0.95rem;
+    }
+    .faq-item.open .faq-body { max-height: 300px; padding-bottom: 20px; }
+
+    /* ── Schedule ── */
+    .schedule-item { border-left: 2px solid var(--border); padding-left: 20px; position: relative; }
+    .schedule-item::before {
+      content: '';
+      position: absolute; left: -5px; top: 6px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--blue);
+    }
+    .schedule-item.highlight { border-left-color: var(--blue); }
+
+    /* ── Fade-in animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Gradient text ── */
+    .gradient-text {
+      background: linear-gradient(90deg, #F5F5F7 0%, #a0c4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Sticky CTA Mobile ── */
+    #sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      z-index: 40;
+      display: none;
+    }
+    @media (max-width: 768px) { #sticky-cta { display: block; } }
+
+    /* ── Mobile menu ── */
+    #mobile-menu {
+      display: none;
+      position: fixed; top: 48px; left: 0; right: 0;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 49;
+    }
+    #mobile-menu.open { display: block; }
+
+    /* ── Section divider ── */
+    .section-rule { border-top: 1px solid var(--border); }
+
+    /* ── Stat card ── */
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    /* ── Badge ── */
+    .badge {
+      background: rgba(0,113,227,0.15);
+      border: 1px solid rgba(0,113,227,0.3);
+      color: #5eb5ff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 980px;
+      padding: 4px 12px;
+      display: inline-block;
+    }
+
+    /* ── Tag popular ── */
+    .tag-popular {
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 980px;
+      padding: 3px 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════
+       NAVBAR
+  ═════════════════════════════════════ -->
+  <nav id="navbar" class="px-4 md:px-8">
+    <div class="max-w-6xl mx-auto flex items-center justify-between h-12 md:h-14">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 text-apple-light font-semibold text-sm tracking-tight">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-white opacity-90">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        iPhone Experience Day
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-6 text-sm text-apple-muted">
+        <a href="#sobre" class="hover:text-white transition-colors">Sobre</a>
+        <a href="#programacao" class="hover:text-white transition-colors">Programação</a>
+        <a href="#ingressos" class="hover:text-white transition-colors">Ingressos</a>
+        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+      </div>
+
+      <!-- Desktop CTA -->
+      <a href="#ingressos" class="hidden md:block btn-primary text-sm px-5 py-2">
+        Garantir vaga
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburger" class="md:hidden text-apple-light p-1" aria-label="Menu">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4 text-sm">
+      <a href="#sobre"       class="py-2 text-apple-muted hover:text-white transition-colors" onclick="closeMobileMenu()">Sobre</a>
+      <a href="#programacao" class="py-2 text-apple-muted hover:text-white transition-colors" onclick="closeMobileMenu()">Programação</a>
+      <a href="#ingressos"   class="py-2 text-apple-muted hover:text-white transition-colors" onclick="closeMobileMenu()">Ingressos</a>
+      <a href="#faq"         class="py-2 text-apple-muted hover:text-white transition-colors" onclick="closeMobileMenu()">FAQ</a>
+      <a href="#ingressos"   class="btn-primary text-center py-3 text-sm mt-2" onclick="closeMobileMenu()">Garantir minha vaga</a>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       HERO
+  ═════════════════════════════════════ -->
+  <section class="hero-bg min-h-screen flex flex-col justify-end pb-16 md:pb-24 pt-32">
+    <div class="max-w-6xl mx-auto px-4 md:px-8 w-full">
+
+      <div class="reveal">
+        <span class="badge mb-5">22 de Maio de 2026 · São Paulo, SP</span>
+
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6 max-w-3xl">
+          O dia em que você experimenta <span class="gradient-text">o que vem a seguir.</span>
+        </h1>
+
+        <p class="text-apple-muted text-lg md:text-xl max-w-xl leading-relaxed mb-10">
+          Não é um keynote assistido de casa. É uma experiência ao vivo — câmera na mão, demo aberta, sem mediação.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-14">
+          <a href="#ingressos" class="btn-primary px-8 py-3.5 text-base text-center">
+            Quero garantir minha vaga
+          </a>
+          <a href="#sobre" class="btn-outline px-8 py-3.5 text-base text-center">
+            Ver programação completa
+          </a>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="reveal" style="transition-delay: 0.15s">
+        <p class="text-apple-muted text-xs uppercase tracking-widest mb-3 font-medium">Faltam</p>
+        <div class="flex gap-3" id="countdown">
+          <div class="countdown-box px-4 py-3 text-center min-w-[72px]">
+            <div class="text-2xl md:text-3xl font-bold text-white" id="cd-days">--</div>
+            <div class="text-apple-muted text-xs mt-1">dias</div>
+          </div>
+          <div class="countdown-box px-4 py-3 text-center min-w-[72px]">
+            <div class="text-2xl md:text-3xl font-bold text-white" id="cd-hours">--</div>
+            <div class="text-apple-muted text-xs mt-1">horas</div>
+          </div>
+          <div class="countdown-box px-4 py-3 text-center min-w-[72px]">
+            <div class="text-2xl md:text-3xl font-bold text-white" id="cd-mins">--</div>
+            <div class="text-apple-muted text-xs mt-1">min</div>
+          </div>
+          <div class="countdown-box px-4 py-3 text-center min-w-[72px]">
+            <div class="text-2xl md:text-3xl font-bold text-white" id="cd-secs">--</div>
+            <div class="text-apple-muted text-xs mt-1">seg</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       SOBRE / STATS
+  ═════════════════════════════════════ -->
+  <section id="sobre" class="py-20 md:py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+
+      <div class="reveal text-center mb-16">
+        <span class="badge mb-4">Sobre o evento</span>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-5">
+          O maior evento hands-on de iPhone do Brasil.
+        </h2>
+        <p class="text-apple-muted text-lg max-w-2xl mx-auto leading-relaxed">
+          Um dia inteiro dedicado a quem leva o iPhone a sério — desenvolvedores, fotógrafos, criadores de conteúdo e entusiastas que querem ir além do manual.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 reveal">
+        <div class="stat-card p-8 text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">2.000<span class="text-blue-400">+</span></div>
+          <div class="text-apple-muted text-sm">participantes esperados</div>
+        </div>
+        <div class="stat-card p-8 text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">24</div>
+          <div class="text-apple-muted text-sm">demos hands-on ao vivo</div>
+        </div>
+        <div class="stat-card p-8 text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">8h</div>
+          <div class="text-apple-muted text-sm">de programação contínua</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       EXPERIÊNCIAS / FEATURES
+  ═════════════════════════════════════ -->
+  <section class="py-20 md:py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+
+      <div class="reveal text-center mb-14">
+        <span class="badge mb-4">O que você vai vivenciar</span>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight">
+          Quatro experiências que você<br class="hidden md:block"> não vê em nenhum keynote.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Card 1 -->
+        <div class="feature-card p-8 reveal">
+          <div class="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center mb-5">
+            <i data-lucide="camera" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Fotografia que você precisa ver de perto</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            Sessões rotativas com iPhone 16 Pro em mão — modos Cinema, Macro e Action disponíveis para testar em cenários montados especialmente para o evento. Você fotografa, ninguém fotografa por você.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card p-8 reveal" style="transition-delay: 0.1s">
+          <div class="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center mb-5">
+            <i data-lucide="lock" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Privacidade como nunca foi explicada</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            Workshop com especialistas em segurança mostrando, na prática, o que o iPhone faz em segundo plano para proteger seus dados — e o que a concorrência não faz.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card p-8 reveal" style="transition-delay: 0.2s">
+          <div class="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center mb-5">
+            <i data-lucide="layers" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Integração Apple que ninguém te contou</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            iPhone + Mac + Watch + Apple TV operando como um único sistema. Demo ao vivo dos fluxos que transformam o jeito de trabalhar — Handoff, Sidecar, AirPlay 2, Continuity Camera.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="feature-card p-8 reveal" style="transition-delay: 0.3s">
+          <div class="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center mb-5">
+            <i data-lucide="accessibility" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Acessibilidade na prática, não no discurso</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            Demo guiada por usuários reais mostrando como os recursos de acessibilidade do iPhone mudam vidas — Voice Control, AssistiveTouch e Live Captions sendo usados de verdade.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       PROGRAMAÇÃO
+  ═════════════════════════════════════ -->
+  <section id="programacao" class="py-20 md:py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+
+      <div class="reveal mb-14">
+        <span class="badge mb-4">22 de Maio de 2026</span>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight">
+          Programação do dia
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 reveal">
+
+        <div class="space-y-8">
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">09:00</p>
+            <p class="font-medium text-white">Credenciamento e boas-vindas</p>
+            <p class="text-apple-muted text-sm mt-1">Café, kit do participante e open networking.</p>
+          </div>
+          <div class="schedule-item highlight">
+            <p class="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">10:00</p>
+            <p class="font-medium text-white">Conferência de abertura</p>
+            <p class="text-apple-muted text-sm mt-1">O estado do iPhone em 2026 — o que mudou, o que está por vir.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">11:30</p>
+            <p class="font-medium text-white">Demos hands-on — 1ª rodada</p>
+            <p class="text-apple-muted text-sm mt-1">6 estações simultâneas. Grupos rotativos de 20 min cada.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">13:00</p>
+            <p class="font-medium text-white">Almoço e networking</p>
+            <p class="text-apple-muted text-sm mt-1">Incluído nos ingressos Professional e VIP.</p>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">14:30</p>
+            <p class="font-medium text-white">Demos hands-on — 2ª rodada</p>
+            <p class="text-apple-muted text-sm mt-1">4 workshops especializados em paralelo (vagas limitadas por ingresso).</p>
+          </div>
+          <div class="schedule-item highlight">
+            <p class="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">16:00</p>
+            <p class="font-medium text-white">Painel: O futuro do iOS</p>
+            <p class="text-apple-muted text-sm mt-1">Discussão aberta com devs e criadores sobre para onde o ecossistema Apple está indo.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">17:30</p>
+            <p class="font-medium text-white">Encerramento e sorteios</p>
+            <p class="text-apple-muted text-sm mt-1">Surpresas para quem ficou até o fim.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">19:00</p>
+            <p class="font-medium text-white">Jantar VIP <span class="text-apple-muted text-xs font-normal">(apenas VIP)</span></p>
+            <p class="text-apple-muted text-sm mt-1">Mesa reservada com palestrantes. Vagas esgotam primeiro.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       INGRESSOS
+  ═════════════════════════════════════ -->
+  <section id="ingressos" class="py-20 md:py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+
+      <div class="reveal text-center mb-14">
+        <span class="badge mb-4">Ingressos</span>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+          Escolha como você quer estar lá.
+        </h2>
+        <p class="text-apple-muted text-lg max-w-xl mx-auto">
+          Três opções. Todas incluem acesso às demos abertas. A diferença está em o quanto fundo você quer ir.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal">
+
+        <!-- Visitante -->
+        <div class="pricing-card p-8 flex flex-col">
+          <p class="text-apple-muted text-sm font-medium mb-2">Visitante</p>
+          <div class="flex items-end gap-1 mb-6">
+            <span class="text-4xl font-bold text-white">R$&nbsp;197</span>
+            <span class="text-apple-muted text-sm mb-1">/ pessoa</span>
+          </div>
+          <ul class="space-y-3 text-sm text-apple-muted flex-1 mb-8">
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Acesso ao evento completo</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Todas as demos abertas</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Conferência de abertura</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Painel de encerramento</li>
+            <li class="flex gap-2 opacity-40"><i data-lucide="x" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>Workshops especializados</li>
+            <li class="flex gap-2 opacity-40"><i data-lucide="x" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>Almoço incluído</li>
+          </ul>
+          <a href="#" class="btn-outline text-center py-3 text-sm">Comprar ingresso</a>
+        </div>
+
+        <!-- Professional -->
+        <div class="pricing-card featured p-8 flex flex-col relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span class="tag-popular">Mais escolhido</span>
+          </div>
+          <p class="text-blue-300 text-sm font-medium mb-2">Professional</p>
+          <div class="flex items-end gap-1 mb-6">
+            <span class="text-4xl font-bold text-white">R$&nbsp;397</span>
+            <span class="text-apple-muted text-sm mb-1">/ pessoa</span>
+          </div>
+          <ul class="space-y-3 text-sm text-apple-muted flex-1 mb-8">
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Tudo do Visitante</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>4 workshops especializados</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Almoço e café da tarde</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Kit exclusivo do evento</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Gravações das sessões</li>
+            <li class="flex gap-2 opacity-40"><i data-lucide="x" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>Jantar com palestrantes</li>
+          </ul>
+          <a href="#" class="btn-primary text-center py-3 text-sm">Quero o Professional</a>
+        </div>
+
+        <!-- VIP -->
+        <div class="pricing-card p-8 flex flex-col">
+          <p class="text-apple-muted text-sm font-medium mb-2">VIP</p>
+          <div class="flex items-end gap-1 mb-6">
+            <span class="text-4xl font-bold text-white">R$&nbsp;797</span>
+            <span class="text-apple-muted text-sm mb-1">/ pessoa</span>
+          </div>
+          <ul class="space-y-3 text-sm text-apple-muted flex-1 mb-8">
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Tudo do Professional</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Área exclusiva VIP</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Jantar com palestrantes</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Sessão de perguntas privada</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>Prioridade em todas as demos</li>
+            <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5"></i>30 vagas no total</li>
+          </ul>
+          <a href="#" class="btn-outline text-center py-3 text-sm">Comprar VIP</a>
+        </div>
+
+      </div>
+
+      <p class="text-center text-apple-muted text-sm mt-8 reveal">
+        Pagamento via cartão, Pix ou boleto · Parcelamento em até 6× sem juros
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       FAQ
+  ═════════════════════════════════════ -->
+  <section id="faq" class="py-20 md:py-28 section-rule">
+    <div class="max-w-3xl mx-auto px-4 md:px-8">
+
+      <div class="reveal text-center mb-12">
+        <span class="badge mb-4">FAQ</span>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Perguntas frequentes</h2>
+      </div>
+
+      <div class="reveal" id="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            O evento inclui refeições?
+            <i data-lucide="plus" class="faq-icon w-5 h-5"></i>
+          </button>
+          <div class="faq-body">
+            Café da manhã e lanche da tarde estão incluídos em todos os ingressos. Almoço completo está incluído nos ingressos Professional e VIP. O jantar de encerramento é exclusivo para o ingresso VIP.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            Preciso levar meu próprio iPhone para participar?
+            <i data-lucide="plus" class="faq-icon w-5 h-5"></i>
+          </button>
+          <div class="faq-body">
+            Não. Todos os iPhones utilizados nas demos são fornecidos pelo evento — iPhone 16 Pro e iPhone 16 Pro Max com memória limpa. Se quiser testar com seu próprio aparelho em sessões específicas, pode trazer — mas não é obrigatório.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            As sessões são em inglês?
+            <i data-lucide="plus" class="faq-icon w-5 h-5"></i>
+          </button>
+          <div class="faq-body">
+            Não. Toda a programação é em português. Palestrantes internacionais (se houver) terão tradução simultânea disponível. Nenhuma sessão exige inglês como pré-requisito.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            Posso cancelar ou transferir meu ingresso?
+            <i data-lucide="plus" class="faq-icon w-5 h-5"></i>
+          </button>
+          <div class="faq-body">
+            Cancelamentos com reembolso total são aceitos até 30 dias antes do evento. Entre 30 e 7 dias, reembolso de 50%. Abaixo de 7 dias, sem reembolso — mas a transferência de nome é gratuita até 48h antes.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            Como chegar ao local do evento?
+            <i data-lucide="plus" class="faq-icon w-5 h-5"></i>
+          </button>
+          <div class="faq-body">
+            O Centro de Convenções Frei Caneca fica a 5 minutos a pé da estação Consolação do Metrô (linha 2 Verde). Há estacionamento no local com valor à parte. Uber e 99 têm ponto de embarque/desembarque exclusivo na entrada lateral.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            As gravações das sessões ficam disponíveis depois?
+            <i data-lucide="plus" class="faq-icon w-5 h-5"></i>
+          </button>
+          <div class="faq-body">
+            As gravações das sessões principais ficam disponíveis para ingressos Professional e VIP por 90 dias após o evento. As demos hands-on não são gravadas — são experiências exclusivas presenciais.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       CTA FINAL
+  ═════════════════════════════════════ -->
+  <section class="py-24 md:py-32 section-rule">
+    <div class="max-w-3xl mx-auto px-4 md:px-8 text-center">
+      <div class="reveal">
+        <p class="text-apple-muted text-sm font-semibold uppercase tracking-widest mb-5">22 de Maio de 2026 · São Paulo</p>
+        <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.05]">
+          Não existe replay de experiência.
+        </h2>
+        <p class="text-apple-muted text-lg max-w-lg mx-auto leading-relaxed mb-10">
+          Você pode assistir ao keynote em casa. Mas segurar o iPhone e testar você mesmo, ao vivo — isso só acontece aqui, neste dia.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#ingressos" class="btn-primary px-10 py-4 text-base">
+            Quero minha vaga agora
+          </a>
+          <a href="#programacao" class="btn-outline px-10 py-4 text-base">
+            Ver a programação
+          </a>
+        </div>
+        <p class="text-apple-muted text-xs mt-6 opacity-60">Vagas limitadas · Sem fila no dia</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       FOOTER
+  ═════════════════════════════════════ -->
+  <footer class="section-rule py-10">
+    <div class="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-apple-muted text-sm">
+      <p>© 2026 iPhone Experience Day · São Paulo, Brasil</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white transition-colors">Termos</a>
+        <a href="#" class="hover:text-white transition-colors">Privacidade</a>
+        <a href="#" class="hover:text-white transition-colors">Contato</a>
+      </div>
+      <p class="opacity-50 text-xs">Evento independente. Não associado à Apple Inc.</p>
+    </div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════
+       STICKY CTA MOBILE
+  ═════════════════════════════════════ -->
+  <div id="sticky-cta">
+    <a href="#ingressos" class="btn-primary block text-center py-3.5 text-sm">
+      Garantir minha vaga
+    </a>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       SCRIPTS
+  ═════════════════════════════════════ -->
+  <script>
+    // ── Init Lucide icons ──
+    lucide.createIcons();
+
+    // ── Navbar scroll effect ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 30) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ── Mobile menu toggle ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      hamburger.innerHTML = menuOpen
+        ? '<i data-lucide="x" class="w-5 h-5"></i>'
+        : '<i data-lucide="menu" class="w-5 h-5"></i>';
+      lucide.createIcons();
+    });
+
+    function closeMobileMenu() {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      hamburger.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+      lucide.createIcons();
+    }
+
+    // ── Countdown timer ──
+    const eventDate = new Date('2026-05-22T09:00:00-03:00');
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = eventDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML =
+          '<span class="text-blue-400 text-xl font-semibold">O evento começou!</span>';
+        return;
+      }
+
+      const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent  = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0');
+      document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ── FAQ Accordion ──
+    function toggleFaq(trigger) {
+      const item = trigger.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+
+      // Open clicked (if wasn't open)
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ── Reveal on scroll (IntersectionObserver) ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Sticky CTA hide when #ingressos is visible ──
+    const ingressosSection = document.getElementById('ingressos');
+    const stickyCta = document.getElementById('sticky-cta');
+
+    const stickyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        stickyCta.style.display = entry.isIntersecting ? 'none' : 'block';
+      });
+    }, { threshold: 0.1 });
+
+    if (ingressosSection) stickyObserver.observe(ingressosSection);
+  </script>
+
+</body>
+</html>
