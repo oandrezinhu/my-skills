@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório CRO — D.O.M Suprimentos Industriais</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+    .gradient-header { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%); }
+    .card-red { border-left: 4px solid #ef4444; }
+    .card-yellow { border-left: 4px solid #f59e0b; }
+    .card-green { border-left: 4px solid #22c55e; }
+    .metric-card { background: linear-gradient(135deg, #1e293b, #0f172a); }
+    .timeline-line::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 32px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #3b82f6, #1e40af, transparent);
+    }
+    .badge-critical { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .badge-important { background: #fffbeb; color: #d97706; border: 1px solid #fed7aa; }
+    .badge-opportunity { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .week-card { transition: transform 0.2s ease; }
+    .week-card:hover { transform: translateY(-2px); }
+    @media print {
+      .no-print { display: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- HEADER -->
+  <div class="gradient-header text-white px-8 py-12">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-start justify-between flex-wrap gap-6">
+        <div>
+          <p class="text-blue-300 text-sm font-medium uppercase tracking-widest mb-2">Relatório CRO — Microsoft Clarity</p>
+          <h1 class="text-4xl font-bold mb-2">D.O.M Suprimentos Industriais</h1>
+          <p class="text-slate-300 text-lg">Análise comportamental + Plano de ação 45 dias</p>
+        </div>
+        <div class="text-right">
+          <p class="text-slate-400 text-sm">Período analisado</p>
+          <p class="text-white font-semibold">14/02/2026 – 14/04/2026</p>
+          <p class="text-slate-400 text-sm mt-2">Gerado em</p>
+          <p class="text-white font-semibold">14/04/2026</p>
+        </div>
+      </div>
+
+      <!-- MÉTRICAS TOPO -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
+        <div class="metric-card rounded-xl p-5 border border-slate-700">
+          <p class="text-slate-400 text-xs uppercase tracking-wider mb-1">Sessões totais</p>
+          <p class="text-3xl font-bold text-white">825</p>
+          <p class="text-red-400 text-sm mt-1">⚠ 366 são bots (44%)</p>
+        </div>
+        <div class="metric-card rounded-xl p-5 border border-slate-700">
+          <p class="text-slate-400 text-xs uppercase tracking-wider mb-1">Sessões reais</p>
+          <p class="text-3xl font-bold text-blue-400">~459</p>
+          <p class="text-slate-400 text-sm mt-1">Após filtro de bot</p>
+        </div>
+        <div class="metric-card rounded-xl p-5 border border-slate-700">
+          <p class="text-slate-400 text-xs uppercase tracking-wider mb-1">Scroll depth médio</p>
+          <p class="text-3xl font-bold text-amber-400">45%</p>
+          <p class="text-amber-400 text-sm mt-1">Ideal: &gt; 60%</p>
+        </div>
+        <div class="metric-card rounded-xl p-5 border border-slate-700">
+          <p class="text-slate-400 text-xs uppercase tracking-wider mb-1">Conversão e-comm</p>
+          <p class="text-3xl font-bold text-red-400">0,48%</p>
+          <p class="text-slate-400 text-sm mt-1">4 compras / 60 dias</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-6 py-12">
+
+    <!-- RESUMO EXECUTIVO -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+        <span class="text-2xl">📊</span> Resumo Executivo
+      </h2>
+      <p class="text-slate-600 leading-relaxed mb-4">
+        O site da D.O.M tem um problema de <strong>performance técnica que está destruindo a experiência mobile</strong> — e mobile representa 57% do tráfego. O LCP de 3,4s está acima do limiar do Google (2,5s), aumentando a rejeição e penalizando o ranqueamento orgânico que é, hoje, a <strong>única fonte de tráfego ativa</strong> (campanhas Google Ads estão pausadas).
+      </p>
+      <p class="text-slate-600 leading-relaxed mb-4">
+        Somado a isso, <strong>44% das sessões são bots</strong>, contaminando qualquer leitura de dado e gerando risco de fraude quando as campanhas voltarem.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        O dado mais revelador: o <strong>formulário de contato converte 13x mais que o e-commerce</strong> (6,3% vs 0,48%). O público é B2B e quer negociar orçamento, não comprar direto — mas o site foi estruturado como B2C. Esse desalinhamento é o maior freio de crescimento.
+      </p>
+
+      <!-- KPIs COMPARADOS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div class="bg-red-50 rounded-xl p-4 border border-red-100">
+          <p class="text-red-700 font-semibold text-sm mb-2">Performance</p>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">LCP</span><span class="text-red-600 font-bold">3,41s ⚠</span></div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">INP</span><span class="text-amber-600 font-bold">272ms</span></div>
+          <div class="flex justify-between text-sm"><span class="text-slate-600">Score geral</span><span class="text-amber-600 font-bold">77/100</span></div>
+        </div>
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
+          <p class="text-amber-700 font-semibold text-sm mb-2">Comportamento</p>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">Scroll médio</span><span class="text-amber-600 font-bold">45%</span></div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">Tempo ativo</span><span class="text-amber-600 font-bold">34% do total</span></div>
+          <div class="flex justify-between text-sm"><span class="text-slate-600">Dead clicks</span><span class="text-amber-600 font-bold">7,15%</span></div>
+        </div>
+        <div class="bg-green-50 rounded-xl p-4 border border-green-100">
+          <p class="text-green-700 font-semibold text-sm mb-2">Conversão</p>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">Formulário</span><span class="text-green-600 font-bold">6,30% ✓</span></div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">Carrinho</span><span class="text-slate-500">2,18%</span></div>
+          <div class="flex justify-between text-sm"><span class="text-slate-600">Compra</span><span class="text-red-600 font-bold">0,48%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROBLEMAS CRÍTICOS -->
+    <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+      <span>🔴</span> Problemas Críticos
+    </h2>
+
+    <!-- P1 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-red p-6 mb-4">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <span class="badge-critical text-xs font-semibold px-3 py-1 rounded-full">CRÍTICO</span>
+          <h3 class="text-lg font-bold text-slate-900 mt-2">LCP de 3,4s — Página lenta destruindo mobile</h3>
+        </div>
+        <span class="text-sm font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-200">Esta semana</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Dado</p>
+          <p class="text-slate-700 text-sm">LCP = 3,412s | INP = 272ms | Score = 77/100 | 57% do tráfego é mobile</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Causa Raiz</p>
+          <p class="text-slate-700 text-sm">Imagens não otimizadas + scripts bloqueando renderização. Google APIs dando timeout (erro no CSV).</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Impacto</p>
+          <p class="text-slate-700 text-sm">Rejeição antes de qualquer interação. Penaliza ranqueamento orgânico (72% do tráfego). Cada 100ms a mais de LCP = -1% de conversão.</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Ação</p>
+          <ul class="text-slate-700 text-sm space-y-1">
+            <li>→ Converter imagens das categorias para WebP</li>
+            <li>→ Lazy load em imagens abaixo da dobra</li>
+            <li>→ Deferir scripts não críticos (Google APIs)</li>
+            <li>→ Ativar CDN se ainda não tiver</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-4 bg-red-50 rounded-lg p-3 border border-red-100">
+        <p class="text-red-700 text-sm"><strong>Hipótese:</strong> Se LCP cair para &lt;2,5s, esperamos redução de 15–25% na rejeição mobile e recuperação de posicionamento orgânico em 30–45 dias.</p>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-red p-6 mb-4">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <span class="badge-critical text-xs font-semibold px-3 py-1 rounded-full">CRÍTICO</span>
+          <h3 class="text-lg font-bold text-slate-900 mt-2">44% de bots — Dados contaminados e risco de fraude nos anúncios</h3>
+        </div>
+        <span class="text-sm font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-200">Esta semana</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Dado</p>
+          <p class="text-slate-700 text-sm">366 sessões de bot de 825 totais. 295 de rede suspeita, 23 de fraude em anúncios (ppcAdFraud).</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Impacto</p>
+          <p class="text-slate-700 text-sm">Dados de heatmap e scroll distorcidos. Quando campanhas voltarem, budget será queimado por tráfego falso.</p>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Ação</p>
+          <ul class="text-slate-700 text-sm space-y-1">
+            <li>→ Ativar Cloudflare (plano gratuito já bloqueia a maioria dos scrapers e redes suspeitas)</li>
+            <li>→ Antes de reativar Google Ads: configurar IP exclusion e habilitar proteção de cliques inválidos</li>
+            <li>→ Instalar conversão por tag do Google (não só evento do GA) para validação real</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-4 bg-red-50 rounded-lg p-3 border border-red-100">
+        <p class="text-red-700 text-sm"><strong>Hipótese:</strong> Com filtro de bot ativo, as métricas reais vão melhorar visualmente sem nenhuma mudança na LP — a conversão "aparente" sobe porque os bots saem do denominador.</p>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-red p-6 mb-4">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <span class="badge-critical text-xs font-semibold px-3 py-1 rounded-full">CRÍTICO</span>
+          <h3 class="text-lg font-bold text-slate-900 mt-2">Erro JS "offsetcategories is not defined" — Funcionalidade quebrada</h3>
+        </div>
+        <span class="text-sm font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-200">Esta semana</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Dado</p>
+          <p class="text-slate-700 text-sm">61 sessões com JS errors. "offsetcategories is not defined" em 10 sessões (16% dos erros). "Script error" em 49 sessões (80%).</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Causa Raiz</p>
+          <p class="text-slate-700 text-sm">Variável não definida em script das páginas de categoria — provavelmente nas 3 mais acessadas: /aneis-de-vedacao/, /retentores/ ou /gaxetas/.</p>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Ação</p>
+          <ul class="text-slate-700 text-sm space-y-1">
+            <li>→ Abrir DevTools (F12 → Console) nas 3 páginas de categoria mais visitadas</li>
+            <li>→ Reproduzir o erro e identificar o script de origem</li>
+            <li>→ Corrigir a variável undefined (provavelmente relacionada a filtros de categoria)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-red p-6 mb-8">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <span class="badge-critical text-xs font-semibold px-3 py-1 rounded-full">CRÍTICO</span>
+          <h3 class="text-lg font-bold text-slate-900 mt-2">Scroll depth de 45% — CTAs não estão sendo vistos</h3>
+        </div>
+        <span class="text-sm font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-200">Esta semana</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Dado</p>
+          <p class="text-slate-700 text-sm">Scroll médio: 45,19% | Tempo ativo: 59s de 175s totais (34% do tempo é ativo — abaixo do limiar de 40%).</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Causa Raiz</p>
+          <p class="text-slate-700 text-sm">Páginas de categoria com listagem longa sem hierarquia visual. Usuário não encontra o produto rapidamente e desiste.</p>
+        </div>
+        <div class="md:col-span-2">
+          <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Ação</p>
+          <ul class="text-slate-700 text-sm space-y-1">
+            <li>→ Nas páginas de categoria (especialmente /aneis-de-vedacao/ — 228 sessões), posicionar filtros de produto no topo/lateral</li>
+            <li>→ Destacar os 3-4 produtos mais vendidos no início da listagem</li>
+            <li>→ Adicionar sticky filter no mobile para navegação sem perder o contexto</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PONTOS DE ATRITO -->
+    <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+      <span>🟡</span> Pontos de Atrito
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-yellow p-6">
+        <span class="badge-important text-xs font-semibold px-3 py-1 rounded-full">IMPORTANTE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-3">Funil: 61% de abandono entre carrinho e checkout</h3>
+        <div class="bg-amber-50 rounded-lg p-3 mb-3">
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">Adicionar ao carrinho</span><span class="font-bold text-slate-800">18 sessões</span></div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-slate-600">Iniciar checkout</span><span class="font-bold text-amber-600">7 sessões ↓61%</span></div>
+          <div class="flex justify-between text-sm"><span class="text-slate-600">Pedido completo</span><span class="font-bold text-red-600">4 sessões</span></div>
+        </div>
+        <p class="text-slate-600 text-sm"><strong>Ação:</strong> Adicionar compra como visitante + CTA de "Solicitar orçamento" nos produtos. O público B2B prefere negociar, não comprar direto.</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-yellow p-6">
+        <span class="badge-important text-xs font-semibold px-3 py-1 rounded-full">IMPORTANTE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-3">Busca interna é a 4ª página mais visitada</h3>
+        <p class="text-slate-600 text-sm mb-3">63 sessões usando /search/ indica falha na navegação por categorias. Usuário recorre à busca como escape — sinal de que o menu não entrega o produto pelo caminho visual.</p>
+        <p class="text-slate-600 text-sm"><strong>Ação:</strong> Auditar termos buscados no Search Console. Melhorar visibilidade da barra de busca no mobile e revisar estrutura do menu de categorias.</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-yellow p-6">
+        <span class="badge-important text-xs font-semibold px-3 py-1 rounded-full">IMPORTANTE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-3">Dead clicks em 7,15% das sessões</h3>
+        <p class="text-slate-600 text-sm mb-3">59 sessões clicando em elementos sem ação. Em e-commerce, o padrão mais comum é clicar em imagens de produto esperando zoom ou galeria.</p>
+        <p class="text-slate-600 text-sm"><strong>Ação:</strong> Ativar heatmap no Clarity e identificar os elementos. Implementar zoom/galeria nas imagens de produto.</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-yellow p-6">
+        <span class="badge-important text-xs font-semibold px-3 py-1 rounded-full">IMPORTANTE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-3">INP de 272ms — Página "trava" ao interagir</h3>
+        <p class="text-slate-600 text-sm mb-3">Acima do ideal de 200ms. A página parece lenta ao clicar em botões ou filtros — contribui para dead clicks e abandono silencioso.</p>
+        <p class="text-slate-600 text-sm"><strong>Ação:</strong> Deferir scripts não críticos e auditar event listeners pesados. Resolver em conjunto com a otimização do LCP.</p>
+      </div>
+    </div>
+
+    <!-- OPORTUNIDADES -->
+    <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+      <span>🟢</span> Oportunidades
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-green p-6">
+        <span class="badge-opportunity text-xs font-semibold px-3 py-1 rounded-full">OPORTUNIDADE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Right click 9,21% = público salvando specs</h3>
+        <p class="text-slate-600 text-sm">Comportamento B2B de coleta de dados técnicos. Disponibilizar PDF de especificações para download nos produtos qualifica o lead e reduz fricção.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-green p-6">
+        <span class="badge-opportunity text-xs font-semibold px-3 py-1 rounded-full">OPORTUNIDADE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">52 leads via formulário sem nutrição</h3>
+        <p class="text-slate-600 text-sm">91,9% são novos usuários. Não há remarketing ativo. Criar sequência básica de e-mail para quem preenche o formulário (catálogo + orçamento).</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 card-green p-6">
+        <span class="badge-opportunity text-xs font-semibold px-3 py-1 rounded-full">OPORTUNIDADE</span>
+        <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Samech enviou 13 sessões qualificadas</h3>
+        <p class="text-slate-600 text-sm">samechvedacoes.com.br aparece como referenciador. Tráfego qualificado do mesmo segmento industrial. Verificar posicionamento do link e otimizar LP de destino.</p>
+      </div>
+    </div>
+
+    <!-- PLANO DE 45 DIAS -->
+    <div class="bg-slate-900 rounded-2xl p-8 mb-8 text-white">
+      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
+        <span>📅</span> Plano de Ação — 45 Dias
+      </h2>
+      <p class="text-slate-400 mb-8">14 de abril a 29 de maio de 2026 — priorizado por impacto em conversão</p>
+
+      <!-- SEMANA 1-2 -->
+      <div class="relative mb-8 timeline-line">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 z-10">S1</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-1">
+              <h3 class="font-bold text-white">Semana 1–2 <span class="text-slate-400 font-normal text-sm">(14/04 – 28/04)</span></h3>
+              <span class="text-xs bg-red-900 text-red-300 px-2 py-0.5 rounded-full">Fundação técnica</span>
+            </div>
+            <p class="text-slate-400 text-sm mb-4">Eliminar os problemas que estão destruindo silenciosamente os dados e a experiência</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-800 rounded-xl p-4">
+                <p class="text-red-400 text-xs font-semibold uppercase mb-2">Dev</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Ativar Cloudflare (free) — bloquear bots e scrapers</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Converter imagens das 3 categorias principais para WebP</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Implementar lazy load em imagens abaixo da dobra</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Corrigir JS error "offsetcategories is not defined" nas páginas de categoria</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Deferir scripts não críticos (Google APIs com timeout)</li>
+                </ul>
+              </div>
+              <div class="bg-slate-800 rounded-xl p-4">
+                <p class="text-blue-400 text-xs font-semibold uppercase mb-2">Estratégia / Account</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Ativar heatmap de cliques e scroll no Clarity (se ainda não estiver)</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Levantar os termos mais buscados no Google Search Console</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Documentar a taxa de conversão atual (baseline) antes de qualquer mudança</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Definir objetivo da campanha para reativação: leads ou e-commerce?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-3 bg-red-900/30 rounded-lg p-3 border border-red-800">
+              <p class="text-red-300 text-sm"><strong>Meta da semana:</strong> LCP abaixo de 2,5s | Bots bloqueados | JS errors zerados nas categorias</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEMANA 3-4 -->
+      <div class="relative mb-8 timeline-line">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 z-10">S3</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-1">
+              <h3 class="font-bold text-white">Semana 3–4 <span class="text-slate-400 font-normal text-sm">(29/04 – 12/05)</span></h3>
+              <span class="text-xs bg-amber-900 text-amber-300 px-2 py-0.5 rounded-full">Conversão B2B</span>
+            </div>
+            <p class="text-slate-400 text-sm mb-4">Alinhar o site com o comportamento real do público — negociação, não compra impulsiva</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-800 rounded-xl p-4">
+                <p class="text-red-400 text-xs font-semibold uppercase mb-2">Dev + Designer</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Adicionar CTA "Solicitar Orçamento" nas páginas de produto (ao lado de "Comprar")</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Implementar zoom/galeria nas imagens de produto (resolver dead clicks)</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Posicionar filtros de categoria no topo da listagem (especialmente /aneis-de-vedacao/)</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Remover obrigatoriedade de cadastro no checkout (opção "comprar como visitante")</li>
+                </ul>
+              </div>
+              <div class="bg-slate-800 rounded-xl p-4">
+                <p class="text-blue-400 text-xs font-semibold uppercase mb-2">Copy + Estratégia</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Revisar menu de categorias com base nos termos mais buscados</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Reescrever headline das páginas de categoria (foco em especificação técnica, não genérico)</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Criar template de e-mail para lead que preenche o formulário</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-3 bg-amber-900/30 rounded-lg p-3 border border-amber-800">
+              <p class="text-amber-300 text-sm"><strong>Meta da semana:</strong> CTA de orçamento visível | Drop do carrinho abaixo de 40% | Scroll depth acima de 55%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEMANA 5-7 -->
+      <div class="relative mb-2">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 z-10">S5</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-1">
+              <h3 class="font-bold text-white">Semana 5–7 <span class="text-slate-400 font-normal text-sm">(13/05 – 29/05)</span></h3>
+              <span class="text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded-full">Tráfego pago + retenção</span>
+            </div>
+            <p class="text-slate-400 text-sm mb-4">Com a base técnica resolvida e o site alinhado ao B2B, preparar a reativação dos anúncios</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="bg-slate-800 rounded-xl p-4">
+                <p class="text-red-400 text-xs font-semibold uppercase mb-2">Dev + Ads</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Instalar pixel do Google para remarketing (configurar antes de reativar campanhas)</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Configurar IP exclusion e proteção de cliques inválidos no Google Ads</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Criar lista de remarketing para quem visitou /aneis-de-vedacao/ sem comprar</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Reativar campanha "Core Produtos" com landing page otimizada</li>
+                </ul>
+              </div>
+              <div class="bg-slate-800 rounded-xl p-4">
+                <p class="text-blue-400 text-xs font-semibold uppercase mb-2">Conteúdo + Nutrição</p>
+                <ul class="text-slate-300 text-sm space-y-2">
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Disponibilizar PDF de especificações técnicas nos 5 produtos mais visitados</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Ativar sequência de e-mail para leads do formulário</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Verificar e otimizar a página de destino do tráfego vindo da Samech</li>
+                  <li class="flex gap-2"><span class="text-slate-500 flex-shrink-0">□</span>Rodar análise de Clarity novamente e comparar com baseline</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-3 bg-blue-900/30 rounded-lg p-3 border border-blue-800">
+              <p class="text-blue-300 text-sm"><strong>Meta da semana:</strong> Campanhas reativadas com proteção de fraude | Pixel instalado | Primeiro relatório de comparação com baseline</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIPÓTESES A/B -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+        <span class="text-2xl">🧪</span> Hipóteses para Teste A/B
+        <span class="text-sm font-normal text-slate-500 ml-2">— ordenadas por potencial de impacto</span>
+      </h2>
+      <div class="space-y-4">
+        <div class="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">1</div>
+          <div>
+            <p class="font-semibold text-slate-800">CTA duplo no produto: "Comprar" + "Solicitar Orçamento"</p>
+            <p class="text-slate-600 text-sm mt-1">Se adicionar o botão de orçamento ao lado do carrinho, esperamos aumentar leads B2B em 40%+ porque o público industrial prefere negociar preço antes de fechar.</p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">2</div>
+          <div>
+            <p class="font-semibold text-slate-800">Checkout sem cadastro obrigatório</p>
+            <p class="text-slate-600 text-sm mt-1">Se permitir compra como visitante, esperamos reduzir o abandono de 61% entre carrinho e checkout, porque o cadastro é a maior barreira em compras B2B pontuais.</p>
+          </div>
+        </div>
+        <div class="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">3</div>
+          <div>
+            <p class="font-semibold text-slate-800">Filtros no topo das páginas de categoria</p>
+            <p class="text-slate-600 text-sm mt-1">Se reorganizar /aneis-de-vedacao/ com filtros acima da listagem, esperamos aumentar o scroll depth de 45% para 60%+ e elevar cliques em produto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTRICAS DE ACOMPANHAMENTO -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+        <span class="text-2xl">📈</span> Métricas para Acompanhar
+      </h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-slate-200">
+              <th class="text-left py-3 px-3 text-slate-500 font-semibold">Métrica</th>
+              <th class="text-center py-3 px-3 text-slate-500 font-semibold">Atual</th>
+              <th class="text-center py-3 px-3 text-slate-500 font-semibold">Meta 45 dias</th>
+              <th class="text-left py-3 px-3 text-slate-500 font-semibold">Responsável</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">LCP (Largest Contentful Paint)</td>
+              <td class="py-3 px-3 text-center text-red-600 font-bold">3,41s</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&lt; 2,5s</td>
+              <td class="py-3 px-3 text-slate-600">Dev</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">% de sessões de bot</td>
+              <td class="py-3 px-3 text-center text-red-600 font-bold">44%</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&lt; 10%</td>
+              <td class="py-3 px-3 text-slate-600">Dev (Cloudflare)</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">Scroll depth médio</td>
+              <td class="py-3 px-3 text-center text-amber-600 font-bold">45%</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&gt; 60%</td>
+              <td class="py-3 px-3 text-slate-600">Designer + Dev</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">Dead clicks</td>
+              <td class="py-3 px-3 text-center text-amber-600 font-bold">7,15%</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&lt; 3%</td>
+              <td class="py-3 px-3 text-slate-600">Designer</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">Envio de formulário</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">6,3%</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&gt; 8%</td>
+              <td class="py-3 px-3 text-slate-600">Copy + Designer</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">Drop carrinho → checkout</td>
+              <td class="py-3 px-3 text-center text-red-600 font-bold">61%</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&lt; 35%</td>
+              <td class="py-3 px-3 text-slate-600">Dev (checkout)</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">Conversão e-commerce</td>
+              <td class="py-3 px-3 text-center text-red-600 font-bold">0,48%</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&gt; 1,5%</td>
+              <td class="py-3 px-3 text-slate-600">Time completo</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-3 font-medium text-slate-800">Performance score</td>
+              <td class="py-3 px-3 text-center text-amber-600 font-bold">77/100</td>
+              <td class="py-3 px-3 text-center text-green-600 font-bold">&gt; 88/100</td>
+              <td class="py-3 px-3 text-slate-600">Dev</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="text-center text-slate-400 text-sm py-6 border-t border-slate-200">
+      <p>Relatório gerado com base nos dados do Microsoft Clarity — D.O.M Suprimentos Industriais</p>
+      <p class="mt-1">Período: 14/02/2026 – 14/04/2026 | Gerado em: 14/04/2026</p>
+    </div>
+  </div>
+
+</body>
+</html>

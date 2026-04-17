@@ -1,0 +1,1151 @@
+<!-- ═══════════════════════════════════════
+     BLOCO GREATPAGES — iPhone Experience Day 2026
+     Colar no editor → bloco HTML personalizado
+     ═══════════════════════════════════════ -->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  /* ── Reset de base (só dentro do escopo) ── */
+  .gp-iphone-event *, .gp-iphone-event *::before, .gp-iphone-event *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Variáveis CSS ── */
+  .gp-iphone-event {
+    --bg:      #000000;
+    --surface: #141414;
+    --card:    #1C1C1E;
+    --border:  #2D2D2D;
+    --muted:   #6E6E73;
+    --light:   #F5F5F7;
+    --blue:    #0071E3;
+    --blue-h:  #0077ED;
+    --blue-400: #60a5fa;
+    --blue-300: #93c5fd;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--light);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Classes custom (do original, escopadas) ── */
+  .gp-iphone-event .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 980px;
+    transition: background 0.25s, transform 0.15s, box-shadow 0.25s, letter-spacing 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 0 0 0 rgba(0,113,227,0);
+    position: relative;
+    overflow: hidden;
+  }
+  .gp-iphone-event .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .gp-iphone-event .btn-primary:hover {
+    background: var(--blue-h);
+    box-shadow: 0 6px 28px rgba(0,113,227,0.55), 0 0 0 3px rgba(0,113,227,0.18);
+    transform: translateY(-2px);
+    letter-spacing: 0.01em;
+  }
+  .gp-iphone-event .btn-primary:hover::after { opacity: 1; }
+  .gp-iphone-event .btn-primary:active { transform: scale(0.97) translateY(0); box-shadow: none; }
+
+  .gp-iphone-event .btn-outline {
+    border: 1px solid rgba(255,255,255,0.35);
+    color: var(--light);
+    font-weight: 500;
+    border-radius: 980px;
+    transition: border-color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.15s, color 0.2s;
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .gp-iphone-event .btn-outline::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 60%);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .gp-iphone-event .btn-outline:hover {
+    border-color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 4px 20px rgba(255,255,255,0.08), 0 0 0 3px rgba(255,255,255,0.07);
+    transform: translateY(-2px);
+    color: #fff;
+  }
+  .gp-iphone-event .btn-outline:hover::after { opacity: 1; }
+  .gp-iphone-event .btn-outline:active { transform: scale(0.97) translateY(0); }
+
+  .gp-iphone-event .hero-bg {
+    background-image:
+      linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,1) 100%),
+      url('https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center top;
+  }
+
+  .gp-iphone-event .countdown-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .gp-iphone-event .countdown-box:hover {
+    background: rgba(0,113,227,0.12);
+    border-color: rgba(0,113,227,0.4);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(0,113,227,0.2);
+  }
+
+  .gp-iphone-event .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .gp-iphone-event .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,113,227,0.6), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .gp-iphone-event .feature-card:hover {
+    border-color: rgba(0,113,227,0.45);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(0,113,227,0.15), 0 4px 16px rgba(0,0,0,0.4);
+    background: #212124;
+  }
+  .gp-iphone-event .feature-card:hover::before { transform: scaleX(1); }
+
+  .gp-iphone-event .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .gp-iphone-event .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,113,227,0.7), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .gp-iphone-event .pricing-card.featured {
+    border-color: var(--blue);
+    background: linear-gradient(145deg, #0A1A2E, #0C1C30);
+  }
+  .gp-iphone-event .pricing-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 12px 40px rgba(0,113,227,0.2), 0 4px 16px rgba(0,0,0,0.4);
+    transform: translateY(-4px);
+  }
+  .gp-iphone-event .pricing-card:hover::before { transform: scaleX(1); }
+  .gp-iphone-event .pricing-card.featured:hover {
+    box-shadow: 0 16px 56px rgba(0,113,227,0.35), 0 4px 16px rgba(0,0,0,0.5);
+  }
+
+  .gp-iphone-event .faq-item {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    border-radius: 8px;
+    padding: 0 8px;
+    margin: 0 -8px;
+  }
+  .gp-iphone-event .faq-item:hover { background: rgba(255,255,255,0.03); }
+  .gp-iphone-event .faq-item.open  { background: rgba(0,113,227,0.05); }
+  .gp-iphone-event .faq-trigger {
+    width: 100%; text-align: left;
+    background: transparent; border: none;
+    color: var(--light); cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 0;
+    font-size: 1.05rem; font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.2s, letter-spacing 0.2s;
+  }
+  .gp-iphone-event .faq-trigger:hover { color: #fff; letter-spacing: 0.005em; }
+  .gp-iphone-event .faq-item.open .faq-trigger { color: #fff; }
+  .gp-iphone-event .faq-icon {
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), color 0.2s;
+    color: var(--muted); flex-shrink: 0; margin-left: 16px;
+  }
+  .gp-iphone-event .faq-item.open .faq-icon { transform: rotate(45deg) scale(1.1); color: var(--blue); }
+  .gp-iphone-event .faq-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.25s;
+    color: var(--muted); line-height: 1.7; font-size: 1rem;
+  }
+  .gp-iphone-event .faq-item.open .faq-body { max-height: 300px; padding-bottom: 22px; }
+
+  .gp-iphone-event .schedule-item {
+    border-left: 2px solid var(--border);
+    padding-left: 20px;
+    position: relative;
+  }
+  .gp-iphone-event .schedule-item::before {
+    content: '';
+    position: absolute; left: -5px; top: 6px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blue);
+  }
+  .gp-iphone-event .schedule-item.highlight { border-left-color: var(--blue); }
+
+  .gp-iphone-event .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .gp-iphone-event .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gp-iphone-event .gradient-text {
+    background: linear-gradient(90deg, #F5F5F7 0%, #a0c4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gp-iphone-event .section-rule { border-top: 1px solid var(--border); }
+
+  .gp-iphone-event .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .gp-iphone-event .badge {
+    background: rgba(0,113,227,0.15);
+    border: 1px solid rgba(0,113,227,0.3);
+    color: #5eb5ff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 980px;
+    padding: 4px 12px;
+    display: inline-block;
+  }
+
+  .gp-iphone-event .tag-popular {
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 980px;
+    padding: 3px 10px;
+    display: inline-block;
+  }
+
+  /* ── Utilitários locais (tradução de Tailwind) ── */
+
+  /* Layout */
+  .gp-iphone-event .flex { display: flex; }
+  .gp-iphone-event .grid { display: grid; }
+  .gp-iphone-event .block { display: block; }
+  .gp-iphone-event .hidden { display: none; }
+  .gp-iphone-event .relative { position: relative; }
+  .gp-iphone-event .absolute { position: absolute; }
+  .gp-iphone-event .items-center { align-items: center; }
+  .gp-iphone-event .items-end { align-items: flex-end; }
+  .gp-iphone-event .justify-between { justify-content: space-between; }
+  .gp-iphone-event .justify-center { justify-content: center; }
+  .gp-iphone-event .flex-col { flex-direction: column; }
+  .gp-iphone-event .flex-1 { flex: 1; }
+  .gp-iphone-event .flex-shrink-0 { flex-shrink: 0; }
+  .gp-iphone-event .overflow-hidden { overflow: hidden; }
+
+  /* Gap */
+  .gp-iphone-event .gap-1 { gap: 0.25rem; }
+  .gp-iphone-event .gap-2 { gap: 0.5rem; }
+  .gp-iphone-event .gap-3 { gap: 0.75rem; }
+  .gp-iphone-event .gap-4 { gap: 1rem; }
+  .gp-iphone-event .gap-5 { gap: 1.25rem; }
+  .gp-iphone-event .gap-6 { gap: 1.5rem; }
+
+  /* Grid */
+  .gp-iphone-event .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+
+  /* Spacing vertical entre siblings */
+  .gp-iphone-event .space-y-8 > * + * { margin-top: 2rem; }
+  .gp-iphone-event .space-y-3 > * + * { margin-top: 0.75rem; }
+
+  /* Width / Height */
+  .gp-iphone-event .w-4  { width: 1rem; }
+  .gp-iphone-event .w-5  { width: 1.25rem; }
+  .gp-iphone-event .w-10 { width: 2.5rem; }
+  .gp-iphone-event .w-full { width: 100%; }
+  .gp-iphone-event .h-4  { height: 1rem; }
+  .gp-iphone-event .h-5  { height: 1.25rem; }
+  .gp-iphone-event .h-10 { height: 2.5rem; }
+  .gp-iphone-event .min-h-screen { min-height: 100vh; }
+  .gp-iphone-event .min-w-18 { min-width: 72px; } /* min-w-[72px] */
+  .gp-iphone-event .max-w-6xl { max-width: 72rem; }
+  .gp-iphone-event .max-w-3xl { max-width: 48rem; }
+  .gp-iphone-event .max-w-2xl { max-width: 42rem; }
+  .gp-iphone-event .max-w-xl  { max-width: 36rem; }
+  .gp-iphone-event .max-w-lg  { max-width: 32rem; }
+  .gp-iphone-event .mx-auto { margin-left: auto; margin-right: auto; }
+
+  /* Padding */
+  .gp-iphone-event .p-8   { padding: 2rem; }
+  .gp-iphone-event .px-4  { padding-left: 1rem; padding-right: 1rem; }
+  .gp-iphone-event .px-5  { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .gp-iphone-event .px-8  { padding-left: 2rem; padding-right: 2rem; }
+  .gp-iphone-event .px-10 { padding-left: 2.5rem; padding-right: 2.5rem; }
+  .gp-iphone-event .py-2  { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  .gp-iphone-event .py-3  { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .gp-iphone-event .py-35 { padding-top: 0.875rem; padding-bottom: 0.875rem; } /* py-3.5 */
+  .gp-iphone-event .py-4  { padding-top: 1rem; padding-bottom: 1rem; }
+  .gp-iphone-event .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .gp-iphone-event .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+  .gp-iphone-event .py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+  .gp-iphone-event .pb-16 { padding-bottom: 4rem; }
+  .gp-iphone-event .pt-20 { padding-top: 5rem; }
+
+  /* Margin */
+  .gp-iphone-event .mb-1  { margin-bottom: 0.25rem; }
+  .gp-iphone-event .mb-2  { margin-bottom: 0.5rem; }
+  .gp-iphone-event .mb-3  { margin-bottom: 0.75rem; }
+  .gp-iphone-event .mb-4  { margin-bottom: 1rem; }
+  .gp-iphone-event .mb-5  { margin-bottom: 1.25rem; }
+  .gp-iphone-event .mb-6  { margin-bottom: 1.5rem; }
+  .gp-iphone-event .mb-8  { margin-bottom: 2rem; }
+  .gp-iphone-event .mb-10 { margin-bottom: 2.5rem; }
+  .gp-iphone-event .mb-12 { margin-bottom: 3rem; }
+  .gp-iphone-event .mb-14 { margin-bottom: 3.5rem; }
+  .gp-iphone-event .mb-16 { margin-bottom: 4rem; }
+  .gp-iphone-event .mt-1  { margin-top: 0.25rem; }
+  .gp-iphone-event .mt-2  { margin-top: 0.5rem; }
+  .gp-iphone-event .mt-6  { margin-top: 1.5rem; }
+  .gp-iphone-event .mt-8  { margin-top: 2rem; }
+  .gp-iphone-event .mt-05 { margin-top: 0.125rem; } /* mt-0.5 */
+
+  /* Posicionamento */
+  .gp-iphone-event .top-neg3   { top: -0.75rem; }     /* -top-3 */
+  .gp-iphone-event .left-half  { left: 50%; }          /* left-1/2 */
+  .gp-iphone-event .translate-x-neg50 { transform: translateX(-50%); } /* -translate-x-1/2 */
+
+  /* Tipografia — escala aumentada +15% para compensar redução do GreatPages */
+  .gp-iphone-event .text-xs   { font-size: 0.875rem; }
+  .gp-iphone-event .text-sm   { font-size: 1rem; }
+  .gp-iphone-event .text-base { font-size: 1.125rem; }
+  .gp-iphone-event .text-lg   { font-size: 1.3rem; }
+  .gp-iphone-event .text-xl   { font-size: 1.45rem; }
+  .gp-iphone-event .text-2xl  { font-size: 1.75rem; }
+  .gp-iphone-event .text-3xl  { font-size: 2.15rem; }
+  .gp-iphone-event .text-4xl  { font-size: 2.6rem; }
+  .gp-iphone-event .text-5xl  { font-size: 3.4rem; }
+  .gp-iphone-event .text-6xl  { font-size: 4.3rem; }
+  .gp-iphone-event .font-normal    { font-weight: 400; }
+  .gp-iphone-event .font-medium    { font-weight: 500; }
+  .gp-iphone-event .font-semibold  { font-weight: 600; }
+  .gp-iphone-event .font-bold      { font-weight: 700; }
+  .gp-iphone-event .leading-105   { line-height: 1.05; }
+  .gp-iphone-event .leading-tight  { line-height: 1.25; }
+  .gp-iphone-event .leading-relaxed { line-height: 1.7; }
+  .gp-iphone-event .tracking-tight   { letter-spacing: -0.025em; }
+  .gp-iphone-event .tracking-wider   { letter-spacing: 0.05em; }
+  .gp-iphone-event .tracking-widest  { letter-spacing: 0.1em; }
+  .gp-iphone-event .uppercase     { text-transform: uppercase; }
+  .gp-iphone-event .text-center   { text-align: center; }
+  .gp-iphone-event .text-left     { text-align: left; }
+
+  /* Cores */
+  .gp-iphone-event .text-white        { color: #fff; }
+  .gp-iphone-event .text-apple-light  { color: var(--light); }
+  .gp-iphone-event .text-apple-muted  { color: var(--muted); }
+  .gp-iphone-event .text-blue-400     { color: var(--blue-400); }
+  .gp-iphone-event .text-blue-300     { color: var(--blue-300); }
+
+  .gp-iphone-event .bg-blue-tinted { background: rgba(30, 58, 138, 0.4); } /* bg-blue-900/40 */
+
+  /* Bordas */
+  .gp-iphone-event .rounded-xl   { border-radius: 0.75rem; }
+  .gp-iphone-event .rounded-full { border-radius: 9999px; }
+
+  /* Opacidade */
+  .gp-iphone-event .opacity-40 { opacity: 0.4; }
+  .gp-iphone-event .opacity-50 { opacity: 0.5; }
+  .gp-iphone-event .opacity-60 { opacity: 0.6; }
+
+  /* Hover */
+  .gp-iphone-event .hover-text-white:hover { color: #fff; }
+  .gp-iphone-event a.transition-colors { transition: color 0.2s; }
+
+  /* ── Responsividade ── */
+  @media (min-width: 640px) {
+    .gp-iphone-event .sm-flex-row    { flex-direction: row; }
+    .gp-iphone-event .sm-grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (min-width: 768px) {
+    .gp-iphone-event .md-flex        { display: flex; }
+    .gp-iphone-event .md-block       { display: block; }
+    .gp-iphone-event .md-hidden      { display: none; }
+    .gp-iphone-event .md-px-8        { padding-left: 2rem; padding-right: 2rem; }
+    .gp-iphone-event .md-pb-24       { padding-bottom: 6rem; }
+    .gp-iphone-event .md-py-28       { padding-top: 7rem; padding-bottom: 7rem; }
+    .gp-iphone-event .md-py-32       { padding-top: 8rem; padding-bottom: 8rem; }
+    .gp-iphone-event .md-text-3xl    { font-size: 2.15rem; }
+    .gp-iphone-event .md-text-4xl    { font-size: 2.6rem; }
+    .gp-iphone-event .md-text-5xl    { font-size: 3.4rem; }
+    .gp-iphone-event .md-text-6xl    { font-size: 4.3rem; }
+    .gp-iphone-event .md-text-xl     { font-size: 1.45rem; }
+    .gp-iphone-event .md-grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .gp-iphone-event .md-grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .gp-iphone-event .md-flex-row    { flex-direction: row; }
+    .gp-iphone-event .md-gap-x-16    { column-gap: 4rem; }
+    .gp-iphone-event .md-gap-y-8     { row-gap: 2rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .gp-iphone-event .lg-text-7xl { font-size: 5.2rem; }
+  }
+
+  /* ── Hero canvas de partículas ── */
+  .gp-iphone-event .hero-bg { position: relative; }
+  #gp-particle-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .gp-iphone-event .hero-bg > div,
+  .gp-iphone-event .hero-bg > section,
+  .gp-iphone-event .hero-bg > p,
+  .gp-iphone-event .hero-bg > h1,
+  .gp-iphone-event .hero-bg > h2 {
+    position: relative;
+    z-index: 2;
+  }
+  /* Wrapper interno do hero acima do canvas */
+  #gp-hero-section > div { position: relative; z-index: 2; }
+
+  /* ── Stat card hover ── */
+  .gp-iphone-event .stat-card {
+    transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .gp-iphone-event .stat-card:hover {
+    background: #1e1e20;
+    border-color: rgba(0,113,227,0.35);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 36px rgba(0,113,227,0.12);
+  }
+
+  /* ── Schedule item hover ── */
+  .gp-iphone-event .schedule-item {
+    transition: padding-left 0.25s, border-left-color 0.25s;
+    cursor: default;
+  }
+  .gp-iphone-event .schedule-item:hover {
+    padding-left: 28px;
+    border-left-color: var(--blue);
+  }
+</style>
+
+<div class="gp-iphone-event">
+
+  <!-- ════════════════════════════════════
+       HERO
+  ═════════════════════════════════════ -->
+  <section class="hero-bg min-h-screen flex flex-col justify-end pb-16 md-pb-24 pt-20 px-4 md-px-8" id="gp-hero-section">
+    <canvas id="gp-particle-canvas"></canvas>
+    <div class="max-w-6xl mx-auto w-full">
+
+      <div class="reveal">
+        <span class="badge mb-5">22 de Maio de 2026 · São Paulo, SP</span>
+
+        <h1 style="font-size:2.6rem;font-weight:700;line-height:1.05;letter-spacing:-0.025em;margin-bottom:1.5rem;max-width:48rem;" class="md-text-6xl lg-text-7xl">
+          O dia em que você experimenta <span class="gradient-text">o que vem a seguir.</span>
+        </h1>
+
+        <p class="text-apple-muted text-lg md-text-xl max-w-xl leading-relaxed mb-10">
+          Não é um keynote assistido de casa. É uma experiência ao vivo — câmera na mão, demo aberta, sem mediação.
+        </p>
+
+        <div class="flex flex-col sm-flex-row gap-4 mb-14">
+          <a href="#ingressos" class="btn-primary px-8 py-35 text-base text-center">
+            Quero garantir minha vaga
+          </a>
+          <a href="#sobre" class="btn-outline px-8 py-35 text-base text-center">
+            Ver programação completa
+          </a>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="reveal" style="transition-delay: 0.15s">
+        <p class="text-apple-muted text-xs uppercase tracking-widest mb-3 font-medium">Faltam</p>
+        <div class="flex gap-3" id="gp-countdown">
+          <div class="countdown-box px-4 py-3 text-center min-w-18">
+            <div class="text-2xl md-text-3xl font-bold text-white" id="gp-cd-days">--</div>
+            <div class="text-apple-muted text-xs mt-1">dias</div>
+          </div>
+          <div class="countdown-box px-4 py-3 text-center min-w-18">
+            <div class="text-2xl md-text-3xl font-bold text-white" id="gp-cd-hours">--</div>
+            <div class="text-apple-muted text-xs mt-1">horas</div>
+          </div>
+          <div class="countdown-box px-4 py-3 text-center min-w-18">
+            <div class="text-2xl md-text-3xl font-bold text-white" id="gp-cd-mins">--</div>
+            <div class="text-apple-muted text-xs mt-1">min</div>
+          </div>
+          <div class="countdown-box px-4 py-3 text-center min-w-18">
+            <div class="text-2xl md-text-3xl font-bold text-white" id="gp-cd-secs">--</div>
+            <div class="text-apple-muted text-xs mt-1">seg</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       SOBRE / STATS
+  ═════════════════════════════════════ -->
+  <section id="sobre" class="py-20 md-py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md-px-8">
+
+      <div class="reveal text-center mb-16">
+        <span class="badge mb-4">Sobre o evento</span>
+        <h2 class="text-3xl md-text-5xl font-bold tracking-tight mb-5">
+          O maior evento hands-on de iPhone do Brasil.
+        </h2>
+        <p class="text-apple-muted text-lg max-w-2xl mx-auto leading-relaxed">
+          Um dia inteiro dedicado a quem leva o iPhone a sério — desenvolvedores, fotógrafos, criadores de conteúdo e entusiastas que querem ir além do manual.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 sm-grid-cols-3 gap-4 reveal">
+        <div class="stat-card p-8 text-center">
+          <div class="text-4xl md-text-5xl font-bold text-white mb-2">2.000<span class="text-blue-400">+</span></div>
+          <div class="text-apple-muted text-sm">participantes esperados</div>
+        </div>
+        <div class="stat-card p-8 text-center">
+          <div class="text-4xl md-text-5xl font-bold text-white mb-2">24</div>
+          <div class="text-apple-muted text-sm">demos hands-on ao vivo</div>
+        </div>
+        <div class="stat-card p-8 text-center">
+          <div class="text-4xl md-text-5xl font-bold text-white mb-2">8h</div>
+          <div class="text-apple-muted text-sm">de programação contínua</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       EXPERIÊNCIAS / FEATURES
+  ═════════════════════════════════════ -->
+  <section class="py-20 md-py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md-px-8">
+
+      <div class="reveal text-center mb-14">
+        <span class="badge mb-4">O que você vai vivenciar</span>
+        <h2 class="text-3xl md-text-5xl font-bold tracking-tight">
+          Quatro experiências que você<br class="hidden md-block"> não vê em nenhum keynote.
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md-grid-cols-2 gap-4">
+
+        <!-- Card 1 -->
+        <div class="feature-card p-8 reveal">
+          <div class="w-10 h-10 rounded-xl bg-blue-tinted flex items-center justify-center mb-5">
+            <!-- camera icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Fotografia que você precisa ver de perto</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            Sessões rotativas com iPhone 16 Pro em mão — modos Cinema, Macro e Action disponíveis para testar em cenários montados especialmente para o evento. Você fotografa, ninguém fotografa por você.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card p-8 reveal" style="transition-delay: 0.1s">
+          <div class="w-10 h-10 rounded-xl bg-blue-tinted flex items-center justify-center mb-5">
+            <!-- lock icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Privacidade como nunca foi explicada</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            Workshop com especialistas em segurança mostrando, na prática, o que o iPhone faz em segundo plano para proteger seus dados — e o que a concorrência não faz.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card p-8 reveal" style="transition-delay: 0.2s">
+          <div class="w-10 h-10 rounded-xl bg-blue-tinted flex items-center justify-center mb-5">
+            <!-- layers icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Integração Apple que ninguém te contou</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            iPhone + Mac + Watch + Apple TV operando como um único sistema. Demo ao vivo dos fluxos que transformam o jeito de trabalhar — Handoff, Sidecar, AirPlay 2, Continuity Camera.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="feature-card p-8 reveal" style="transition-delay: 0.3s">
+          <div class="w-10 h-10 rounded-xl bg-blue-tinted flex items-center justify-center mb-5">
+            <!-- accessibility icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="1"></circle><path d="m9 9 3-3 3 3"></path><path d="m3 12 4-1 3 3 3-3 4 1"></path><path d="m9 20 1.5-3 1.5-1 1.5 1L15 20"></path></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Acessibilidade na prática, não no discurso</h3>
+          <p class="text-apple-muted leading-relaxed text-sm">
+            Demo guiada por usuários reais mostrando como os recursos de acessibilidade do iPhone mudam vidas — Voice Control, AssistiveTouch e Live Captions sendo usados de verdade.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       PROGRAMAÇÃO
+  ═════════════════════════════════════ -->
+  <section id="programacao" class="py-20 md-py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md-px-8">
+
+      <div class="reveal mb-14">
+        <span class="badge mb-4">22 de Maio de 2026</span>
+        <h2 class="text-3xl md-text-5xl font-bold tracking-tight">
+          Programação do dia
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md-grid-cols-2 reveal" style="column-gap:4rem;row-gap:2rem;">
+
+        <div class="space-y-8">
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">09:00</p>
+            <p class="font-medium text-white">Credenciamento e boas-vindas</p>
+            <p class="text-apple-muted text-sm mt-1">Café, kit do participante e open networking.</p>
+          </div>
+          <div class="schedule-item highlight">
+            <p class="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">10:00</p>
+            <p class="font-medium text-white">Conferência de abertura</p>
+            <p class="text-apple-muted text-sm mt-1">O estado do iPhone em 2026 — o que mudou, o que está por vir.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">11:30</p>
+            <p class="font-medium text-white">Demos hands-on — 1ª rodada</p>
+            <p class="text-apple-muted text-sm mt-1">6 estações simultâneas. Grupos rotativos de 20 min cada.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">13:00</p>
+            <p class="font-medium text-white">Almoço e networking</p>
+            <p class="text-apple-muted text-sm mt-1">Incluído nos ingressos Professional e VIP.</p>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">14:30</p>
+            <p class="font-medium text-white">Demos hands-on — 2ª rodada</p>
+            <p class="text-apple-muted text-sm mt-1">4 workshops especializados em paralelo (vagas limitadas por ingresso).</p>
+          </div>
+          <div class="schedule-item highlight">
+            <p class="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">16:00</p>
+            <p class="font-medium text-white">Painel: O futuro do iOS</p>
+            <p class="text-apple-muted text-sm mt-1">Discussão aberta com devs e criadores sobre para onde o ecossistema Apple está indo.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">17:30</p>
+            <p class="font-medium text-white">Encerramento e sorteios</p>
+            <p class="text-apple-muted text-sm mt-1">Surpresas para quem ficou até o fim.</p>
+          </div>
+          <div class="schedule-item">
+            <p class="text-apple-muted text-xs font-semibold uppercase tracking-wider mb-1">19:00</p>
+            <p class="font-medium text-white">Jantar VIP <span class="text-apple-muted text-xs font-normal">(apenas VIP)</span></p>
+            <p class="text-apple-muted text-sm mt-1">Mesa reservada com palestrantes. Vagas esgotam primeiro.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       INGRESSOS
+  ═════════════════════════════════════ -->
+  <section id="ingressos" class="py-20 md-py-28 section-rule">
+    <div class="max-w-6xl mx-auto px-4 md-px-8">
+
+      <div class="reveal text-center mb-14">
+        <span class="badge mb-4">Ingressos</span>
+        <h2 class="text-3xl md-text-5xl font-bold tracking-tight mb-4">
+          Escolha como você quer estar lá.
+        </h2>
+        <p class="text-apple-muted text-lg max-w-xl mx-auto">
+          Três opções. Todas incluem acesso às demos abertas. A diferença está em o quanto fundo você quer ir.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md-grid-cols-3 gap-4 reveal" style="gap:1.25rem;">
+
+        <!-- Visitante -->
+        <div class="pricing-card p-8 flex flex-col">
+          <p class="text-apple-muted text-sm font-medium mb-2">Visitante</p>
+          <div class="flex items-end gap-1 mb-6">
+            <span class="text-4xl font-bold text-white">R$&nbsp;197</span>
+            <span class="text-apple-muted text-sm mb-1">/ pessoa</span>
+          </div>
+          <ul class="space-y-3 text-sm text-apple-muted flex-1 mb-8" style="list-style:none;">
+            <li class="flex gap-2">
+              <!-- check icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Acesso ao evento completo
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Todas as demos abertas
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Conferência de abertura
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Painel de encerramento
+            </li>
+            <li class="flex gap-2 opacity-40">
+              <!-- x icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              Workshops especializados
+            </li>
+            <li class="flex gap-2 opacity-40">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              Almoço incluído
+            </li>
+          </ul>
+          <a href="#" class="btn-outline text-center py-3 text-sm">Comprar ingresso</a>
+        </div>
+
+        <!-- Professional -->
+        <div class="pricing-card featured p-8 flex flex-col relative">
+          <div class="absolute top-neg3 left-half translate-x-neg50">
+            <span class="tag-popular">Mais escolhido</span>
+          </div>
+          <p class="text-blue-300 text-sm font-medium mb-2">Professional</p>
+          <div class="flex items-end gap-1 mb-6">
+            <span class="text-4xl font-bold text-white">R$&nbsp;397</span>
+            <span class="text-apple-muted text-sm mb-1">/ pessoa</span>
+          </div>
+          <ul class="space-y-3 text-sm text-apple-muted flex-1 mb-8" style="list-style:none;">
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Tudo do Visitante
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              4 workshops especializados
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Almoço e café da tarde
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Kit exclusivo do evento
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Gravações das sessões
+            </li>
+            <li class="flex gap-2 opacity-40">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              Jantar com palestrantes
+            </li>
+          </ul>
+          <a href="#" class="btn-primary text-center py-3 text-sm">Quero o Professional</a>
+        </div>
+
+        <!-- VIP -->
+        <div class="pricing-card p-8 flex flex-col">
+          <p class="text-apple-muted text-sm font-medium mb-2">VIP</p>
+          <div class="flex items-end gap-1 mb-6">
+            <span class="text-4xl font-bold text-white">R$&nbsp;797</span>
+            <span class="text-apple-muted text-sm mb-1">/ pessoa</span>
+          </div>
+          <ul class="space-y-3 text-sm text-apple-muted flex-1 mb-8" style="list-style:none;">
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Tudo do Professional
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Área exclusiva VIP
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Jantar com palestrantes
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Sessão de perguntas privada
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              Prioridade em todas as demos
+            </li>
+            <li class="flex gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.125rem;"><polyline points="20 6 9 13 4 10"></polyline><line x1="20" y1="6" x2="9" y2="13"></line></svg>
+              30 vagas no total
+            </li>
+          </ul>
+          <a href="#" class="btn-outline text-center py-3 text-sm">Comprar VIP</a>
+        </div>
+
+      </div>
+
+      <p class="text-center text-apple-muted text-sm mt-8 reveal">
+        Pagamento via cartão, Pix ou boleto · Parcelamento em até 6× sem juros
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       FAQ
+  ═════════════════════════════════════ -->
+  <section id="faq" class="py-20 md-py-28 section-rule">
+    <div class="max-w-3xl mx-auto px-4 md-px-8">
+
+      <div class="reveal text-center mb-12">
+        <span class="badge mb-4">FAQ</span>
+        <h2 class="text-3xl md-text-4xl font-bold tracking-tight">Perguntas frequentes</h2>
+      </div>
+
+      <div class="reveal" id="gp-faq-list">
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="gp_toggleFaq(this)">
+            O evento inclui refeições?
+            <!-- plus icon -->
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <div class="faq-body">
+            Café da manhã e lanche da tarde estão incluídos em todos os ingressos. Almoço completo está incluído nos ingressos Professional e VIP. O jantar de encerramento é exclusivo para o ingresso VIP.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="gp_toggleFaq(this)">
+            Preciso levar meu próprio iPhone para participar?
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <div class="faq-body">
+            Não. Todos os iPhones utilizados nas demos são fornecidos pelo evento — iPhone 16 Pro e iPhone 16 Pro Max com memória limpa. Se quiser testar com seu próprio aparelho em sessões específicas, pode trazer — mas não é obrigatório.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="gp_toggleFaq(this)">
+            As sessões são em inglês?
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <div class="faq-body">
+            Não. Toda a programação é em português. Palestrantes internacionais (se houver) terão tradução simultânea disponível. Nenhuma sessão exige inglês como pré-requisito.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="gp_toggleFaq(this)">
+            Posso cancelar ou transferir meu ingresso?
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <div class="faq-body">
+            Cancelamentos com reembolso total são aceitos até 30 dias antes do evento. Entre 30 e 7 dias, reembolso de 50%. Abaixo de 7 dias, sem reembolso — mas a transferência de nome é gratuita até 48h antes.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="gp_toggleFaq(this)">
+            Como chegar ao local do evento?
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <div class="faq-body">
+            O Centro de Convenções Frei Caneca fica a 5 minutos a pé da estação Consolação do Metrô (linha 2 Verde). Há estacionamento no local com valor à parte. Uber e 99 têm ponto de embarque/desembarque exclusivo na entrada lateral.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="gp_toggleFaq(this)">
+            As gravações das sessões ficam disponíveis depois?
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <div class="faq-body">
+            As gravações das sessões principais ficam disponíveis para ingressos Professional e VIP por 90 dias após o evento. As demos hands-on não são gravadas — são experiências exclusivas presenciais.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       CTA FINAL
+  ═════════════════════════════════════ -->
+  <section class="py-24 md-py-32 section-rule">
+    <div class="max-w-3xl mx-auto px-4 md-px-8 text-center">
+      <div class="reveal">
+        <p class="text-apple-muted text-sm font-semibold uppercase tracking-widest mb-5">22 de Maio de 2026 · São Paulo</p>
+        <h2 class="text-4xl md-text-6xl font-bold tracking-tight mb-6 leading-105">
+          Não existe replay de experiência.
+        </h2>
+        <p class="text-apple-muted text-lg max-w-lg mx-auto leading-relaxed mb-10">
+          Você pode assistir ao keynote em casa. Mas segurar o iPhone e testar você mesmo, ao vivo — isso só acontece aqui, neste dia.
+        </p>
+        <div class="flex flex-col sm-flex-row gap-4 justify-center">
+          <a href="#ingressos" class="btn-primary px-10 py-4 text-base">
+            Quero minha vaga agora
+          </a>
+          <a href="#programacao" class="btn-outline px-10 py-4 text-base">
+            Ver a programação
+          </a>
+        </div>
+        <p class="text-apple-muted text-xs mt-6 opacity-60">Vagas limitadas · Sem fila no dia</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       FOOTER
+  ═════════════════════════════════════ -->
+  <footer class="section-rule py-10">
+    <div class="max-w-6xl mx-auto px-4 md-px-8 flex flex-col md-flex-row justify-between items-center gap-4 text-apple-muted text-sm">
+      <p>© 2026 iPhone Experience Day · São Paulo, Brasil</p>
+      <div class="flex gap-6">
+        <a href="#" class="transition-colors hover-text-white">Termos</a>
+        <a href="#" class="transition-colors hover-text-white">Privacidade</a>
+        <a href="#" class="transition-colors hover-text-white">Contato</a>
+      </div>
+      <p class="opacity-50 text-xs">Evento independente. Não associado à Apple Inc.</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Partículas na Hero ──
+  (function() {
+    var canvas = document.getElementById('gp-particle-canvas');
+    var hero   = document.getElementById('gp-hero-section');
+    if (!canvas || !hero) return;
+
+    var ctx = canvas.getContext('2d');
+    var mouse = { x: -999, y: -999 };
+    var particles = [];
+    var animId;
+
+    function resize() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Rastrear mouse relativo ao hero
+    hero.addEventListener('mousemove', function(e) {
+      var rect = hero.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    hero.addEventListener('mouseleave', function() {
+      mouse.x = -999; mouse.y = -999;
+    });
+
+    // Criar partícula no cursor
+    function spawnParticle(x, y) {
+      var angle  = Math.random() * Math.PI * 2;
+      var speed  = 0.4 + Math.random() * 0.8;
+      var size   = 1.5 + Math.random() * 2.5;
+      var life   = 0.9 + Math.random() * 0.6; // segundos
+      var hue    = 200 + Math.random() * 40;   // azul frio → ciano
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 0.5,
+        size: size,
+        maxLife: life,
+        life: life,
+        hue: hue
+      });
+    }
+
+    var lastSpawn = 0;
+    var lastTime  = 0;
+
+    function tick(now) {
+      animId = requestAnimationFrame(tick);
+      var dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Spawnar novas partículas se o mouse estiver na hero
+      if (mouse.x > 0 && now - lastSpawn > 30) {
+        for (var s = 0; s < 2; s++) {
+          spawnParticle(
+            mouse.x + (Math.random() - 0.5) * 12,
+            mouse.y + (Math.random() - 0.5) * 12
+          );
+        }
+        lastSpawn = now;
+      }
+
+      // Atualizar e desenhar
+      for (var i = particles.length - 1; i >= 0; i--) {
+        var p = particles[i];
+        p.life -= dt;
+        if (p.life <= 0) { particles.splice(i, 1); continue; }
+
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.vy += 0.012; // leve gravidade
+
+        var alpha   = (p.life / p.maxLife);
+        var radius  = p.size * (0.4 + alpha * 0.6);
+
+        // Glow ao redor do ponto
+        var grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius * 3.5);
+        grd.addColorStop(0, 'hsla(' + p.hue + ',90%,72%,' + (alpha * 0.55) + ')');
+        grd.addColorStop(1, 'hsla(' + p.hue + ',90%,72%,0)');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius * 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Núcleo sólido
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'hsla(' + p.hue + ',95%,85%,' + alpha + ')';
+        ctx.fill();
+      }
+
+      // Linha de trilha do cursor (halo)
+      if (mouse.x > 0) {
+        var halo = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 60);
+        halo.addColorStop(0, 'rgba(0,113,227,0.12)');
+        halo.addColorStop(1, 'rgba(0,113,227,0)');
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 60, 0, Math.PI * 2);
+        ctx.fillStyle = halo;
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // ── Countdown timer ──
+  var gp_eventDate = new Date('2026-05-22T09:00:00-03:00');
+
+  function gp_updateCountdown() {
+    var now = new Date();
+    var diff = gp_eventDate - now;
+
+    if (diff <= 0) {
+      var el = document.getElementById('gp-countdown');
+      if (el) el.innerHTML = '<span style="color:var(--blue-400);font-size:1.25rem;font-weight:600;">O evento começou!</span>';
+      return;
+    }
+
+    var days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+    var dEl = document.getElementById('gp-cd-days');
+    var hEl = document.getElementById('gp-cd-hours');
+    var mEl = document.getElementById('gp-cd-mins');
+    var sEl = document.getElementById('gp-cd-secs');
+
+    if (dEl) dEl.textContent = String(days).padStart(2, '0');
+    if (hEl) hEl.textContent = String(hours).padStart(2, '0');
+    if (mEl) mEl.textContent = String(mins).padStart(2, '0');
+    if (sEl) sEl.textContent = String(secs).padStart(2, '0');
+  }
+
+  gp_updateCountdown();
+  setInterval(gp_updateCountdown, 1000);
+
+  // ── FAQ Accordion ──
+  window.gp_toggleFaq = function(trigger) {
+    var item = trigger.closest('.faq-item');
+    if (!item) return;
+    var isOpen = item.classList.contains('open');
+
+    // Fechar todos
+    var openItems = document.querySelectorAll('.gp-iphone-event .faq-item.open');
+    for (var i = 0; i < openItems.length; i++) {
+      openItems[i].classList.remove('open');
+    }
+
+    // Abrir clicado (se não estava aberto)
+    if (!isOpen) item.classList.add('open');
+  };
+
+  // ── Reveal on scroll (IntersectionObserver) ──
+  var gp_revealEls = document.querySelectorAll('.gp-iphone-event .reveal');
+  if ('IntersectionObserver' in window) {
+    var gp_observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          gp_observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    gp_revealEls.forEach(function(el) { gp_observer.observe(el); });
+  } else {
+    // Fallback para browsers sem suporte
+    gp_revealEls.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+})();
+</script>
