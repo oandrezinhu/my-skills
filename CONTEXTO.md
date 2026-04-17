@@ -64,6 +64,7 @@ Designer de performance sênior. Cria materiais **on e off** para campanhas paga
 | `/lp` | `.claude/skills/lp/SKILL.md` | ✅ Criada |
 | `/formatos` | `.claude/skills/formatos/SKILL.md` | ✅ Criada |
 | `/identidade` | `.claude/skills/identidade/SKILL.md` | ✅ Criada |
+| `/sigo-criativo` | `.claude/skills/sigo-criativo/SKILL.md` | ✅ Criada — criativos Figma para cliente Sigo ERP |
 
 ## Templates de prompts disponíveis (`/prompts`)
 
